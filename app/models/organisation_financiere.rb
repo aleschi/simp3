@@ -1,0 +1,2 @@
+class OrganisationFinanciere < ApplicationRecord
+end
