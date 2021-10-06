@@ -20,7 +20,7 @@ class Indicateurs extends React.Component {
           }
           throw new Error("Network response was not ok.");
         })
-        .then(response => this.setState({ indicateurs: response }))
+        .then(response => this.setState({ indicateurs: response.data1 }))
         .catch(() => this.props.history.push("/"));
   }
 

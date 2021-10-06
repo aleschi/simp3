@@ -1,7 +1,13 @@
 class Api::V1::IndicateursController < ApplicationController
   def index
   	indicateur = Indicateur.all.order(created_at: :desc)
-    render json: indicateur
+    ministere = Ministere.all.order(created_at: :desc)
+    service_executant = ServiceExecutant.all.order(created_at: :desc)
+    bloc = OrganisationFinanciere.all.order(created_at: :desc)
+    type_service = TypeService.all.order(created_at: :desc)
+    indicateur_execution = IndicateurExecution.all.order(created_at: :desc)
+    response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere, data3: service_executant, data4: bloc, data5: type_service, data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant])}
+    render json: response
   end
 
   def new

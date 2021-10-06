@@ -1,17 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class Execution_infos extends React.Component {
-  render() {
+export default ({indicateurs, indicateur_n}) => {
+
     return (
     <div className="indicateurs_infos_box" >
-    	<div className="box_classique">
-		    <div>Indicateur 1</div>
-		    <div>Infos</div>
-	    </div>
+    	
+      {indicateur_n.map((indicateur, index) => (
+        <div key={index}>
+        <div className="box_classique">
+          <div className="titre_etiquette">Indicateur {indicateur.name}</div>
+          <div className="d12"></div>
+          <div className="texte_etiquette">{indicateur.description}</div>
+        </div>
+        <div className="d24"></div>
+        </div>
+      ))}
+	 
     </div>
     
     );
-  }
-}
-export default Execution_infos;
+};
+

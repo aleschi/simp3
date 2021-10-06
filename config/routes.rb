@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       get 'indicateur_executions/index'
       get 'indicateur_executions/new'
       get 'indicateur_executions/create'
+      post 'indicateur_executions/search'
     end
   end
   namespace :api do

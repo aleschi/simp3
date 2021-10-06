@@ -129,6 +129,7 @@ a{
 }
 .indicateurs_chart_box{
   width:50%;
+  padding:0px 10px;
 }
 .map_component > div{
   width:50%;
@@ -163,6 +164,26 @@ border: 1px solid rgba(0, 0, 0, 0.1);
   &:focus{
     border-bottom:1px solid #000091;
   }
+  }
+}
+.formw {
+  select{
+    color:#1E1E1E;
+    outline:none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius:4px;
+    font-size:13px;
+    line-height:20px;
+    background-color:#fff;
+    padding:5px 10px;
+    margin:10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   }
 }
 .bouton{
@@ -281,10 +302,14 @@ text-decoration:none;
 
 .box_classique{
   background-color:#fff;
-  border-radius:24px;
+  border-radius:8px;
   padding:12px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   -o-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+}
+.highcharts-credits{
+  color:#fff !important;
+  fill: #fff !important;
 }
