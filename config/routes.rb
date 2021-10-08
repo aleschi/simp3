@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get 'service_executants/index'
+      get 'service_executants/new'
+      get 'service_executants/create'
+      post 'service_executants/search'
+    end
+  end
+  namespace :api do
+    namespace :v1 do
       get 'indicateur_executions/index'
       get 'indicateur_executions/new'
       get 'indicateur_executions/create'

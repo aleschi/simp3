@@ -22,10 +22,12 @@ class Execution extends React.Component {
           service_executant_n: [],
           search_indicateur: 'IA1',
           indicateur_name: '',
-          search_service_executants: '',
+          search_service_executants: [],
+
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleChange2 = this.handleChange2.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
@@ -41,8 +43,19 @@ class Execution extends React.Component {
       .catch(() => this.props.history.push("/"));
     }
 
-    handleChange(e) {
+    handleChange(event) {
       this.setState({ [event.target.name]: event.target.value });
+    }
+    handleChange2(event){
+        let search_service_executants = this.state.search_service_executants
+        
+        if(event.target.checked) {
+            search_service_executants.push(event.target.value)
+        } else {
+            search_service_executants.splice(event.target.value,1)
+        }
+
+        this.setState({ search_service_executants:  search_service_executants}) 
     }
     handleSubmit(event) {
         event.preventDefault();
@@ -81,7 +94,7 @@ class Execution extends React.Component {
         <Header /> 
         <div className="indicateurs_component">
 
-            <Execution_search handleChange={this.handleChange}
+            <Execution_search handleChange={this.handleChange} handleChange2={this.handleChange2}
           indicateurs={this.state.indicateurs}
           service_executants={this.state.service_executants}
           handleSubmit={this.handleSubmit}/>
