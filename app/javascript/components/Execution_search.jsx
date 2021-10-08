@@ -28,11 +28,13 @@ export default ({ handleChange, handleSubmit, indicateurs, service_executants })
 				<div className="d12"></div>
 				<div className="texte_etiquette formw">
 				Ma recherche concerne 
-				<select name="search_service_executants">
+				
 					{service_executants.map((service, index) => (
-		              <option key={index} value={service.libelle}>{service.libelle}</option>
+						<label key={index}>{service.libelle}
+						<input type="checkbox" name="search_service_executants" onChange={handleChange} id={service.libelle} value={service.libelle} />
+						</label>
 		            ))}
-				</select>
+			
 				</div>
 				<div className="d24"></div>
 				<button className="bouton" type="submit">Valider</button>

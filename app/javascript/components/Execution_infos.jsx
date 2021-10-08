@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default ({indicateurs, indicateur_n}) => {
+export default ({indicateur_n}) => {
 
     return (
     <div className="indicateurs_infos_box" >

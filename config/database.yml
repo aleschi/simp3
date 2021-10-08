@@ -84,3 +84,4 @@ production:
   database: datason_production
   username: datason
   password: <%= ENV['DATASON_DATABASE_PASSWORD'] %>
+ # url: <%= ENV['DATABASE_URL'] %>

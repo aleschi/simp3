@@ -2,9 +2,29 @@ import React,{ useState, useEffect }  from "react";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-export default ({ indicateur_executions, indicateur_n, service_executant_n}) => {
+export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name}) => {
 
-    const [options, setOptions] = useState({
+    const series_i = [];
+    let date;
+    const title_i = '';
+    
+        
+    {service_executant_n.forEach(function (e,index) {
+          series_i.push({
+            name: e.libelle,
+            data:[]
+          });
+            {indicateur_executions.forEach(function (el) {
+              if (e.id == el.service_executant_id){
+              date = new Date(el.date).getTime();
+              
+              series_i[index].data.push([date, el.valeur]);
+              }
+            });}
+         
+        });}
+
+      const options = {
         chart: {
             type: 'spline',
             style:{
@@ -12,7 +32,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n}) => 
             },       
         },
         title: {
-            text: ''
+            text: title_i,
         },
         tooltip: {
             shared: true,
@@ -23,50 +43,22 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n}) => 
         xAxis:{
             type: 'datetime',
         },
-        series: [
-        {
-          data: []
-        }
-      ]
-    });
+        yAxis: { 
+        title: {
+            text: "Valeur de l'indicateur",
+            }
+        },
+        series: series_i,
+    };
 
-    useEffect(() => {
-    const url = "/api/v1/indicateur_executions/index";
-    fetch(url)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Network response was not ok.");
-      })
-      .then((response) => {
-        const series = [];
-        let date;
-
-        response.data8.forEach(function (e,index) {
-          series.push({
-            name: e.libelle,
-            data:[]
-          });
-            response.data6.forEach(function (el) {
-              if (e.id == el.service_executant_id){
-              date = new Date(el.date).getTime();
-              
-              series[index].data.push([date, el.valeur]);
-              }
-            });
-         
-        })
-
-        setOptions({ series: series });
-      });
-    },[]);
     return (
     <div>
-        <HighchartsReact highcharts={Highcharts} options={options} />
-        <div>
-            
+        <div className="text-center titre_etiquette">
+         {`Suivi de l'indicateur ${indicateur_name}`}   
         </div>
+
+        <HighchartsReact highcharts={Highcharts} options={options} />
+        
     </div>
     );
 };
