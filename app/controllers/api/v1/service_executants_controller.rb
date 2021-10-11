@@ -1,5 +1,8 @@
 class Api::V1::ServiceExecutantsController < ApplicationController
   def index
+    autoCompleteResults = ServiceExecutant.all
+    response = {autoCompleteResults: autoCompleteResults}
+    render json: response
   end
 
   def new

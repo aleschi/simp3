@@ -186,36 +186,59 @@ const mapStyle = [
 ]
 
 export class Mapcontainer extends React.Component {
-  state = {
-    showingInfoWindow: false,  // Hides or shows the InfoWindow
-    activeMarker: {},          // Shows the active marker upon click
-    selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
-  };
-  onMarkerClick = (props, marker, e) =>
+
+    constructor(props){
+        super(props);
+        this.state = {
+            autoCompleteResults: this.props.autoCompleteResults,
+            showingInfoWindow: false,  // Hides or shows the InfoWindow
+            activeMarker: {},          // Shows the active marker upon click
+            selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
+  
+        }
+    }
+    componentDidUpdate(prevProps) {
+      if (this.props.autoCompleteResults !== prevProps.autoCompleteResults) {
+        this.setState({autoCompleteResults: this.props.autoCompleteResults});
+      }
+    }
+    
+    onMarkerClick = (props, marker, e) =>
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
 
-  onClose = props => {
+    onClose = props => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
         activeMarker: null
       });
     }
-  };
+    };
   
- _mapLoaded(mapProps, map) {
-    map.setOptions({
-       styles: mapStyle
+    _mapLoaded(mapProps, map) {
+        map.setOptions({
+        styles: mapStyle
+        })
+    };
+
+    displayMarkers = () => {
+    return this.state.autoCompleteResults.map((result, index) => {
+      return <Marker key={index} id={index} icon={imager} name={'Nom du CSP'} position={{
+       lat: result.latitude,
+       lng: result.longitude
+     }}
+     onClick={this.onMarkerClick} />
     })
- };
+    }
 
     render() {
 
       return (
+
         <div className="map">
 	        <Map
 	          google={this.props.google}
@@ -225,11 +248,8 @@ export class Mapcontainer extends React.Component {
 	          initialCenter={{ lat: 48.52, lng: 2.19}}
 	          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
 	        >
-	          
-	        <Marker
-	          onClick={this.onMarkerClick}
-	          name={'Nom du CSP'} position={{ lat: 48.50, lng: 2.18}} icon={imager}
-	        />
+	        {this.displayMarkers()}  
+	        
 	        <InfoWindow
 	          marker={this.state.activeMarker}
 	          visible={this.state.showingInfoWindow}
@@ -241,6 +261,7 @@ export class Mapcontainer extends React.Component {
 	        </InfoWindow>
 	        </Map>
         </div>
+
       );
    }
 }
