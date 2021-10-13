@@ -1,6 +1,6 @@
 import React from "react";
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-
+import Mapresult from "../components/Mapresult";
 const mapStyles = {
 	  width: '45%',
 	  height: '400px',
@@ -191,10 +191,12 @@ export class Mapcontainer extends React.Component {
         super(props);
         this.state = {
             autoCompleteResults: this.props.autoCompleteResults,
+            service_ex: this.props.service_executant,
+            showResults: false,
             showingInfoWindow: false,  // Hides or shows the InfoWindow
             activeMarker: {},          // Shows the active marker upon click
-            selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
-  
+            selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
+
         }
     }
     componentDidUpdate(prevProps) {
@@ -209,6 +211,30 @@ export class Mapcontainer extends React.Component {
       activeMarker: marker,
       showingInfoWindow: true
     });
+
+    onMarkerClick2= (props, marker, e) => { 
+       
+   
+        const url = "/api/v1/service_executants/search_marker?q=" + props.id;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+      
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ service_ex: response.service_executant, showResults: true}))
+      .catch(error => console.log(error.message));
+       
+    };
 
     onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -227,18 +253,18 @@ export class Mapcontainer extends React.Component {
 
     displayMarkers = () => {
     return this.state.autoCompleteResults.map((result, index) => {
-      return <Marker key={index} id={index} icon={imager} name={'Nom du CSP'} position={{
+      return <Marker key={index} id={result.id} icon={imager} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
-     onClick={this.onMarkerClick} />
+     onClick={this.onMarkerClick2} />
     })
     }
 
     render() {
 
       return (
-
+        <div className="map_map align_flex">
         <div className="map">
 	        <Map
 	          google={this.props.google}
@@ -261,7 +287,9 @@ export class Mapcontainer extends React.Component {
 	        </InfoWindow>
 	        </Map>
         </div>
-
+        
+         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} /> : null }
+        </div>
       );
    }
 }

@@ -116,9 +116,16 @@ button, button:focus{
 }
 .map{
   height:400px;
-  width:50%;
+  width:66.7%;
+  padding:0 12px;
 }
-
+.align_flex{
+  display: inline-flex;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flex;
+  display: -moz-inline-flex;
+  width:100%;
+}
 .map_component, .indicateurs_component{
   display: inline-flex;
   display: -webkit-inline-flex;
@@ -135,22 +142,18 @@ button, button:focus{
   width:50%;
   padding:0px 10px;
 }
-.map_component > div{
-  width:50%;
+.map_component > div {
+  width:75%;
 }
 .map_box{
   width:25% !important;
 }
-.box{
-padding:24px;
-border-radius:4px;
-border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-  -o-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+.map_map{
+  width:100%;
 }
-
+.map_infos{
+  width:33.3%;
+}
 .form {
   input, textarea {
   width:100%;

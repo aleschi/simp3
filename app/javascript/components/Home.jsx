@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Mapcontainer from "../components/Mapcontainer";
-import Mapresult from "../components/Mapresult";
+
 import Mapsearch from "../components/Mapsearch";
 import Chart from "../components/Chart";
 
@@ -14,6 +14,8 @@ class Home extends React.Component {
         this.state = {
           term: '',
           autoCompleteResults: [],
+          serviceexecutant: [],
+
         };
 
         this.getAutoCompleteResults = this.getAutoCompleteResults.bind(this);
@@ -28,7 +30,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, serviceexecutant: response.service_executant }))
       .catch(() => this.props.history.push("/"));
     }
 
@@ -37,7 +39,7 @@ class Home extends React.Component {
         event.preventDefault();
         const url = "/api/v1/service_executants/search?q=" + e.target.value;
         const autoCompleteResults = this.state.autoCompleteResults;
-        const term = this.state.term
+        const term = this.state.term;
 
         const body = {
           autoCompleteResults,term
@@ -63,15 +65,16 @@ class Home extends React.Component {
     }
 
   render() {
+
     return (
     <div>
         <Header /> 
         <div className="map_component">
             <Mapsearch autoCompleteResults={this.state.autoCompleteResults} getAutoCompleteResults={this.getAutoCompleteResults} term={this.state.term}/>
             
-            <Mapcontainer autoCompleteResults={this.state.autoCompleteResults} /> 
-            
-            <Mapresult />
+            <Mapcontainer service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} /> 
+   
+         
         </div>
   
         <Footer />    
