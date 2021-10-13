@@ -8,7 +8,7 @@ export default ({indicateur_n}) => {
     	
       {indicateur_n.map((indicateur, index) => (
         <div key={index}>
-        <div className="box_classique">
+        <div className="box_etiquette">
           <div className="titre_etiquette">Indicateur {indicateur.name}</div>
           <div className="d12"></div>
           <div className="texte_etiquette">{indicateur.description}</div>

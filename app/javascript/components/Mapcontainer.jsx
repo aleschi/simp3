@@ -192,6 +192,7 @@ export class Mapcontainer extends React.Component {
         this.state = {
             autoCompleteResults: this.props.autoCompleteResults,
             service_ex: this.props.service_executant,
+            indicateur_executions: [],
             showResults: false,
             showingInfoWindow: false,  // Hides or shows the InfoWindow
             activeMarker: {},          // Shows the active marker upon click
@@ -231,7 +232,7 @@ export class Mapcontainer extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ service_ex: response.service_executant, showResults: true}))
+      .then(response => this.setState({ service_ex: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions}))
       .catch(error => console.log(error.message));
        
     };
@@ -288,7 +289,7 @@ export class Mapcontainer extends React.Component {
 	        </Map>
         </div>
         
-         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} /> : null }
+         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions}/> : null }
         </div>
       );
    }

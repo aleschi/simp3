@@ -164,9 +164,9 @@ button, button:focus{
   font-size:15px;
   padding:5px 8px;
   appearance: none;
-    -ms-appearance: none;
-    -moz-appearance: none; /* Firefox */
-    -webkit-appearance: none; /* Safari and Chrome */
+  -ms-appearance: none;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
   outline:none;
   &:focus{
     border-bottom:1px solid #000091;
@@ -193,8 +193,25 @@ button, button:focus{
   -o-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   }
 }
+.search_bar{
+  background-color:#fff !important;
+  border:1px solid rgba(0,0,0,0.1) !important;
+  border-bottom:2px solid #000091 !important;
+}
+.search_results{
+  border:1px solid rgba(0,0,0,0.1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2) !important;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  padding:12px;
+}
+.search_bar::placeholder{
+  font-weight:light;
+  font-style: italic;
+}
 .bouton{
-text-decoration:none;
+  text-decoration:none;
   background-color:#000091;
   color:#fff;
   font-size:16px;      
@@ -352,4 +369,13 @@ text-decoration:none;
 .highcharts-credits{
   color:#fff !important;
   fill: #fff !important;
+}
+.map_se{
+  width:25%;
+  color:#1E1E1E;
+  font-size:13px;
+  font-weight:bold;
+  span{
+  color:#000091;
+  }
 }
