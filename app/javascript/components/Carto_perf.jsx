@@ -1,17 +1,16 @@
-import React,{ useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Chart from "../components/Chart";
-import Execution_search from "../components/Execution_search";
-import Execution_table from "../components/Execution_table";
-import Execution_infos from "../components/Execution_infos";
+import Mapcontainer from "../components/Mapcontainer";
 
-class Execution extends React.Component {
+import Mapsearch_perf from "../components/Mapsearch_perf";
+
+class Home extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-       
           indicateurs: [],
           ministeres: [],
           service_executants: [],
@@ -41,6 +40,7 @@ class Execution extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeStructure = this.handleChangeStructure.bind(this);
     }
+
     componentDidMount() {
     const url = "/api/v1/indicateur_executions/index";
     fetch(url)
@@ -53,7 +53,6 @@ class Execution extends React.Component {
       .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name  }))
       .catch(() => this.props.history.push("/"));
     }
-
     handleChange(event) {
       this.setState({ [event.target.name]: event.target.value });
     }
@@ -140,32 +139,28 @@ class Execution extends React.Component {
       .catch(error => console.log(error.message));
     }
 
-    render() {
+
+
+  render() {
 
     return (
-
     <div>
         <Header /> 
-        <div className="indicateurs_component">
-
-            <Execution_search handleChange={this.handleChange} handleChange2={this.handleChange2} handleChange3={this.handleChange3} handleChange4={this.handleChange4} handleChange5={this.handleChange5}  handleChangeStructure={this.handleChangeStructure}
+        <div className="map_component">
+            <Mapsearch_perf handleChange={this.handleChange} handleChange2={this.handleChange2} handleChange3={this.handleChange3} handleChange4={this.handleChange4} handleChange5={this.handleChange5}  handleChangeStructure={this.handleChangeStructure}
           indicateurs={this.state.indicateurs}
           service_executants={this.state.service_executants}
           handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}/>
-          
-            <div className="indicateurs_chart_box">
-                <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name}/>
-
-                <Execution_table indicateur_executions={this.state.indicateur_executions}/>
-            </div>
-
-            <Execution_infos indicateur_n={this.state.indicateur_n}/>
             
+            <Mapcontainer service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} /> 
+   
+         
         </div>
+  
         <Footer />    
     </div>
     
     );
   }
 }
-export default Execution;
+export default Home;

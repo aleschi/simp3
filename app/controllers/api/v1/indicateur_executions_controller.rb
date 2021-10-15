@@ -56,4 +56,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     render json: response
   end 
 
+  def search_perf
+  end 
+
 end
