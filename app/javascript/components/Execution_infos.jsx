@@ -12,6 +12,14 @@ export default ({indicateur_n}) => {
           <div className="titre_etiquette">Indicateur {indicateur.name}</div>
           <div className="d12"></div>
           <div className="texte_etiquette">{indicateur.description}</div>
+          <div className="d12"></div>
+          <div className="texte_etiquette">Information à afficher : {indicateur.type_indicateur}</div>
+          <div className="d12"></div>
+          <div className="texte_etiquette">Unité: {indicateur.unite}</div>
+          <div className="d12"></div>
+          <div className="texte_etiquette">Calcul : {indicateur.calcul}</div>
+          <div className="d12"></div>
+          <div className="texte_etiquette">Remarque principales : {indicateur.remarque}</div>
         </div>
         <div className="d24"></div>
         </div>

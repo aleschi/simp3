@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'react-bootstrap';
 
-export default ({ handleChange,handleChange2,handleChange3, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres, showSe }) => {
+export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc }) => {
 	
 	    return (
 
@@ -43,13 +43,32 @@ export default ({ handleChange,handleChange2,handleChange3, handleChangeStructur
 							</label></div>
 			            ))
 
-			            :
-
+			            : null }
+			        { showMinistere ? 
 			            ministeres.map((ministere, index) => (
 						<div key={index} className="texte_etiquette">	<label >
 							<input type="checkbox" name="search_ministeres" onChange={handleChange3} id={ministere.name} value={ministere.id} /> {ministere.name}
 							</label></div>
 			            ))
+			            : null
+
+			            }
+			        { showBloc ? 
+			            blocs.map((bloc, index) => (
+						<div key={index} className="texte_etiquette">	<label >
+							<input type="checkbox" name="search_blocs" onChange={handleChange4} id={bloc.name} value={bloc.id} /> {bloc.name}
+							</label></div>
+			            ))
+			            : null
+
+			            }
+			        { showType ? 
+			            type_services.map((type, index) => (
+						<div key={index} className="texte_etiquette">	<label >
+							<input type="checkbox" name="search_type_services" onChange={handleChange5} id={type.name} value={type.id} /> {type.name}
+							</label></div>
+			            ))
+			            : null
 
 			            }
   					</Dropdown.Menu>
