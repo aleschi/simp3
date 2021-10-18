@@ -48,11 +48,15 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       service_executant_n = ServiceExecutant.where(type_service_id: types_id)
       search_service_executants = service_executant_n.pluck(:id).uniq 
     end
+
+    if params[:effectif] && params[:effectif].length != 0 
+      service_executant_n = service_executant_n.where('effectif <= ?', params[:effectif].to_i)
+    end 
     
 
     indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :asc)
  
-    response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere.as_json(:include => :service_executants), data3: service_executant.as_json(:include => :ministere), data4: bloc, data5: type_service, data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => :ministere}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services]}
+    response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere.as_json(:include => :service_executants), data3: service_executant.as_json(:include => :ministere), data4: bloc, data5: type_service, data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => :ministere}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], effectif: params[:effectif]}
     render json: response
   end 
 

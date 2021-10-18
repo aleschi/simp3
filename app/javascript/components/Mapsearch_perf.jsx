@@ -76,11 +76,11 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
 				</div>
 				<div className="d12"></div>
 				<div className="texte_etiquette formw">Afficher les SE de moins de 
-				<select name="effectif" >					
-		            <option value="Service">100 personnes</option>
-		            <option value="Ministere">50 personnes</option>
-		            <option value="Bloc">10 personnes</option>
-		            <option value="Type">5 personnes</option>		            
+				<select name="effectif" onChange={handleChange} >					
+		            <option value="100">100 personnes</option>
+		            <option value="50">50 personnes</option>
+		            <option value="10">10 personnes</option>
+		            <option value="5">5 personnes</option>		            
 				</select></div>
 				<div className="d24"></div>
 				<button className="bouton" type="submit">Valider</button>
