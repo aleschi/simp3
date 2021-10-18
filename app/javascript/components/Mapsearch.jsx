@@ -1,15 +1,15 @@
 import React from "react";
 
 
-export default ({autoCompleteResults,getAutoCompleteResults,term}) => {
+export default ({autoCompleteResults,getAutoCompleteResults,term,csp, sfact,cgf,comptable}) => {
 	
     return (
     <div className="map_box">
         <div className="align_flex">
-          <div className="map_se"><span>X</span><br/>CSP</div>
-          <div className="map_se"><span>X</span><br/>SFACT</div>
-          <div className="map_se"><span>X</span><br/>CGF</div>
-          <div className="map_se"><span>X</span><br/>Comptables</div>
+          <div className="map_se"><span>{csp}</span><br/>CSP</div>
+            <div className="map_se"><span>{sfact}</span><br/>SFACT</div>
+            <div className="map_se"><span>{cgf}</span><br/>CGF</div>
+            <div className="map_se"><span>{comptable}</span><br/>Comptables</div>
         </div>
         <div className="d24"></div>
         <div className="form">
@@ -19,7 +19,7 @@ export default ({autoCompleteResults,getAutoCompleteResults,term}) => {
             <div className="d12"></div>
             {autoCompleteResults.map((response, index) => {
               return <div key={index}>
-                {response.libelle}
+                <button onClick={getAutoCompleteResults} value={response.libelle} >{response.libelle}</button>
               </div> 
             })}
           </div>

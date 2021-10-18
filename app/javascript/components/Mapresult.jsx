@@ -25,13 +25,15 @@ render() {
             <div className="d12"></div>
             <div className="texte_etiquette">Ministère : {service_executant.ministere.name}</div>
             <div className="d12"></div>
+            <div className="texte_etiquette">Type : {service_executant.type_service.name}</div>
+            <div className="d12"></div>
             <div className="texte_etiquette"><b>{service_executant.effectif}</b> agents</div>
             <div className="d12"></div>
             <div className="texte_etiquette">Dernières données reçues</div>
             <div className="d12"></div>
             <div>
                 {this.state.indicateur_executions.map((indicateur_execution, index) => (
-                <div key={index} className="texte_etiquette">{indicateur_execution.indicateur.name} : {indicateur_execution.valeur} ({indicateur_execution.date})</div>
+                <div key={index} className="texte_etiquette">{indicateur_execution.indicateur.name} : {indicateur_execution.valeur} {indicateur_execution.indicateur.unite} ({indicateur_execution.date})</div>
                 ))}
             </div>
         </div>

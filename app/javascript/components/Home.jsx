@@ -15,10 +15,15 @@ class Home extends React.Component {
           term: '',
           autoCompleteResults: [],
           serviceexecutant: [],
+          csp: '',
+          sfact: '',
+          cgf: '',
+          comptable: '',
 
         };
 
         this.getAutoCompleteResults = this.getAutoCompleteResults.bind(this);
+  
     }
 
     componentDidMount() {
@@ -30,7 +35,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, serviceexecutant: response.service_executant }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, serviceexecutant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, comptable: response.comptable}))
       .catch(() => this.props.history.push("/"));
     }
 
@@ -60,7 +65,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, term: response.term }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, term: response.term,csp: response.csp, sfact: response.sfact, cgf: response.cgf, comptable: response.comptable }))
       .catch(error => console.log(error.message));
     }
 
@@ -70,7 +75,7 @@ class Home extends React.Component {
     <div>
         <Header /> 
         <div className="map_component">
-            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} getAutoCompleteResults={this.getAutoCompleteResults} term={this.state.term}/>
+            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} getAutoCompleteResults={this.getAutoCompleteResults} term={this.state.term} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} comptable={this.state.comptable}/>
             
             <Mapcontainer service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} /> 
    

@@ -26,6 +26,9 @@ a{
   }
 }
 button, button:focus{
+  border:none;
+  padding:none;
+  background-color:#fff;
   outline:none !important;
   box-shadow:none;
 }

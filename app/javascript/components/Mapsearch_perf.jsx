@@ -1,11 +1,18 @@
 import React from "react";
 import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'react-bootstrap';
 
-export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc }) => {
+export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, csp, sfact,cgf,comptable }) => {
 	
 	    return (
 
 	    <div className="indicateurs_search_box">
+	    	<div className="align_flex">
+	          <div className="map_se"><span>{csp}</span><br/>CSP</div>
+	          <div className="map_se"><span>{sfact}</span><br/>SFACT</div>
+	          <div className="map_se"><span>{cgf}</span><br/>CGF</div>
+	          <div className="map_se"><span>{comptable}</span><br/>Comptables</div>
+	        </div>
+	        <div className="d24"></div>
 			<div className="box_etiquette">
 				<div className="titre_etiquette text-center">Ma recherche </div>
 				<div className="d12"></div>
