@@ -14,15 +14,31 @@ class Home extends React.Component {
         this.state = {
           term: '',
           autoCompleteResults: [],
+          autoCompleteList: [],
           serviceexecutant: [],
+          service_executants: [],
+          ministeres: [],
+          blocs: [],
+          type_services: [],
           csp: '',
           sfact: '',
           cgf: '',
-          comptable: '',
+          showSe: true,
+          showMinistere: false,
+          showBloc: false,
+          showType: false,
+          search_service_executants: [],
+          search_ministeres: [],
+          search_blocs: [],
+          search_type_services: [],
+          effectif: '200',
+          type_structure: "ALL",
 
         };
 
-        this.getAutoCompleteResults = this.getAutoCompleteResults.bind(this);
+        this.getAutoCompleteResults = this.getAutoCompleteResults.bind(this);     
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeStructure = this.handleChangeStructure.bind(this);
   
     }
 
@@ -35,19 +51,27 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, serviceexecutant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, comptable: response.comptable}))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, serviceexecutant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services}))
       .catch(() => this.props.history.push("/"));
     }
 
     getAutoCompleteResults(e){
 
         event.preventDefault();
-        const url = "/api/v1/service_executants/search?q=" + e.target.value;
+        const url = "/api/v1/service_executants/search_list?"+e.target.name + "=" + e.target.value;
         const autoCompleteResults = this.state.autoCompleteResults;
+        const autoCompleteList = this.state.autoCompleteList;
         const term = this.state.term;
+        const search_service_executants = this.state.search_service_executants;
+        const search_ministeres = this.state.search_ministeres;
+        const search_blocs = this.state.search_blocs;
+        const search_type_services = this.state.search_type_services;
+        const effectif = this.state.effectif;
+        const type_structure = this.state.type_structure;
+    
 
         const body = {
-          autoCompleteResults,term
+          autoCompleteList,autoCompleteResults,term,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -65,8 +89,26 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, term: response.term,csp: response.csp, sfact: response.sfact, cgf: response.cgf, comptable: response.comptable }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteList, term: response.term,csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure  }))
       .catch(error => console.log(error.message));
+    }
+
+    handleChange(e){
+      this.setState({ [event.target.name]: event.target.value });
+    }
+    handleChangeStructure(event){
+      if (event.target.value == 'Ministere'){
+        this.setState({ showSe:  false, showMinistere: true, showBloc:  false, showType:  false, search_blocs: [], search_type_services:[], search_service_executants: [], autoCompleteList: this.state.ministeres }) 
+      } 
+      else if (event.target.value == 'Bloc'){
+      this.setState({ showSe:  false, showMinistere: false, showBloc:  true, showType:  false, search_ministeres: [], search_type_services:[], search_service_executants: [], autoCompleteList: this.state.blocs}) 
+      }
+      else if (event.target.value == 'Type'){
+      this.setState({ showSe:  false, showMinistere: false, showBloc:  false, showType:  true, search_ministeres: [], search_blocs:[], search_service_executants: [], autoCompleteList: this.state.type_services}) 
+      }
+      else if (event.target.value == 'Service') {
+      this.setState({ showSe:  true, showMinistere: false, showBloc:  false, showType:  false, search_ministeres: [], search_type_services:[], search_blocs: [], autoCompleteList: this.state.service_executants}) 
+      }
     }
 
   render() {
@@ -75,7 +117,7 @@ class Home extends React.Component {
     <div>
         <Header /> 
         <div className="map_component">
-            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} getAutoCompleteResults={this.getAutoCompleteResults} term={this.state.term} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} comptable={this.state.comptable}/>
+            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} getAutoCompleteResults={this.getAutoCompleteResults} term={this.state.term} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}/>
             
             <Mapcontainer service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} /> 
    

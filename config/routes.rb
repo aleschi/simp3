@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       get 'service_executants/create'
       post 'service_executants/search'
       post 'service_executants/search_marker'
+      post 'service_executants/import'
+      post 'service_executants/search_list'
     end
   end
   namespace :api do
@@ -23,6 +25,7 @@ Rails.application.routes.draw do
       get 'indicateurs/new'
       post 'indicateurs/create'
       delete 'indicateurs/destroy/:id', to: 'indicateurs#destroy'
+      post 'indicateurs/import'
     end
   end
   root 'home#index'

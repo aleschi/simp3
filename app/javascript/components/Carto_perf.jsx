@@ -29,11 +29,10 @@ class Home extends React.Component {
           showMinistere: false,
           showBloc: false,
           showType: false,
-          effectif: '100',
+          effectif: '200',
           csp: '',
           sfact: '',
           cgf: '',
-          comptable: '',
 
         };
 
@@ -55,7 +54,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, comptable: response.comptable, search_service_executants: response.search_service_executants }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, search_service_executants: response.search_service_executants }))
       .catch(() => this.props.history.push("/"));
     }
     handleChange(event) {
@@ -141,7 +140,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, comptable: response.comptable  }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf }))
       .catch(error => console.log(error.message));
     }
 
@@ -156,7 +155,7 @@ class Home extends React.Component {
             <Mapsearch_perf handleChange={this.handleChange} handleChange2={this.handleChange2} handleChange3={this.handleChange3} handleChange4={this.handleChange4} handleChange5={this.handleChange5}  handleChangeStructure={this.handleChangeStructure}
           indicateurs={this.state.indicateurs}
           service_executants={this.state.service_executants}
-          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} comptable={this.state.comptable}/>
+          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact}/>
             
             <Mapcontainer service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} /> 
    

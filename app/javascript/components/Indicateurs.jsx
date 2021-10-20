@@ -58,9 +58,7 @@ class Indicateurs extends React.Component {
               <div>{indicateur.name}</div>
               <div>{indicateur.description}</div>
               <div>
-              <button type="button" className="" onClick={this.deleteIndicateur}>
-                Supprimer
-              </button>
+              
         </div>
         </div>
         <div className="d24"></div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'react-bootstrap';
 
-export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, csp, sfact,cgf,comptable }) => {
+export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, csp, sfact,cgf}) => {
 	
 	    return (
 
@@ -10,7 +10,6 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
 	          <div className="map_se"><span>{csp}</span><br/>CSP</div>
 	          <div className="map_se"><span>{sfact}</span><br/>SFACT</div>
 	          <div className="map_se"><span>{cgf}</span><br/>CGF</div>
-	          <div className="map_se"><span>{comptable}</span><br/>Comptables</div>
 	        </div>
 	        <div className="d24"></div>
 			<div className="box_etiquette">
@@ -83,7 +82,8 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
 				</div>
 				<div className="d12"></div>
 				<div className="texte_etiquette formw">Afficher les SE de moins de 
-				<select name="effectif" onChange={handleChange} >					
+				<select name="effectif" onChange={handleChange} >
+				<option value="200">200 personnes</option>					
 		            <option value="100">100 personnes</option>
 		            <option value="50">50 personnes</option>
 		            <option value="10">10 personnes</option>

@@ -1,4 +1,5 @@
 class Api::V1::IndicateursController < ApplicationController
+  protect_from_forgery with: :null_session
   def index
   	indicateur = Indicateur.all.order(created_at: :desc)
     ministere = Ministere.all.order(created_at: :desc)
@@ -27,10 +28,16 @@ class Api::V1::IndicateursController < ApplicationController
     render json: { message: 'indicateur deleted!' }
   end
 
+  def import
+    Indicateur.import(params[:file])
+    indicateur = Indicateur.all
+    render json: indicateur
+  end
+
   private
 
   def indicateur_params
-    params.require(:indicateur).permit(:name, :description)
+    params.require(:indicateur).permit(:name, :description, :unite, :calcul, :remarque)
   end
 
   def indicateur
