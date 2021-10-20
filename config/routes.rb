@@ -7,7 +7,6 @@ Rails.application.routes.draw do
       post 'service_executants/search'
       post 'service_executants/search_marker'
       post 'service_executants/import'
-      post 'service_executants/search_list'
     end
   end
   namespace :api do

@@ -28,8 +28,8 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
 				<select name="type_structure" onChange={handleChangeStructure}>					
 		            <option value="Service">Services Exécutants</option>
 		            <option value="Ministere">Ministères</option>
-		            <option value="Bloc">BLOC</option>
-		            <option value="Type">TYPE</option>		            
+		            <option value="Bloc">Organisation financière</option>
+		            <option value="Type">Type de service</option>		            
 				</select></div>
 
 				<div className="d12"></div>
@@ -80,17 +80,27 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
   					</Dropdown.Menu>
 				</Dropdown>
 				</div>
+
+				<div className="d12"></div>
+	            <div className="texte_etiquette formw">Afficher uniquement les
+	            <select name="type_structure" onChange={handleChange} >  
+	                    <option value="ALL">Toutes les structures</option>
+	                    <option value="CSP">CSP</option>
+	                    <option value="SFACT">SFACT</option>
+	                    <option value="CGF">CGF</option>             
+	            </select></div>
+
 				<div className="d12"></div>
 				<div className="texte_etiquette formw">Afficher les SE de moins de 
 				<select name="effectif" onChange={handleChange} >
-				<option value="200">200 personnes</option>					
+					<option value="200">200 personnes</option>					
 		            <option value="100">100 personnes</option>
 		            <option value="50">50 personnes</option>
 		            <option value="10">10 personnes</option>
 		            <option value="5">5 personnes</option>		            
 				</select></div>
 				<div className="d24"></div>
-				<button className="bouton" type="submit">Valider</button>
+				<div className="text-center"><button className="bouton" type="submit">Valider</button></div>
 				</form>
 			</div>  
 	    </div>

@@ -58,7 +58,7 @@ class Home extends React.Component {
     getAutoCompleteResults(e){
 
         event.preventDefault();
-        const url = "/api/v1/service_executants/search_list?"+e.target.name + "=" + e.target.value;
+        const url = "/api/v1/service_executants/search?"+e.target.name + "=" + e.target.value;
         const autoCompleteResults = this.state.autoCompleteResults;
         const autoCompleteList = this.state.autoCompleteList;
         const term = this.state.term;

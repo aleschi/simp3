@@ -25,15 +25,24 @@ render() {
             <div className="d12"></div>
             <div className="texte_etiquette">Ministère : {service_executant.ministere.name}</div>
             <div className="d12"></div>
-            <div className="texte_etiquette">Type : {service_executant.type_service.name}</div>
+            <div className="texte_etiquette">Type de service : {service_executant.type_service.name}</div>
+            <div className="d12"></div>
+            <div className="texte_etiquette">Organisation Financière : {service_executant.organisation_financiere.name}</div>
+            <div className="d12"></div>
+            <div className="texte_etiquette">Type de structure : {service_executant.type_structure}</div>
             <div className="d12"></div>
             <div className="texte_etiquette"><b>{service_executant.effectif}</b> agents</div>
             <div className="d12"></div>
-            <div className="texte_etiquette">Dernières données reçues</div>
+            <div className="align_flex">
+                <div className="box_infor">5 EJ</div><div className="box_infor">3 SF</div><div className="box_infor">1 DP</div>
+            </div>
+            <div className="d12"></div>
+            <div className="texte_etiquette">Dernières données reçues </div>
             <div className="d12"></div>
             <div>
                 {this.state.indicateur_executions.map((indicateur_execution, index) => (
-                <div key={index} className="texte_etiquette">{indicateur_execution.indicateur.name} : {indicateur_execution.valeur} {indicateur_execution.indicateur.unite} ({indicateur_execution.date})</div>
+                <div key={index} className="align_flex">
+                <span className="box_indv">{indicateur_execution.indicateur.name} : {indicateur_execution.valeur} {indicateur_execution.indicateur.unite} ({indicateur_execution.date})</span></div>
                 ))}
             </div>
         </div>

@@ -30,6 +30,7 @@ class Home extends React.Component {
           showBloc: false,
           showType: false,
           effectif: '200',
+          type_structure: 'ALL',
           csp: '',
           sfact: '',
           cgf: '',
@@ -120,9 +121,10 @@ class Home extends React.Component {
         const search_blocs = this.state.search_blocs;
         const search_type_services = this.state.search_type_services;
         const effectif = this.state.effectif;
+        const type_structure = this.state.type_structure
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -140,7 +142,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure }))
       .catch(error => console.log(error.message));
     }
 

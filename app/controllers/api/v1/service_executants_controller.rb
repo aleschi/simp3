@@ -1,7 +1,7 @@
 class Api::V1::ServiceExecutantsController < ApplicationController
   protect_from_forgery with: :null_session
   def index
-    autoCompleteResults = ServiceExecutant.all
+    autoCompleteResults = ServiceExecutant.all.order(libelle: :asc)
     service_executant = ServiceExecutant.where(id: ServiceExecutant.first.id)
 
     if !autoCompleteResults.nil?
@@ -13,7 +13,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       sfact = 0
       cgf = 0
     end 
-    service_executants = ServiceExecutant.all
+    service_executants = ServiceExecutant.all.order(libelle: :asc)
     ministeres = Ministere.all.order(name: :asc)
     blocs = OrganisationFinanciere.all.order(name: :asc)
     type_services = TypeService.all.order(name: :asc)
@@ -27,7 +27,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
   def create
   end
 
-  def search_list
+  def search
     if params[:search_service_executants] && params[:search_service_executants].length != 0
       autoCompleteList = ServiceExecutant.ransack(libelle_cont: params[:search_service_executants]).result(distinct: true)
       autoCompleteResults = ServiceExecutant.ransack(libelle_cont: params[:search_service_executants]).result(distinct: true)
@@ -69,23 +69,6 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     end 
 
     response = {autoCompleteResults: autoCompleteResults, autoCompleteList: autoCompleteList, term: term, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services]}
-    render json: response
-  end 
-
-  def search 
-    
-  	autoCompleteResults = autoCompleteResults.where('effectif <= ?', params[:effectif].to_i)
-    if !autoCompleteResults.nil?
-      csp = autoCompleteResults.where('type_structure = ?', 'CSP').count
-      sfact = autoCompleteResults.where('type_structure = ?', 'SFACT').count
-      cgf = autoCompleteResults.where('type_structure = ?', 'CGF').count
-    else 
-      csp = 0
-      sfact = 0
-      cgf = 0
-    end 
-
-  	response = {autoCompleteResults: autoCompleteResults, term: term, csp: csp, sfact: sfact, cgf: cgf}
     render json: response
   end 
 
