@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post 'service_executants/search'
       post 'service_executants/search_marker'
       post 'service_executants/import'
+      post 'service_executants/date_update'
     end
   end
   namespace :api do
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
       get 'indicateur_executions/new'
       get 'indicateur_executions/create'
       post 'indicateur_executions/search'
+      post 'indicateur_executions/import'
     
     end
   end

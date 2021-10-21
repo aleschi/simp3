@@ -74,10 +74,20 @@ class Api::V1::ServiceExecutantsController < ApplicationController
 
   def search_marker
     service_executant = ServiceExecutant.where(id: params[:q])
-    indicateur_executions = service_executant.first.indicateur_executions.all 
+
+    indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
     response = {service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}])}
     render json: response
   end
+
+  def date_update
+    
+    service_executant = ServiceExecutant.where(id: params[:service_ex].first["id"])
+    indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
+    #autocomplete result à changer !
+    response = {service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}])}
+    render json: response 
+  end 
 
   def import
     ServiceExecutant.import(params[:file])

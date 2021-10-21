@@ -491,3 +491,17 @@ input[type="checkbox"]:checked {
   margin-right:10px;
   }
 }
+.react-datepicker__input-container input{
+  border:none;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  padding:4px 0px;
+  &:hover{
+  cursor:pointer;
+  }
+  &:focus{
+  border:none;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  outline:none;
+  appearance:none;
+  }
+}

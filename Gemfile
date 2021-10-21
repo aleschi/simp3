@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem "font-awesome-rails"
 gem 'geocoder'
 gem 'ransack'
+gem "roo", "~> 2.8.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

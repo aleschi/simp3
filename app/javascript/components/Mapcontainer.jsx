@@ -1,4 +1,8 @@
 import React from "react";
+import DatePicker from "react-datepicker";
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import fr from 'date-fns/locale/fr';
+registerLocale('fr', fr)
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import Mapresult from "../components/Mapresult";
 const mapStyles = {
@@ -29,8 +33,10 @@ export class Mapcontainer extends React.Component {
             showingInfoWindow: false,  // Hides or shows the InfoWindow
             activeMarker: {},          // Shows the active marker upon click
             selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
-
+            startDate: new Date(),
         }
+        this.handledateChange = this.handledateChange.bind(this);
+   
     }
     componentDidUpdate(prevProps) {
       if (this.props.autoCompleteResults !== prevProps.autoCompleteResults) {
@@ -50,13 +56,17 @@ export class Mapcontainer extends React.Component {
    
         const url = "/api/v1/service_executants/search_marker?q=" + props.id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
+        const startDate = this.state.startDate;
+        const body = {
+          startDate
+        };
         fetch(url, {
           method: "POST",
           headers: {
             "X-CSRF-Token": token,
             "Content-Type": "application/json"
           },
-      
+        body: JSON.stringify(body)
         })
         .then(response => {
         if (response.ok) {
@@ -92,16 +102,47 @@ export class Mapcontainer extends React.Component {
      }}
      onClick={this.onMarkerClick2} />
     })
+    };
+
+    handledateChange(event){
+      this.setState({ startDate: event});
+
+      const url = "/api/v1/service_executants/date_update";
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const startDate = event;
+        const service_ex = this.state.service_ex;
+        const indicateur_executions = this.state.indicateur_executions
+        const body = {
+          startDate,indicateur_executions,service_ex
+        };
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+        body: JSON.stringify(body)
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ service_ex: response.service_executant, indicateur_executions: response.indicateur_executions}))
+      .catch(error => console.log(error.message));
     }
 
-    render() {
+    
 
+    render() {
+    
       return (
         <div className="map_map align_flex">
         <div className="map_center">
           <div>
-            <div className="texte_etiquette">Date</div>
-            <div>Octobre 2021</div>
+            <div className="texte_etiquette">Date <i className="fas fa-caret-down"></i></div>
+            <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.handledateChange} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
           </div>
           <div className="d12"></div>
           <div className="map">

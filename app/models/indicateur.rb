@@ -13,6 +13,8 @@ class Indicateur < ApplicationRecord
       			@indicateur.unite = row[3]
       			@indicateur.calcul = row[4]
       			@indicateur.remarque = row[5]
+            @indicateur.seuil_1 = row[6]
+            @indicateur.seuil_2 = row[7]
       			@indicateur.save
     		end
   		end

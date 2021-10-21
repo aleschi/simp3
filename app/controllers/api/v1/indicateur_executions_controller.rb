@@ -82,6 +82,9 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     render json: response
   end 
 
-
+  def import
+    IndicateurExecution.import(params[:file])
+    render json: { message: 'ind ajouté!' }
+  end 
 
 end

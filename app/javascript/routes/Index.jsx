@@ -6,6 +6,7 @@ import Newindicateur from "../components/Newindicateur";
 import Indicateurs from "../components/Indicateurs";
 import Execution from "../components/Execution";
 import Newservice_executant from "../components/Newservice_executant";
+import Newindicateur_execution from "../components/Newindicateur_execution";
 
 export default (
   <Router>
@@ -15,6 +16,7 @@ export default (
       <Route path="/indicateurs" exact component={Indicateurs} />
       <Route path="/indicateurs/new" exact component={Newindicateur} />
       <Route path="/service_executants/new" exact component={Newservice_executant} />
+      <Route path="/indicateur_executions/new" exact component={Newindicateur_execution} />
       <Route path="/indicateur_executions" exact component={Execution} />
     </Switch>
   </Router>
