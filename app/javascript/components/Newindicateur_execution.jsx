@@ -56,7 +56,7 @@ class Newindicateur_execution extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                   <label>
                     Envoyer un fichier :
-                    <input type="file" ref={this.fileInput} name="file" accept='.csv' onChange={this.changeHandler}/>
+                    <input type="file" ref={this.fileInput} name="file" accept='.xlsx' onChange={this.changeHandler}/>
                   </label>
                   <br />
                   <button type="submit" className="bouton mt-3">Envoyer</button>

@@ -6,7 +6,7 @@ import Mapcontainer from "../components/Mapcontainer";
 
 import Mapsearch_perf from "../components/Mapsearch_perf";
 
-class Home extends React.Component {
+class Carto_perf extends React.Component {
     constructor(props) {
         super(props);
 
@@ -34,6 +34,7 @@ class Home extends React.Component {
           csp: '',
           sfact: '',
           cgf: '',
+          se_color: {},
 
         };
 
@@ -47,7 +48,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-    const url = "/api/v1/indicateur_executions/index";
+    const url = "/api/v1/indicateur_executions/carto_perf";
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -55,7 +56,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, search_service_executants: response.search_service_executants }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, search_service_executants: response.search_service_executants, se_color: response.se_color }))
       .catch(() => this.props.history.push("/"));
     }
     handleChange(event) {
@@ -149,7 +150,7 @@ class Home extends React.Component {
 
 
   render() {
-    
+
     return (
     <div>
         <Header /> 
@@ -159,7 +160,7 @@ class Home extends React.Component {
           service_executants={this.state.service_executants}
           handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact}/>
             
-            <Mapcontainer service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} /> 
+            <Mapcontainer service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} /> 
    
          
         </div>
@@ -170,4 +171,4 @@ class Home extends React.Component {
     );
   }
 }
-export default Home;
+export default Carto_perf;

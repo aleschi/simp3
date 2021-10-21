@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get 'indicateur_executions/index'
+      get 'indicateur_executions/carto_perf'
       get 'indicateur_executions/new'
       get 'indicateur_executions/create'
       post 'indicateur_executions/search'
