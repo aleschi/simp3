@@ -121,7 +121,7 @@ class Home extends React.Component {
         <div className="map_component">
             <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} getAutoCompleteResults={this.getAutoCompleteResults} term={this.state.term} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}/>
             
-            <Mapcontainer service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} se_color={this.state.se_color} indicateur_n={this.state.indicateur_n} /> 
+            <Mapcontainer service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} /> 
    
          
         </div>

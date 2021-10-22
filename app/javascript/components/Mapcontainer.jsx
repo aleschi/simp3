@@ -199,11 +199,11 @@ export class Mapcontainer extends React.Component {
 
     displayLegend = () => {
      
-    if (this.state.indicateur_n == []){
+    if (this.state.indicateur_n.length == 0){
       return <div className="map_legende">
-          <span><i className="fas fa-map-marker cvert"></i> Moyenne Indicateurs {'\u003C'} Seuil 1 </span>
-          <span><i className="fas fa-map-marker cjaune"></i> Seuil 1 {'\u003C'}  Moyenne Indicateurs {'\u003C'} Seuil 2 </span>
-          <span><i className="fas fa-map-marker crouge"></i> Seuil 2 {'\u003C'} Moyenne Indicateurs </span>
+          <span><i className="fas fa-map-marker cvert"></i> Moyenne Indicateurs {'\u003C'} Moyenne Seuil 1 </span>
+          <span><i className="fas fa-map-marker cjaune"></i> Moyenne Seuil 1 {'\u003C'}  Moyenne Indicateurs {'\u003C'} Moyenne Seuil 2 </span>
+          <span><i className="fas fa-map-marker crouge"></i> Moyenne Seuil 2 {'\u003C'} Moyenne Indicateurs </span>
       </div>
     }else{
       return this.state.indicateur_n.map((result, index) => ( 

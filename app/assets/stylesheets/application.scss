@@ -466,14 +466,33 @@ input[type="checkbox"]:checked {
   font-size:13px;
   margin-right:5px;
 }
+
 .box_indv{
   background-color: rgba(66, 186, 179, 0.2);
   border-radius: 4px;
   padding: 4px;
-  margin-right:5px;
-  margin-bottom:5px;
   color:#42BAB3;
   font-size:13px;
+  margin:5px;
+  display:inline-block;
+}
+.box_indj{
+  background-color: rgba(232, 207, 78, 0.2);
+  border-radius: 4px;
+  padding: 4px;
+  color:#E8CF4E;
+  font-size:13px;
+  margin:5px;
+  display:inline-block;
+}
+.box_indr{
+  background-color: rgba(255, 62, 20, 0.1);
+  border-radius: 4px;
+  padding: 4px;
+  color:#FF3E14;
+  font-size:13px;
+  margin:5px;
+  display:inline-block;
 }
 .cvert{
   color:#42BAB3;

@@ -1,6 +1,6 @@
 class Api::V1::IndicateurExecutionsController < ApplicationController
   protect_from_forgery with: :null_session
-  def index
+  def index #page execution
 
   	indicateur_n = Indicateur.where('name = ?', Indicateur.first.name)
   	indicateur_name = Indicateur.all.order(name: :asc).first.name
@@ -14,30 +14,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
  	  @service_executant_n_arr = indicateur_execution.pluck(:service_executant_id).uniq
  	  service_executant_n = ServiceExecutant.where(id: @service_executant_n_arr)
     search_service_executants = service_executant_n.pluck(:id).uniq
-    if !service_executant_n.nil?
-      csp = service_executant_n.where('type_structure = ?', 'CSP').count
-      sfact = service_executant_n.where('type_structure = ?', 'SFACT').count
-      cgf = service_executant_n.where('type_structure = ?', 'CGF').count
-    else 
-      csp = 0
-      sfact = 0
-      cgf = 0
-    end 
-    se_color = Hash.new
-    indicateur_execution.each do |ex|
-      if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? 
-        if ex.valeur <= indicateur_n.first.seuil_1
-          se_color[ex.service_executant_id] = "vert"
-        elsif ex.valeur > indicateur_n.first.seuil_1 && ex.valeur <= indicateur_n.first.seuil_2
-          se_color[ex.service_executant_id] = "jaune"
-        elsif ex.valeur > indicateur_n.first.seuil_2
-          se_color[ex.service_executant_id] = "jaune"
-        end
-      else
-        se_color[ex.service_executant_id] = "noir"
-      end
-    end 
-    response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere.as_json(:include => :service_executants), data3: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), data4: bloc.as_json(:include => :service_executants), data5: type_service.as_json(:include => :service_executants), data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants,se_color: se_color }
+
+    response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere.as_json(:include => :service_executants), data3: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), data4: bloc.as_json(:include => :service_executants), data5: type_service.as_json(:include => :service_executants), data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, search_service_executants: search_service_executants }
     render json: response
   end
 

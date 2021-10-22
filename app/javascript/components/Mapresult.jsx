@@ -14,6 +14,24 @@ export class Mapresult extends React.Component {
         this.setState({service_ex: this.props.service_ex, indicateur_executions: this.props.indicateur_executions});
       }
     }
+    displayInd = () => {
+    return this.state.indicateur_executions.map((indicateur_execution, index) => {
+      if (indicateur_execution.valeur <= indicateur_execution.indicateur.seuil_1 ){
+      return <span key={index}  className="box_indv">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+     }
+     else if(indicateur_execution.valeur > indicateur_execution.indicateur.seuil_1 && indicateur_execution.valeur < indicateur_execution.indicateur.seuil_2 ){
+     return <span key={index}  className="box_indj">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+
+     }
+     else if(indicateur_execution.valeur >= indicateur_execution.indicateur.seuil_2 ){
+      return <span key={index}  className="box_indr">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+     }
+     else {
+     return <span key={index}  className="box_indv">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+     }
+    })
+
+    };
 render() {
 
     return (
@@ -40,10 +58,8 @@ render() {
             <div className="texte_etiquette">Dernières données reçues </div>
             <div className="d12"></div>
             <div>
-                {this.state.indicateur_executions.map((indicateur_execution, index) => (
-                <div key={index} className="align_flex">
-                <span className="box_indv">{indicateur_execution.indicateur.name} : {indicateur_execution.valeur} {indicateur_execution.indicateur.unite} ({indicateur_execution.date})</span></div>
-                ))}
+                {this.displayInd()} 
+              
             </div>
         </div>
         </div>
