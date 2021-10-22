@@ -7,12 +7,13 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   	indicateur = Indicateur.all.order(name: :asc)
     ministere = Ministere.all.order(name: :asc)
     service_executant = ServiceExecutant.all.order(libelle: :asc)
-
     bloc = OrganisationFinanciere.all.order(name: :asc)
     type_service = TypeService.all.order(name: :asc)
-    indicateur_execution = indicateur_n.first.indicateur_executions.all.order(date: :asc)
- 	  @service_executant_n_arr = indicateur_execution.pluck(:service_executant_id).uniq
- 	  service_executant_n = ServiceExecutant.where(id: @service_executant_n_arr)
+
+    service_executant_n = ServiceExecutant.where(id: ServiceExecutant.first.id)
+    indicateur_execution = indicateur_n.first.indicateur_executions.where('service_executant_id = ?',service_executant_n.first.id).order(date: :asc)
+ 	
+ 	  
     search_service_executants = service_executant_n.pluck(:id).uniq
 
     response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere.as_json(:include => :service_executants), data3: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), data4: bloc.as_json(:include => :service_executants), data5: type_service.as_json(:include => :service_executants), data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, search_service_executants: search_service_executants }

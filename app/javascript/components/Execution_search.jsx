@@ -75,7 +75,7 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
 				</Dropdown>
 				</div>
 				<div className="d24"></div>
-				<button className="bouton" type="submit">Valider</button>
+				<div className="text-center"><button className="bouton" type="submit">Valider</button></div>
 				</form>
 			</div>  
 	    </div>

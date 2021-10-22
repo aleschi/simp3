@@ -18,7 +18,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
               if (e.id == el.service_executant_id){
               date = new Date(el.date).getTime();
               
-              series_i[index].data.push([date, el.valeur]);
+              series_i[index].data.push([date, Math.round(el.valeur * 100) / 100]);
               }
             });}
          
