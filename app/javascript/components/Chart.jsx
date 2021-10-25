@@ -1,7 +1,8 @@
 import React,{ useState, useEffect }  from "react";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-
+require('highcharts/modules/exporting')(Highcharts);
+require('highcharts/modules/export-data')(Highcharts);
 export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name}) => {
 
     const series_i = [];
@@ -42,6 +43,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         },
         xAxis:{
             type: 'datetime',
+            minTickInterval: 28*24*3600*1000,
         },
         yAxis: { 
         title: {

@@ -41,6 +41,7 @@ class Execution extends React.Component {
         this.handleChange5 = this.handleChange5.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeStructure = this.handleChangeStructure.bind(this);
+        this.sortTable = this.sortTable.bind(this);
         
     }
     componentDidMount() {
@@ -144,8 +145,34 @@ class Execution extends React.Component {
       .catch(error => console.log(error.message));
     }
 
+    sortTable(){
+      event.preventDefault();
+      const indicateur_executions = this.state.indicateur_executions;
+        const body = {
+          indicateur_executions
+        };
+        const url = "/api/v1/indicateur_executions/sort_table";
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ indicateur_executions: response.data6}))
+      .catch(error => console.log(error.message));
+    }
+
     render() {
-    console.log(this.state.search_service_executants[0]);
+
     return (
 
     <div>
@@ -160,7 +187,7 @@ class Execution extends React.Component {
             <div className="indicateurs_chart_box">
                 <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name}/>
 
-                <Execution_table indicateur_executions={this.state.indicateur_executions}/>
+                <Execution_table indicateur_executions={this.state.indicateur_executions} sortTable={this.sortTable}/>
             </div>
 
             <Execution_infos indicateur_n={this.state.indicateur_n}/>

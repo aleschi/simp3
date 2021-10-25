@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get 'indicateur_executions/create'
       post 'indicateur_executions/search'
       post 'indicateur_executions/import'
+      post 'indicateur_executions/sort_table'
     
     end
   end

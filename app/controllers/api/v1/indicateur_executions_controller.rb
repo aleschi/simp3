@@ -11,7 +11,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     type_service = TypeService.all.order(name: :asc)
 
     service_executant_n = ServiceExecutant.where(id: service_executant.first.id)
-    indicateur_execution = indicateur_n.first.indicateur_executions.where('service_executant_id = ?',service_executant_n.first.id).order(date: :asc)
+    indicateur_execution = indicateur_n.first.indicateur_executions.where('service_executant_id = ?',service_executant_n.first.id).order(date: :desc)
  	
  	  
     search_service_executants = service_executant_n.pluck(:id).uniq
@@ -106,9 +106,16 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       cgf = 0
     end 
 
-    indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :asc)
+    indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :desc)
  
     response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf,}
+    render json: response
+  end 
+
+  def sort_table
+    indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(date: :asc)
+ 
+    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}])}
     render json: response
   end 
 

@@ -1,20 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default ({ indicateur_executions }) => {
+export default ({ indicateur_executions,sortTable }) => {
 
     return (
     <div className="table" >
 	    <table className="table-striped">
 	      	<thead>
 	        <tr>
-	        	<th scope="col">Date</th>
+	        	<th scope="col">Date <button onClick={sortTable} name="date"><i className="fas fa-sort"></i></button></th>
 	        	<th scope="col">Service Exécutant</th>
 	        	<th scope="col">Code Service Exécutant</th>
 	        	<th scope="col">Ministère</th>
 	        	<th scope="col">Organisation Financière</th>
 	        	<th scope="col">Type Service</th>
-	          	<th scope="col">Valeur Indicateur</th>
+	          	<th scope="col">Valeur Indicateur <button onClick={sortTable} name="valeur"><i className="fas fa-sort"></i></button></th>
 	          	
 	     	
 	        </tr>
