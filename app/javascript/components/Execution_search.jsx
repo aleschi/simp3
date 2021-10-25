@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'react-bootstrap';
 
-export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc }) => {
+export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc,search_service_executants }) => {
 	
 	    return (
 
@@ -39,7 +39,7 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
   					{ showSe ? 
     					service_executants.map((service, index) => (
 						<div key={index} className="texte_etiquette">	<label >
-							<input type="checkbox" name="search_service_executants" onChange={handleChange2} id={service.libelle} value={service.id} /> {service.libelle}
+							<input type="checkbox" name="search_service_executants" onChange={handleChange2} defaultChecked = {search_service_executants === service.id} id={service.libelle} value={service.id} /> {service.libelle}
 							</label></div>
 			            ))
 

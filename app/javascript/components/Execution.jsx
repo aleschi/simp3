@@ -33,6 +33,7 @@ class Execution extends React.Component {
 
         };
 
+       
         this.handleChange = this.handleChange.bind(this);
         this.handleChange2 = this.handleChange2.bind(this);
         this.handleChange3 = this.handleChange3.bind(this);
@@ -40,6 +41,7 @@ class Execution extends React.Component {
         this.handleChange5 = this.handleChange5.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeStructure = this.handleChangeStructure.bind(this);
+        
     }
     componentDidMount() {
     const url = "/api/v1/indicateur_executions/index";
@@ -50,9 +52,11 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name  }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, search_service_executants: response.search_service_executants  }))
       .catch(() => this.props.history.push("/"));
     }
+
+
 
     handleChange(event) {
       this.setState({ [event.target.name]: event.target.value });
@@ -136,12 +140,12 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services }))
+      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services }))
       .catch(error => console.log(error.message));
     }
 
     render() {
-
+    console.log(this.state.search_service_executants[0]);
     return (
 
     <div>
@@ -151,7 +155,7 @@ class Execution extends React.Component {
             <Execution_search handleChange={this.handleChange} handleChange2={this.handleChange2} handleChange3={this.handleChange3} handleChange4={this.handleChange4} handleChange5={this.handleChange5}  handleChangeStructure={this.handleChangeStructure}
           indicateurs={this.state.indicateurs}
           service_executants={this.state.service_executants}
-          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}/>
+          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} search_service_executants= {this.state.search_service_executants[0]}/>
           
             <div className="indicateurs_chart_box">
                 <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name}/>

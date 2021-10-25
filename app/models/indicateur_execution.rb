@@ -6,7 +6,7 @@ class IndicateurExecution < ApplicationRecord
   
   	def self.import(file)
       @indicateurs = Indicateur.all
-  		data = Roo::Spreadsheet.open(file.tempfile)
+  		data = Roo::Spreadsheet.open(file.path)
       headers = data.row(1) # get header row
   		data.each_with_index do |row, idx|
         next if idx == 0 # skip header

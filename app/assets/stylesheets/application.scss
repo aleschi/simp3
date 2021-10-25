@@ -276,7 +276,7 @@ input[type="checkbox"]:checked {
   font-weight:light;
   font-style: italic;
 }
-.bouton{
+.bouton, .bouton:focus, .bouton:active{
   text-decoration:none;
   background-color:#000091;
   color:#fff;
@@ -523,4 +523,37 @@ input[type="checkbox"]:checked {
   outline:none;
   appearance:none;
   }
+}
+.tu{
+  text-decoration:underline;
+}
+.document-file-input{
+  width:80%;
+  margin:auto;
+  
+ 
+    font-size:14px;
+    padding: 25px 35px;
+    color:#6A6A6A;
+    border: 2px dashed #C4C4C4;
+    border-radius:4px;
+    width:100%;
+    background-color: rgba(196, 196, 196, 0.1);
+    text-align:center;
+    margin-bottom:30px;
+    i{
+      color: #F29D53;
+      font-size:20px;
+      margin-right:5px;
+    }
+    
+    &:hover{
+      cursor:pointer;
+    }
+
+}
+.react-fetch-progress-bar {
+  backgroundColor: #F0F0F0 !important;
+  height: 10px;
+  border-radius:4px;
 }

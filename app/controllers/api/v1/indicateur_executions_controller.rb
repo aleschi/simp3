@@ -10,7 +10,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     bloc = OrganisationFinanciere.all.order(name: :asc)
     type_service = TypeService.all.order(name: :asc)
 
-    service_executant_n = ServiceExecutant.where(id: ServiceExecutant.first.id)
+    service_executant_n = ServiceExecutant.where(id: service_executant.first.id)
     indicateur_execution = indicateur_n.first.indicateur_executions.where('service_executant_id = ?',service_executant_n.first.id).order(date: :asc)
  	
  	  
@@ -68,15 +68,10 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   def create
   end
 
-  def search 
+  def search #afficher le graphe suivi indicateur
   	indicateur_n = Indicateur.where('name = ?', params[:search_indicateur].to_s)
   	indicateur_name = params[:search_indicateur].to_s
 
-  	indicateur = Indicateur.all.order(name: :asc)
-    ministere = Ministere.all.order(name: :asc)
-    service_executant = ServiceExecutant.all.order(libelle: :asc)
-    bloc = OrganisationFinanciere.all.order(name: :asc)
-    type_service = TypeService.all.order(name: :asc)
 
     if params[:search_service_executants].length != 0
       search_service_executants = params[:search_service_executants]
@@ -113,7 +108,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
 
     indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :asc)
  
-    response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere.as_json(:include => :service_executants), data3: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), data4: bloc.as_json(:include => :service_executants), data5: type_service.as_json(:include => :service_executants), data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf,}
+    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf,}
     render json: response
   end 
 
