@@ -70,10 +70,15 @@ class Home extends React.Component {
         const search_type_services = this.state.search_type_services;
         const effectif = this.state.effectif;
         const type_structure = this.state.type_structure;
+        const showSe = this.state.showSe;
+        const showBloc = this.state.showBloc;
+        const showMinistere = this.state.showMinistere;
+        const showType = this.state.showType;
+
     
 
         const body = {
-          autoCompleteList,autoCompleteResults,term,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure
+          autoCompleteList,autoCompleteResults,term,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,showSe,showBloc,showMinistere,showType
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;

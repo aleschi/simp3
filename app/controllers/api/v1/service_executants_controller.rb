@@ -69,7 +69,17 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       autoCompleteResults = ServiceExecutant.where(type_service_id: @arr_type)
       term = params[:search_type_services]
     else
-      autoCompleteList = ServiceExecutant.all
+      if params[:showSe] == true 
+        autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
+      elsif params[:showMinistere] == true 
+        autoCompleteList = Ministere.all.order(name: :asc)
+      elsif params[:showType] == true 
+        autoCompleteList = TypeService.all.order(name: :asc)
+      elsif params[:showBloc] == true
+        autoCompleteList = OrganisationFinanciere.all.order(name: :asc)
+      else
+        autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
+      end
       autoCompleteResults = ServiceExecutant.all
       term= ''
     end 
