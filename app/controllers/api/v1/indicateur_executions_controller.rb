@@ -113,8 +113,11 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   end 
 
   def sort_table
-    indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(date: :asc)
- 
+    if params[:search] == "date"
+      indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(date: :asc)
+    elsif params[:search] == "valeur"
+      indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(valeur: :desc)
+    end
     response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}])}
     render json: response
   end 

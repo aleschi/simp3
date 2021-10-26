@@ -10,6 +10,11 @@ const mapStyles = {
 	  height: '400px',
 
 	};
+import iconR from '../../assets/images/icon_lieu_rouge.svg';
+import iconJ from '../../assets/images/icon_lieu_jaune.svg';
+import iconV from '../../assets/images/icon_lieu_vert.svg';
+import iconN from '../../assets/images/icon_lieu_noir.svg';
+
 const image_v = {
                           path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
                           fillColor: '#42BAB3',
@@ -129,14 +134,14 @@ export class Mapcontainer extends React.Component {
     displayMarkers = () => {
     return this.state.autoCompleteResults.map((result, index) => {
       if (this.state.secolor[result.id] == "vert"){
-      return <Marker key={index} id={result.id} icon={image_v} name={result.libelle} position={{
+      return <Marker key={index} id={result.id} icon={iconV} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
      onClick={this.onMarkerClick2} />
      }
      else if(this.state.secolor[result.id] == "jaune"){
-     return <Marker key={index} id={result.id} icon={image_j} name={result.libelle} position={{
+     return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
@@ -144,21 +149,21 @@ export class Mapcontainer extends React.Component {
 
      }
      else if(this.state.secolor[result.id] == "rouge"){
-      return <Marker key={index} id={result.id} icon={image_r} name={result.libelle} position={{
+      return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
      onClick={this.onMarkerClick2} />
      }
      else if (this.state.secolor[result.id] == "noir"){
-      return <Marker key={index} id={result.id} icon={image_n} name={result.libelle} position={{
+      return <Marker key={index} id={result.id} icon={iconN} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
      onClick={this.onMarkerClick2} />
      }
      else {
-     return <Marker key={index} id={result.id} icon={image_n} name={result.libelle} position={{
+     return <Marker key={index} id={result.id} icon={iconN} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
