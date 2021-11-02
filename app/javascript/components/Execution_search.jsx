@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'react-bootstrap';
 
-export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleChange5, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc,search_service_executants }) => {
+export default ({ handleChange,handleChange2,handleChange3, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres, showSe, showMinistere,search_service_executants }) => {
 	
 	    return (
 
@@ -22,8 +22,7 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
 				<select name="type_structure" onChange={handleChangeStructure}>					
 		            <option value="Service">Services Exécutants</option>
 		            <option value="Ministere">Ministères</option>
-		            <option value="Bloc">BLOC</option>
-		            <option value="Type">TYPE</option>		            
+		                      
 				</select></div>
 
 				<div className="d12"></div>
@@ -53,24 +52,7 @@ export default ({ handleChange,handleChange2,handleChange3,handleChange4,handleC
 			            : null
 
 			            }
-			        { showBloc ? 
-			            blocs.map((bloc, index) => (
-						<div key={index} className="texte_etiquette">	<label >
-							<input type="checkbox" name="search_blocs" onChange={handleChange4} id={bloc.name} value={bloc.id} /> {bloc.name}
-							</label></div>
-			            ))
-			            : null
-
-			            }
-			        { showType ? 
-			            type_services.map((type, index) => (
-						<div key={index} className="texte_etiquette">	<label >
-							<input type="checkbox" name="search_type_services" onChange={handleChange5} id={type.name} value={type.id} /> {type.name}
-							</label></div>
-			            ))
-			            : null
-
-			            }
+			        
   					</Dropdown.Menu>
 				</Dropdown>
 				</div>

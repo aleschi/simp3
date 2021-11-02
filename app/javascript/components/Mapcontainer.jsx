@@ -64,9 +64,9 @@ export class Mapcontainer extends React.Component {
             showingInfoWindow: false,  // Hides or shows the InfoWindow
             activeMarker: {},          // Shows the active marker upon click
             selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
-            startDate: new Date(),
+            startDate: this.props.startDate,
         }
-        this.handledateChange = this.handledateChange.bind(this);
+        
    
     }
     componentDidUpdate(prevProps) {
@@ -173,34 +173,7 @@ export class Mapcontainer extends React.Component {
 
     };
 
-    handledateChange(event){
-      this.setState({ startDate: event});
-
-      const url = "/api/v1/service_executants/date_update";
-        const token = document.querySelector('meta[name="csrf-token"]').content;
-        const startDate = event;
-        const service_ex = this.state.service_ex;
-        const indicateur_executions = this.state.indicateur_executions
-        const body = {
-          startDate,indicateur_executions,service_ex
-        };
-        fetch(url, {
-          method: "POST",
-          headers: {
-            "X-CSRF-Token": token,
-            "Content-Type": "application/json"
-          },
-        body: JSON.stringify(body)
-        })
-        .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Network response was not ok.");
-      })
-      .then(response => this.setState({ service_ex: response.service_executant, indicateur_executions: response.indicateur_executions}))
-      .catch(error => console.log(error.message));
-    }
+   
 
     displayLegend = () => {
      
@@ -232,7 +205,7 @@ export class Mapcontainer extends React.Component {
            
           <div>
             <div className="texte_etiquette">Date <i className="fas fa-caret-down"></i></div>
-            <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.handledateChange} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
+            <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
           </div>
           <div className="d12"></div>
           <div className="map">

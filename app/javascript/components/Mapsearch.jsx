@@ -26,13 +26,13 @@ export default ({autoCompleteResults,autoCompleteList, getAutoCompleteResults,te
 
             { showSe ?
             <div>
-            <div className="form"><input className="search_bar" value={ term } onChange={ getAutoCompleteResults} type='text' name="search_service_executants" placeholder='Recherchez un service exécutant' /></div> 
+            <div className="form"><input className="search_bar" onChange={ getAutoCompleteResults} type='text' name="search_service_executants" placeholder='Recherchez un service exécutant' /></div> 
             <div className="search_results">
-              <div className="titre_etiquette">Liste des services exécutants</div>
+              <div className="titre_etiquette">Liste des services exécutants ({autoCompleteList.length}) </div>
               <div className="d12"></div>
               {autoCompleteList.map((response, index) => {
                 return <div key={index}>
-                  <button onClick={getAutoCompleteResults} name="search_service_executants" value={response.libelle} >{response.libelle}</button>
+                  <button className="list_name" onClick={getAutoCompleteResults} name="search_service_executants" value={response.libelle} >{response.libelle}</button>
                 </div> 
               })}
             </div>
@@ -41,13 +41,13 @@ export default ({autoCompleteResults,autoCompleteList, getAutoCompleteResults,te
 
             { showMinistere ?
             <div>
-            <div className="form"><input className="search_bar" value={ term } onChange={ getAutoCompleteResults} type='text' name="search_ministeres" placeholder='Recherchez un ministère' /></div> 
+            <div className="form"><input className="search_bar" onChange={ getAutoCompleteResults} type='text' name="search_ministeres" placeholder='Recherchez un ministère' /></div> 
             <div className="search_results">
-              <div className="titre_etiquette">Liste des Ministères</div>
+              <div className="titre_etiquette">Liste des Ministères ({autoCompleteList.length})</div>
               <div className="d12"></div>
               {autoCompleteList.map((response, index) => {
                 return <div key={index}>
-                  <button onClick={getAutoCompleteResults} name="search_ministeres" value={response.name} >{response.name}</button>
+                  <button className="list_name" onClick={getAutoCompleteResults} name="search_ministeres" value={response.name} >{response.name}</button>
                 </div> 
               })}
             </div>
@@ -56,13 +56,13 @@ export default ({autoCompleteResults,autoCompleteList, getAutoCompleteResults,te
 
             { showBloc ?
             <div>
-            <div className="form"><input className="search_bar" value={ term } onChange={ getAutoCompleteResults} type='text' name="search_blocs" placeholder='Recherchez un ministère' /></div> 
+            <div className="form"><input className="search_bar" onChange={ getAutoCompleteResults} type='text' name="search_blocs" placeholder='Recherchez un ministère' /></div> 
             <div className="search_results">
-              <div className="titre_etiquette">Liste des Organisations financières</div>
+              <div className="titre_etiquette">Liste des Organisations financières ({autoCompleteList.length})</div>
               <div className="d12"></div>
               {autoCompleteList.map((response, index) => {
                 return <div key={index}>
-                  <button onClick={getAutoCompleteResults} name="search_blocs" value={response.name} >{response.name}</button>
+                  <button className="list_name" onClick={getAutoCompleteResults} name="search_blocs" value={response.name} >{response.name}</button>
                 </div> 
               })}
             </div>
@@ -71,13 +71,13 @@ export default ({autoCompleteResults,autoCompleteList, getAutoCompleteResults,te
 
             { showType ?
             <div>
-            <div className="form"><input className="search_bar" value={ term } onChange={ getAutoCompleteResults} type='text' name="search_types" placeholder='Recherchez un type de service' /></div> 
+            <div className="form"><input className="search_bar" onChange={ getAutoCompleteResults} type='text' name="search_types" placeholder='Recherchez un type de service' /></div> 
             <div className="search_results">
-              <div className="titre_etiquette">Liste des Types de Service</div>
+              <div className="titre_etiquette">Liste des Types de Service ({autoCompleteList.length})</div>
               <div className="d12"></div>
               {autoCompleteList.map((response, index) => {
                 return <div key={index}>
-                  <button onClick={getAutoCompleteResults} name="search_types" value={response.name} >{response.name}</button>
+                  <button className="list_name" onClick={getAutoCompleteResults} name="search_types" value={response.name} >{response.name}</button>
                 </div> 
               })}
             </div>

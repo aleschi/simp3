@@ -1,5 +1,5 @@
 import React from "react";
-import logoUrl from '../../assets/images/logo_ministere.png';
+import logoUrl from '../../assets/images/logo_ministere2.svg';
 import { Link } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 

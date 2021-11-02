@@ -1,5 +1,5 @@
 import React from "react";
-import logoUrl from '../../assets/images/logo_ministere.png';
+import logoUrl from '../../assets/images/logo_ministere2.svg';
 
 const Footer = () => (
 	<div className="footer">

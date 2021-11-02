@@ -4,8 +4,9 @@ class ServiceExecutant < ApplicationRecord
   belongs_to :type_service
   has_many :indicateur_executions
 
-  geocoded_by :adresse
-  after_validation :geocode
+  geocoded_by :address
+  reverse_geocoded_by :latitude, :longitude
+  after_validation :geocode, :reverse_geocode
 
   require 'csv'
   
@@ -27,7 +28,7 @@ class ServiceExecutant < ApplicationRecord
       			@service.organisation_financiere_id = OrganisationFinanciere.where('name = ?',row[2]).first.id
       			@service.ministere_id = Ministere.where('name = ?',row[3]).first.id
       			@service.type_service_id = TypeService.where('name = ?',row[4]).first.id
-      			@service.adresse = row[5]+' '+row[6]
+      			@service.address = row[5]+' '+row[6] + ' ' + row[9]
             @service.effectif = row[7]
             @service.type_structure = row[8]
       			if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? && !@service.type_service_id.nil? 

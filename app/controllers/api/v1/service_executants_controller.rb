@@ -48,7 +48,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
   def create
   end
 
-  def search
+  def search #page carto se
     if params[:search_service_executants] && params[:search_service_executants].length != 0
       autoCompleteList = ServiceExecutant.ransack(libelle_cont: params[:search_service_executants]).result(distinct: true)
       autoCompleteResults = ServiceExecutant.ransack(libelle_cont: params[:search_service_executants]).result(distinct: true)
@@ -98,10 +98,24 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       sfact = 0
       cgf = 0
     end 
-
+    #calcul moyenne de l'execution sur chaque se 
+    moyenne_seuil1 = (Indicateur.sum(:seuil_1)/Indicateur.all.count).round(2)
+    moyenne_seuil2 = (Indicateur.sum(:seuil_2)/Indicateur.all.count).round(2)
     se_color = Hash.new
-    autoCompleteResults.each do |ex|
-        se_color[ex.id] = "vert"
+    autoCompleteResults.each do |se|
+      if se.indicateur_executions.count > 0
+        execution = se.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
+        moyenne = execution.sum(:valeur)/execution.count 
+        if moyenne <= moyenne_seuil1
+          se_color[se.id] = "vert"
+        elsif moyenne > moyenne_seuil1 && moyenne < moyenne_seuil2
+          se_color[se.id] = "jaune"
+        elsif moyenne >= moyenne_seuil2
+          se_color[se.id] = "rouge"
+        end
+      else
+        se_color[se.id] = "noir"
+      end
     end 
 
     response = {autoCompleteResults: autoCompleteResults, autoCompleteList: autoCompleteList, term: term, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
@@ -116,14 +130,6 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     render json: response
   end
 
-  def date_update
-    
-    service_executant = ServiceExecutant.where(id: params[:service_ex].first["id"])
-    indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
-    #autocomplete result à changer !
-    response = {service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}])}
-    render json: response 
-  end 
 
   def import
     ServiceExecutant.import(params[:file])
