@@ -8,13 +8,12 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     
     ministere = Ministere.all.order(name: :asc)
     service_executant = ServiceExecutant.all.order(libelle: :asc)
-
     service_executant_n = ServiceExecutant.where(id: service_executant.first.id)
     indicateur_execution = indicateur_n.first.indicateur_executions.where('service_executant_id = ?',service_executant_n.first.id).order(date: :desc)
  		  
     search_service_executants = service_executant_n.pluck(:id).uniq
 
-    response = {data1: indicateur.as_json(:include => :indicateur_executions), data2: ministere.as_json(:include => :service_executants), data3: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, search_service_executants: search_service_executants }
+    response = {data1: indicateur, data2: ministere, data3: service_executant, data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, search_service_executants: search_service_executants }
     render json: response
   end
 
@@ -44,7 +43,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     end 
     se_color = Hash.new
     indicateur_execution.each do |ex|
-      if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? 
+      if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? && !ex.valeur.nil?
         if ex.valeur <= indicateur_n.first.seuil_1
           se_color[ex.service_executant_id] = "vert"
         elsif ex.valeur > indicateur_n.first.seuil_1 && ex.valeur <= indicateur_n.first.seuil_2
@@ -80,14 +79,16 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       service_executant_n = ServiceExecutant.where(ministere_id: ministeres_id)
       search_service_executants = service_executant_n.pluck(:id).uniq
     else 
-      search_service_executants = ServiceExecutant.all.pluck(:id)
-      service_executant_n = ServiceExecutant.all
+      
+      service_executant = ServiceExecutant.all.order(libelle: :asc)
+      service_executant_n = ServiceExecutant.where(id: service_executant.first.id)
+      search_service_executants = service_executant_n.pluck(:id).uniq
     end
 
     indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :desc)
     
 
-    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], effectif: params[:effectif], type_structure: params[:type_structure]}
+    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], type_structure: params[:type_structure]}
     render json: response
   end 
 
@@ -135,7 +136,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
     se_color = Hash.new
     indicateur_execution.each do |ex|
-      if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? 
+      if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? && !ex.valeur.nil?
         if ex.valeur <= indicateur_n.first.seuil_1
           se_color[ex.service_executant_id] = "vert"
         elsif ex.valeur > indicateur_n.first.seuil_1 && ex.valeur <= indicateur_n.first.seuil_2

@@ -12,14 +12,17 @@ class Newindicateur_execution extends React.Component {
             this.setState({files})
           };
           this.state = {
-            files: []
+            files: [],
+            loading: false,
           };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
     handleSubmit(event) {
-      event.preventDefault();
+        event.preventDefault();
+        this.setState({ loading: true });
+
         const url = "/api/v1/indicateur_executions/import";
         const formData = new FormData();
 
@@ -55,36 +58,37 @@ class Newindicateur_execution extends React.Component {
         return (
         <div>
         <Header />
-        <div className="container mt-5">
-            <div className="row">
-              <div className="col-sm-12 col-lg-6 offset-lg-3">
-                <h1 className="font-weight-normal mb-5">
+        <div className="d32"></div>
+            <div className="row loader_box">
+              <div className="col-sm-12 col-lg-8 offset-lg-2">
+
+              { this.state.loading ? <div className="loader_box"><div className="texte_etiquette text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </div><div className="d24"></div> <div className ="loader"></div></div> : 
+                <div>
+                <h1 className="font-weight-normal mb-5 text-center">
                  Ajouter un fichier 
                 </h1>
-                <form onSubmit={this.handleSubmit}>
-                
-                  
-                
-               <Dropzone accept='.xlsx' onDrop={this.onDrop}>
-                {({getRootProps, getInputProps}) => (
-                  <div className="document-file-input" {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <div><i className="fas fa-plus-circle"></i></div>
-                    <div className="d24"></div>
-                    <div> Glissez vos fichiers ici</div> 
-                    <div className="d12"></div>
-                    <div className="tu">Télécharger depuis votre appareil</div>
-                    <div>{files}</div>
-                  </div>
-                )}
-              </Dropzone>
-                <button type="submit" className="bouton mt-3">Envoyer</button>
-                </form>
-                
-                <div className="d24"></div>
+                <form onSubmit={this.handleSubmit}> 
+                 <Dropzone accept='.xlsx' onDrop={this.onDrop}>
+                  {({getRootProps, getInputProps}) => (
+                    <div className="document-file-input" {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <div><i className="fas fa-plus-circle"></i></div>
+                      <div className="d24"></div>
+                      <div> Glissez votre fichier ici</div> 
+                      <div className="d12"></div>
+                      <div className="tu">Télécharger depuis votre appareil</div>
+                      <div>{files}</div>
+                    </div>
+                  )}
+                  </Dropzone>
+                  <div className="text-center"><button type="submit" className="bouton">Envoyer</button></div>
+                </form>               
+                <div className="d32"></div>
+                </div>
+              }
               </div>
             </div>
-        </div>
+      
         <Footer />
         </div>
         );

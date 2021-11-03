@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'service_executants/create'
       post 'service_executants/search'
       post 'service_executants/search_marker'
+      post 'service_executants/search_date'
       post 'service_executants/import'
 
     end

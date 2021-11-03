@@ -16,7 +16,10 @@ export class Mapresult extends React.Component {
     }
     displayInd = () => {
     return this.state.indicateur_executions.map((indicateur_execution, index) => {
-      if (indicateur_execution.valeur <= indicateur_execution.indicateur.seuil_1 ){
+    if (indicateur_execution.valeur == null ){
+    return <span key={index}  className="box_indn">{indicateur_execution.indicateur.name} : X {indicateur_execution.indicateur.unite} </span>
+    }
+    else if (indicateur_execution.valeur <= indicateur_execution.indicateur.seuil_1 ){
       return <span key={index}  className="box_indv">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
      }
      else if(indicateur_execution.valeur > indicateur_execution.indicateur.seuil_1 && indicateur_execution.valeur < indicateur_execution.indicateur.seuil_2 ){
@@ -27,7 +30,7 @@ export class Mapresult extends React.Component {
       return <span key={index}  className="box_indr">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
      }
      else {
-     return <span key={index}  className="box_indv">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+     return <span key={index}  className="box_indn">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
      }
     })
 

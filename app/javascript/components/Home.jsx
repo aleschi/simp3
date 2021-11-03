@@ -62,12 +62,12 @@ class Home extends React.Component {
 
 
     getAutoCompleteResults(e){
-
-        event.preventDefault();
+        this.setState({term: e.target.value});
+        e.preventDefault();
         const url = "/api/v1/service_executants/search?"+e.target.name + "=" + e.target.value;
         const autoCompleteResults = this.state.autoCompleteResults;
         const autoCompleteList = this.state.autoCompleteList;
-        const term = this.state.term;
+        //const term = this.state.term;
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
         const search_blocs = this.state.search_blocs;
@@ -82,7 +82,7 @@ class Home extends React.Component {
     
 
         const body = {
-          autoCompleteList,autoCompleteResults,term,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,showSe,showBloc,showMinistere,showType, startDate
+          autoCompleteList,autoCompleteResults,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,showSe,showBloc,showMinistere,showType, startDate
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -100,7 +100,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteList, term: response.term,csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure,se_color: response.se_color }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteList, term: response.term,csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure}))
       .catch(error => console.log(error.message));
     }
 
@@ -166,7 +166,6 @@ class Home extends React.Component {
     }
 
   render() {
-
     return (
     <div>
         <Header /> 

@@ -26,7 +26,7 @@ export default ({autoCompleteResults,autoCompleteList, getAutoCompleteResults,te
 
             { showSe ?
             <div>
-            <div className="form"><input className="search_bar" onChange={ getAutoCompleteResults} type='text' name="search_service_executants" placeholder='Recherchez un service exécutant' /></div> 
+            <div className="form"><input className="search_bar" value={term} onChange={ getAutoCompleteResults} type='text' name="search_service_executants" placeholder='Recherchez un service exécutant' /></div> 
             <div className="search_results">
               <div className="titre_etiquette">Liste des services exécutants ({autoCompleteList.length}) </div>
               <div className="d12"></div>

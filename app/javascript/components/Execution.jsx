@@ -60,18 +60,19 @@ class Execution extends React.Component {
     handleChange2(event){
         let search_service_executants = this.state.search_service_executants        
         if(event.target.checked) {
-            search_service_executants.push(event.target.value)
+            search_service_executants.push(parseInt(event.target.value));
         } else {
-            search_service_executants.splice(event.target.value,1)
+            search_service_executants.splice(search_service_executants.indexOf(parseInt(event.target.value)), 1);
+           
         }
         this.setState({ search_service_executants:  search_service_executants}) 
     }
     handleChange3(event){
         let search_ministeres = this.state.search_ministeres        
         if(event.target.checked) {
-            search_ministeres.push(event.target.value)
+            search_ministeres.push(parseInt(event.target.value));
         } else {
-            search_ministeres.splice(event.target.value,1)
+            search_ministeres.splice(search_ministeres.indexOf(parseInt(event.target.value)),1);
         }
         this.setState({ search_ministeres: search_ministeres}) 
     }
@@ -119,7 +120,7 @@ class Execution extends React.Component {
     
 
     render() {
-
+    
     return (
 
     <div>

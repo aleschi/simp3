@@ -23,30 +23,7 @@ const image_v = {
                           strokeColor: '#42BAB3',
                           strokeWeight: 1,
                         };
-const image_n = {
-                          path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
-                          fillColor: '#000',
-                          fillOpacity: 1,
-                          scale: 0.5,
-                          strokeColor: '#000',
-                          strokeWeight: 1,
-                        };
-const image_j = {
-                          path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
-                          fillColor: '#E8CF4E',
-                          fillOpacity: 1,
-                          scale: 0.5,
-                          strokeColor: '#E8CF4E',
-                          strokeWeight: 1,
-                        };
-const image_r = {
-                          path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
-                          fillColor: '#FF3E14',
-                          fillOpacity: 1,
-                          scale: 0.5,
-                          strokeColor: '#FF3E14',
-                          strokeWeight: 1,
-                        };
+
 const mapStyle = [ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#444444" } ] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry.fill", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.country", "elementType": "labels", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.province", "elementType": "all", "stylers": [ { "visibility": "on" }, { "saturation": "-22" }, { "lightness": "-17" }, { "gamma": "1.48" } ] }, { "featureType": "administrative.province", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.province", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "visibility": "on" }, { "hue": "#00b3ff" }, { "saturation": "66" }, { "lightness": "43" }, { "gamma": "5.99" }, { "weight": "4.75" } ] }, { "featureType": "landscape.man_made", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "landscape.natural.landcover", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "saturation": -100 }, { "lightness": 45 }, { "visibility": "off" } ] }, { "featureType": "road", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "color": "#efefef" }, { "visibility": "on" } ] } ]
 
 
@@ -181,7 +158,7 @@ export class Mapcontainer extends React.Component {
       return <div className="map_legende">
           <span><i className="fas fa-map-marker cvert"></i> Moyenne Indicateurs {'\u003C'} Moyenne Seuil 1 </span>
           <span><i className="fas fa-map-marker cjaune"></i> Moyenne Seuil 1 {'\u003C'}  Moyenne Indicateurs {'\u003C'} Moyenne Seuil 2 </span>
-          <span><i className="fas fa-map-marker crouge"></i> Moyenne Seuil 2 {'\u003C'} Moyenne Indicateurs </span>
+          <span><i className="fas fa-map-marker crouge"></i> Moyenne Seuil 2 {'\u003C'} Moyenne Indicateurs </span> <span><i className="fas fa-map-marker cnoir"></i> Pas de valeur </span>
       </div>
     }else{
       return this.state.indicateur_n.map((result, index) => ( 
@@ -189,6 +166,7 @@ export class Mapcontainer extends React.Component {
           <span><i className="fas fa-map-marker cvert"></i> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
           <span><i className="fas fa-map-marker cjaune"></i> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
           <span><i className="fas fa-map-marker crouge"></i> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+          <span><i className="fas fa-map-marker cnoir"></i> Pas de valeur </span>
       </div>
       ))
     }
