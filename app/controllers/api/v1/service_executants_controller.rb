@@ -19,13 +19,14 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     type_services = TypeService.all.order(name: :asc)
 
     #calcul moyenne de l'execution sur chaque se 
-    moyenne_seuil1 = (Indicateur.sum(:seuil_1)/Indicateur.all.count).round(2)
-    moyenne_seuil2 = (Indicateur.sum(:seuil_2)/Indicateur.all.count).round(2)
+    moyenne_seuil1 = Indicateur.sum(:seuil_1).round(2)
+    moyenne_seuil2 = Indicateur.sum(:seuil_2).round(2)
     se_color = Hash.new
+
     autoCompleteResults.each do |se|
-      if se.indicateur_executions.count > 0
-        execution = se.indicateur_executions.where.not(valeur: nil).where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month)
-        moyenne = execution.sum(:valeur)/execution.count 
+     
+        moyenne = se.indicateur_executions.where.not(valeur: nil).where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month).sum(:valeur)
+        
         if moyenne <= moyenne_seuil1
           se_color[se.id] = "vert"
         elsif moyenne > moyenne_seuil1 && moyenne < moyenne_seuil2
@@ -33,12 +34,11 @@ class Api::V1::ServiceExecutantsController < ApplicationController
         elsif moyenne >= moyenne_seuil2
           se_color[se.id] = "rouge"
         end
-      else
-        se_color[se.id] = "noir"
-      end
+     
+  
     end 
 
-    response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color}
+    response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color}
     render json: response
   end
 
@@ -160,7 +160,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     autoCompleteResults.each do |se|
       if se.indicateur_executions.count > 0
         execution = se.indicateur_executions.where.not(valeur: nil).where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
-        moyenne = execution.sum(:valeur)/execution.count 
+        moyenne = execution.sum(:valeur)/(execution.count).to_f 
         if moyenne <= moyenne_seuil1
           se_color[se.id] = "vert"
         elsif moyenne > moyenne_seuil1 && moyenne < moyenne_seuil2
