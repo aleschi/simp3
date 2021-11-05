@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users, :path => "",
+    :path_names =>  {:sign_in => "connexion", :sign_out => "deconnexion"}
   namespace :api do
     namespace :v1 do
       get 'service_executants/index'
@@ -33,6 +35,7 @@ Rails.application.routes.draw do
       post 'indicateurs/import'
     end
   end
+  
   root 'home#index'
   get '/*path' => 'home#index' #redirige toutes les pages sans url vers la page d'accueil
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

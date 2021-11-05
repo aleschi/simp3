@@ -30,7 +30,11 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             type: 'spline',
             style:{
                 fontFamily: "Marianne",
-            },       
+            }, 
+            scrollablePlotArea: {
+                      minWidth: 1000,
+                      scrollPositionX: 1
+                  },      
         },
         title: {
             text: title_i,
