@@ -181,7 +181,7 @@ export class Mapcontainer extends React.Component {
         <div className="map_map align_flex">
         <div className="map_center">
            
-          <div>
+          <div className="map_date_box">
             <div className="texte_etiquette">Date <i className="fas fa-caret-down"></i></div>
             <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
           </div>

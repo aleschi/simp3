@@ -523,6 +523,7 @@ input[type="checkbox"]:checked {
   color:#000;
 }
 .map_legende{
+text-align:center;
   color:#6A6A6A;
   font-size:10px;
   span{
@@ -613,4 +614,11 @@ input[type="checkbox"]:checked {
 .login_box{
   max-width:400px;
   margin:auto;
+}
+.map_date_box{
+  width:150px;
+  margin:auto;
+  input{
+  max-width:150px !important;
+  }
 }
