@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CSVLink } from "react-csv";
 
 export class Execution_table extends React.Component {
 
@@ -43,10 +44,24 @@ export class Execution_table extends React.Component {
       .catch(error => console.log(error.message));
     }
 
+    
+
     render() {
 
 
+    const headers = ['Date','Service Exécutant','Code Service Exécutant','Ministère',"Organisation Financière ",'Type Service','Valeur' ];
+    var data_to_download = [];
+    this.state.indicateur_executions.map((indicateur_execution, index) => (
+   
+      data_to_download.push([indicateur_execution.date,indicateur_execution.service_executant.libelle,indicateur_execution.service_executant.code,indicateur_execution.service_executant.ministere.name,indicateur_execution.service_executant.organisation_financiere.name,indicateur_execution.service_executant.type_service.name,Math.round(indicateur_execution.valeur * 100 ) / 100 ])
+            ))
+
     return (
+    <div>
+    <div className="d24"></div>
+    <div className="tr"><CSVLink data={data_to_download} headers={headers} filename={"table_indicateurs.csv"} className="bouton">
+        <i className="fas fa-cloud-download-alt"></i>
+      </CSVLink></div>
     <div className="table" >
 	    <table className="table-striped">
 	      	<thead>
@@ -71,6 +86,7 @@ export class Execution_table extends React.Component {
 	    </table>
 
 
+    </div>
     </div>
     
     );

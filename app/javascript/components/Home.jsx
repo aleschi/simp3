@@ -125,7 +125,7 @@ class Home extends React.Component {
     handleSubmitDate(e){
 
         this.setState({ startDate: e, loading: true });
-        const url = "/api/v1/service_executants/search";
+        const url = "/api/v1/service_executants/search_date";
         const autoCompleteResults = this.state.autoCompleteResults;
         const autoCompleteList = this.state.autoCompleteList;
         const term = this.state.term;

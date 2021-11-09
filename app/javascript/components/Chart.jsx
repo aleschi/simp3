@@ -7,7 +7,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
 
     const series_i = [];
     let date;
-    const title_i = '';
+    const title_i = "Suivi temporel de l'indicateur "+indicateur_name;
     
         
     {service_executant_n.forEach(function (e,index) {
@@ -31,13 +31,18 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             style:{
                 fontFamily: "Marianne",
             }, 
-            scrollablePlotArea: {
-                      minWidth: 1000,
-                      scrollPositionX: 1
-                  },      
+            //scrollablePlotArea: {
+            //          minWidth: 1000,
+            //          scrollPositionX: 1
+            //      },      
         },
         title: {
             text: title_i,
+            style: {
+            fontSize: '15px',
+            fontWeight: "900",
+            color: '#1E1E1E',
+            }
         },
         tooltip: {
             shared: true,
@@ -47,11 +52,12 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         },
         xAxis:{
             type: 'datetime',
-            minTickInterval: 28*24*3600*1000,
+            //minTickInterval: 3*28*24*3600*1000,
         },
         yAxis: { 
         title: {
             text: "Valeur de l'indicateur",
+            
             }
         },
         series: series_i,
@@ -59,9 +65,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
 
     return (
     <div>
-        <div className="text-center titre_etiquette">
-         {`Suivi de l'indicateur ${indicateur_name}`}   
-        </div>
+   
 
         <HighchartsReact highcharts={Highcharts} options={options} />
         

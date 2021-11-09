@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       post 'indicateur_executions/search_carto'
       post 'indicateur_executions/import'
       post 'indicateur_executions/sort_table'
+
     
     end
   end

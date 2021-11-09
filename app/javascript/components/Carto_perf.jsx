@@ -68,36 +68,36 @@ class Carto_perf extends React.Component {
     handleChange2(event){
         let search_service_executants = this.state.search_service_executants        
         if(event.target.checked) {
-            search_service_executants.push(event.target.value)
+            search_service_executants.push(parseInt(event.target.value));
         } else {
-            search_service_executants.splice(event.target.value,1)
+            search_service_executants.splice(search_service_executants.indexOf(parseInt(event.target.value)),1);
         }
         this.setState({ search_service_executants:  search_service_executants}) 
     }
     handleChange3(event){
         let search_ministeres = this.state.search_ministeres        
         if(event.target.checked) {
-            search_ministeres.push(event.target.value)
+            search_ministeres.push(parseInt(event.target.value));
         } else {
-            search_ministeres.splice(event.target.value,1)
+            search_ministeres.splice(search_ministeres.indexOf(parseInt(event.target.value)),1);
         }
         this.setState({ search_ministeres: search_ministeres}) 
     }
     handleChange4(event){
         let search_blocs = this.state.search_blocs        
         if(event.target.checked) {
-            search_blocs.push(event.target.value)
+            search_blocs.push(parseInt(event.target.value));
         } else {
-            search_blocs.splice(event.target.value,1)
+            search_blocs.splice(search_blocs.indexOf(parseInt(event.target.value)),1);
         }
         this.setState({ search_blocs: search_blocs}) 
     }
     handleChange5(event){
         let search_type_services = this.state.search_type_services        
         if(event.target.checked) {
-            search_type_services.push(event.target.value)
+            search_type_services.push(parseInt(event.target.value));
         } else {
-            search_type_services.splice(event.target.value,1)
+            search_type_services.splice(search_type_services.indexOf(parseInt(event.target.value)),1);
         }
         this.setState({ search_type_services: search_type_services}) 
     }

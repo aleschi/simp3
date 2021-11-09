@@ -33,6 +33,7 @@ gem 'ransack'
 gem "roo", "~> 2.8.0"
 gem "appengine"
 gem 'devise'
+gem 'caxlsx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -198,12 +198,15 @@ input[type="checkbox"]:checked {
   width:100%;
   
 }
-.indicateurs_search_box, .indicateurs_infos_box{
+.indicateurs_search_box{
   width:25% !important;
 }
+.indicateurs_infos_box{
+  width:15% !important;
+}
 .indicateurs_chart_box{
-  width:50%;
-  padding:0px 10px;
+  width:60%;
+  padding:0px 24px;
 }
 .map_component > div {
   width:75%;
@@ -375,8 +378,9 @@ input[type="checkbox"]:checked {
           padding:20px 4px;
           text-align:center;
           color:#1E1E1E;
-          font-size:15px;
+          font-size:13px;
           position: sticky; 
+          min-width:100px !important;
       top: 0;
           background-color:#fff;
           a{
@@ -400,7 +404,7 @@ input[type="checkbox"]:checked {
           height:32px;
           text-align:center;
           color:#1E1E1E;
-          font-size:14px;
+          font-size:13px;
            a{
             color:#1E1E1E;
             margin:0 5px;
@@ -413,7 +417,7 @@ input[type="checkbox"]:checked {
           height:32px;
           text-align:center;
           color:#1E1E1E;
-          font-size:15px;
+          font-size:13px;
           a{
             color: rgba(0,74,112,0.4);
             text-decoration:none;
@@ -592,4 +596,21 @@ input[type="checkbox"]:checked {
   100% {
     transform: rotate(360deg);
   }
+}
+.tr{
+  text-align:right;
+}
+.w100{
+  width:100%;
+}
+.bouton_inactif{
+  background-color:#F0F0F0;
+  color:#fff;
+  font-size:16px;
+  padding: 10px 15px;
+  border:none;
+}
+.login_box{
+  max-width:400px;
+  margin:auto;
 }
