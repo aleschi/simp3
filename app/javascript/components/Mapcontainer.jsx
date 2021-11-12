@@ -14,6 +14,7 @@ import iconR from '../../assets/images/icon_lieu_rouge.svg';
 import iconJ from '../../assets/images/icon_lieu_jaune.svg';
 import iconV from '../../assets/images/icon_lieu_vert.svg';
 import iconN from '../../assets/images/icon_lieu_noir.svg';
+import iconG from '../../assets/images/icon_lieu_gris.svg';
 
 const image_v = {
                           path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
@@ -43,7 +44,7 @@ export class Mapcontainer extends React.Component {
             selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
             startDate: this.props.startDate,
         }
-        
+      this.onCloseInfo = this.onCloseInfo.bind(this);  
    
     }
     componentDidUpdate(prevProps) {
@@ -58,12 +59,9 @@ export class Mapcontainer extends React.Component {
       }
     }
     
-    onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+    onCloseInfo(event) {
+    this.setState({ showResults: false });
+    }
 
     onMarkerClick2= (props, marker, e) => { 
        
@@ -133,7 +131,7 @@ export class Mapcontainer extends React.Component {
      onClick={this.onMarkerClick2} />
      }
      else if (this.state.secolor[result.id] == "noir"){
-      return <Marker key={index} id={result.id} icon={iconN} name={result.libelle} position={{
+      return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
@@ -156,9 +154,9 @@ export class Mapcontainer extends React.Component {
      
     if (this.state.indicateur_n.length == 0){
       return <div className="map_legende">
-          <span><i className="fas fa-map-marker cvert"></i> Moyenne Indicateurs {'\u003C'} Moyenne Seuil 1 </span>
-          <span><i className="fas fa-map-marker cjaune"></i> Moyenne Seuil 1 {'\u003C'}  Moyenne Indicateurs {'\u003C'} Moyenne Seuil 2 </span>
-          <span><i className="fas fa-map-marker crouge"></i> Moyenne Seuil 2 {'\u003C'} Moyenne Indicateurs </span> <span><i className="fas fa-map-marker cnoir"></i> Pas de valeur </span>
+          <span><i className="fas fa-map-marker cvert"></i> Performance Globale {'\u003C'} 19 points </span>
+          <span><i className="fas fa-map-marker cjaune"></i> 19 points {'\u003C'}  Performance Globale {'\u003C'} 27 points </span>
+          <span><i className="fas fa-map-marker crouge"></i> 27 points {'\u003C'} Performance Globale </span> <span><i className="fas fa-map-marker cgris"></i> Pas de valeur </span>
       </div>
     }else{
       return this.state.indicateur_n.map((result, index) => ( 
@@ -166,7 +164,7 @@ export class Mapcontainer extends React.Component {
           <span><i className="fas fa-map-marker cvert"></i> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
           <span><i className="fas fa-map-marker cjaune"></i> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
           <span><i className="fas fa-map-marker crouge"></i> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span><i className="fas fa-map-marker cnoir"></i> Pas de valeur </span>
+          <span><i className="fas fa-map-marker cgris"></i> Pas de valeur </span>
       </div>
       ))
     }
@@ -213,7 +211,7 @@ export class Mapcontainer extends React.Component {
           
         </div>
         
-         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions}/> : null }
+         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo}/> : null }
         </div>
       );
    }

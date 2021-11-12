@@ -1,9 +1,9 @@
 import React from "react";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../Header";
+import Footer from "../Footer";
 
-class Newservice_executant extends React.Component {
+class Newindicateur extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,7 @@ class Newservice_executant extends React.Component {
 
     handleSubmit(event) {
       event.preventDefault();
-        const url = "/api/v1/service_executants/import";
+        const url = "/api/v1/indicateurs/import";
         const formData = new FormData();
 
         formData.append('file', this.state.file_csv);
@@ -72,4 +72,4 @@ class Newservice_executant extends React.Component {
         );
     }
 }
-export default Newservice_executant;
+export default Newindicateur;

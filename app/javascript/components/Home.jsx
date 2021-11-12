@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import Mapcontainer from "../components/Mapcontainer";
 
 import Mapsearch from "../components/Mapsearch";
-import Chart from "../components/Chart";
+
 
 class Home extends React.Component {
     constructor(props) {

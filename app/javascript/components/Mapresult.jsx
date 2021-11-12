@@ -42,6 +42,7 @@ render() {
         {this.state.service_ex.map((service_executant, index) => (
         <div key={index}>
         <div className="box_etiquette">
+            <div><button className="button_close" onClick={this.props.onCloseInfo}><i className="far fa-times-circle"></i></button></div>
             <div className="titre_etiquette text-center">{service_executant.libelle}</div>
             <div className="d12"></div>
             <div className="texte_etiquette">Ministère : {service_executant.ministere.name}</div>

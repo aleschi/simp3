@@ -10,6 +10,11 @@
   src: font-url('Marianne-Bold.woff');
   font-weight:bold;
 }
+@font-face {
+  font-family: 'Marianne';
+  src: font-url('Marianne-Light.woff');
+  font-weight:300;
+}
 html{
   height: 100%;
 }
@@ -376,11 +381,12 @@ input[type="checkbox"]:checked {
         border:none !important;
         th{
           padding:20px 4px;
-          text-align:center;
+          text-align:left;
           color:#1E1E1E;
           font-size:13px;
           position: sticky; 
           min-width:100px !important;
+          
       top: 0;
           background-color:#fff;
           a{
@@ -402,9 +408,10 @@ input[type="checkbox"]:checked {
      
           line-height:24px;
           height:32px;
-          text-align:center;
+          text-align:left;
           color:#1E1E1E;
           font-size:13px;
+
            a{
             color:#1E1E1E;
             margin:0 5px;
@@ -412,10 +419,10 @@ input[type="checkbox"]:checked {
           }
         } 
         td{
-
+        
           line-height:24px;
           height:32px;
-          text-align:center;
+          text-align:left;
           color:#1E1E1E;
           font-size:13px;
           a{
@@ -522,6 +529,9 @@ input[type="checkbox"]:checked {
 .cnoir{
   color:#000;
 }
+.cgris{
+  color: #8F8F8F;
+}
 .map_legende{
 text-align:center;
   color:#6A6A6A;
@@ -621,4 +631,19 @@ text-align:center;
   input{
   max-width:150px !important;
   }
+}
+.texte_light{
+  font-weight: 300;
+}
+.pd24{
+  padding:24px;
+}
+.button_close{
+  font-size:14px;
+  font-weight:300;
+  color:#8F8F8F;
+  background-color:transparent;
+}
+.italic{
+  font-style: italic;
 }

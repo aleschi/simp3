@@ -1,11 +1,11 @@
 import React,{ useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Chart from "../components/Chart";
-import Execution_search from "../components/Execution_search";
-import Execution_table from "../components/Execution_table";
-import Execution_infos from "../components/Execution_infos";
+import Header from "../Header";
+import Footer from "../Footer";
+import Chart from "./Chart";
+import Execution_search from "./Execution_search";
+import Execution_table from "./Execution_table";
+import Execution_infos from "./Execution_infos";
 
 class Execution extends React.Component {
     constructor(props) {

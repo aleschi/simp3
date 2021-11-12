@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, :path => "",
-    :path_names =>  {:sign_in => "connexion", :sign_out => "deconnexion"}
+    :path_names =>  {:sign_in => "connexion", :sign_out => "logout"}
   namespace :api do
     namespace :v1 do
       get 'service_executants/index'
@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   end
   
   root 'home#index'
+  get 'check_user_status' => 'home#check_user_status'
+  get 'checkout' => 'home#checkout'
   get '/*path' => 'home#index' #redirige toutes les pages sans url vers la page d'accueil
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

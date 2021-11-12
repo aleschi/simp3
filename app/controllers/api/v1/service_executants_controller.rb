@@ -24,18 +24,31 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     se_color = Hash.new
 
     autoCompleteResults.each do |se|
-     
-        moyenne = se.indicateur_executions.where.not(valeur: nil).where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month).sum(:valeur)
-        
-        if moyenne <= moyenne_seuil1
-          se_color[se.id] = "vert"
-        elsif moyenne > moyenne_seuil1 && moyenne < moyenne_seuil2
-          se_color[se.id] = "jaune"
-        elsif moyenne >= moyenne_seuil2
-          se_color[se.id] = "rouge"
-        end
-     
-  
+      #point = 0
+      #total_ind = 0
+
+      #se.indicateur_executions.where.not(valeur: nil).where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month).each do |exec|
+      #  if exec.valeur <= exec.indicateur.seuil_1
+      #    point += 1
+      #  elsif exec.valeur > exec.indicateur.seuil_1 && exec.valeur <= exec.indicateur.seuil_2
+      #    point += 2
+      #  elsif exec.valeur > exec.indicateur.seuil_2
+      #    point += 3
+      #  end
+      #  total_ind += 1
+      
+      #end 
+
+      #  valeur_noir = point / total_ind
+      #  point += valeur_noir * se.indicateur_executions.where(valeur: nil).where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month).count 
+      #  if point <= 19
+      #    se_color[se.id] = "vert"
+      #  elsif point > 19 && point <= 27
+      #    se_color[se.id] = "jaune"
+      #  elsif point > 27
+      #    se_color[se.id] = "rouge"
+      #  end
+      se_color[se.id] = "jaune"
     end 
 
     response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color}

@@ -17,7 +17,7 @@ export default ({indicateur_n}) => {
           <div className="d12"></div>
           <div className="texte_etiquette">Unité : {indicateur.unite}</div>
           <div className="d12"></div>
-          <div className="texte_etiquette">Méthode de calcul : {indicateur.calcul}</div>
+          <div className="texte_etiquette italic">Méthode de calcul : {indicateur.calcul}</div>
           <div className="d12"></div>
           <div className="texte_etiquette">Remarques principales : {indicateur.remarque}</div>
         </div>

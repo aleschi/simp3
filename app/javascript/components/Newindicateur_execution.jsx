@@ -60,7 +60,7 @@ class Newindicateur_execution extends React.Component {
         <Header />
         <div className="d32"></div>
             <div className="row loader_box">
-              <div className="col-sm-12 col-lg-8 offset-lg-2">
+              <div className="col-sm-12 col-lg-6 offset-lg-3">
 
               { this.state.loading ? <div className="loader_box"><div className="texte_etiquette text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </div><div className="d24"></div> <div className ="loader"></div></div> : 
                 <div>
@@ -74,9 +74,11 @@ class Newindicateur_execution extends React.Component {
                       <input {...getInputProps()} />
                       <div><i className="fas fa-plus-circle"></i></div>
                       <div className="d24"></div>
-                      <div> Glissez votre fichier ici</div> 
+                      <div className="cgris"> Glissez votre fichier ici</div> 
                       <div className="d12"></div>
-                      <div className="tu">Télécharger depuis votre appareil</div>
+                      <div className="tu cgris">Ou téléchargez-le depuis votre appareil</div>
+                      <div className="d12"></div>
+                      <div className="texte_light cgris">(fichier .xlsx uniquement)</div>
                       <div>{files}</div>
                     </div>
                   )}
