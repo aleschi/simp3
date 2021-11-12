@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Mapcontainer from "../components/Mapcontainer";
-
-import Mapsearch_perf from "../components/Mapsearch_perf";
+import Header from "../Header";
+import Footer from "../Footer";
+import Mapcontainer from "./Mapcontainer";
+import Mapsearch_perf from "./Mapsearch_perf";
 
 class Carto_perf extends React.Component {
     constructor(props) {

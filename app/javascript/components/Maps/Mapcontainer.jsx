@@ -4,17 +4,17 @@ import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import fr from 'date-fns/locale/fr';
 registerLocale('fr', fr)
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import Mapresult from "../components/Mapresult";
+import Mapresult from "./Mapresult";
 const mapStyles = {
 	  width: '45%',
 	  height: '400px',
 
 	};
-import iconR from '../../assets/images/icon_lieu_rouge.svg';
-import iconJ from '../../assets/images/icon_lieu_jaune.svg';
-import iconV from '../../assets/images/icon_lieu_vert.svg';
-import iconN from '../../assets/images/icon_lieu_noir.svg';
-import iconG from '../../assets/images/icon_lieu_gris.svg';
+import iconR from '../../../assets/images/icon_lieu_rouge.svg';
+import iconJ from '../../../assets/images/icon_lieu_jaune.svg';
+import iconV from '../../../assets/images/icon_lieu_vert.svg';
+import iconN from '../../../assets/images/icon_lieu_noir.svg';
+import iconG from '../../../assets/images/icon_lieu_gris.svg';
 
 const image_v = {
                           path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',

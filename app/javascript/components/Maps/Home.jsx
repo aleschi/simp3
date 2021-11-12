@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Mapcontainer from "../components/Mapcontainer";
-
-import Mapsearch from "../components/Mapsearch";
+import Header from "../Header";
+import Footer from "../Footer";
+import Mapcontainer from "./Mapcontainer";
+import Mapsearch from "./Mapsearch";
 
 
 class Home extends React.Component {

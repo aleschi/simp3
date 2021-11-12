@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "../components/Home";
-import Carto_perf from "../components/Carto_perf";
+import Home from "../components/Maps/Home";
+import Carto_perf from "../components/Maps/Carto_perf";
 import Newindicateur from "../components/Indicateurs/Newindicateur";
 import Indicateurs from "../components/Indicateurs/Indicateurs";
 import Execution from "../components/Execution/Execution";
 import Newservice_executant from "../components/Services_Executants/Newservice_executant";
-import Newindicateur_execution from "../components/Newindicateur_execution";
+import Newindicateur_execution from "../components/Execution/Newindicateur_execution";
 
 export default (
   <Router>
