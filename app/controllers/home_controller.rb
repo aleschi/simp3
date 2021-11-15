@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!
+  
   def index
   end
 
@@ -19,13 +21,5 @@ class HomeController < ApplicationController
 
   end 
 
-  def checkout
-  	if user_signed_in?
-  		sign_out(current_user)
-	    response = {isLoggedIn: false, isAdmin: false}    
-	    render json: response
-  		#destroy_user_session_path
-  	end 
-  end 
 
 end

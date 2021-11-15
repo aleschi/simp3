@@ -1,4 +1,5 @@
 class Api::V1::IndicateurExecutionsController < ApplicationController
+  before_action :authenticate_user!
   protect_from_forgery with: :null_session
   def index #page execution
 
@@ -61,6 +62,9 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   end
 
   def new
+    date_fichier = IndicateurExecution.order(date: :desc).first.date
+    response = {date_fichier: date_fichier}
+    render json: response
   end
 
   def create

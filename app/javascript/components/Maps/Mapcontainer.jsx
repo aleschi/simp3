@@ -153,11 +153,11 @@ export class Mapcontainer extends React.Component {
     displayLegend = () => {
      
     if (this.state.indicateur_n.length == 0){
-      return <div className="map_legende">
+      return <div><div className="map_legende">
           <span><i className="fas fa-map-marker cvert"></i> Performance Globale {'\u003C'} 19 points </span>
           <span><i className="fas fa-map-marker cjaune"></i> 19 points {'\u003C'}  Performance Globale {'\u003C'} 27 points </span>
-          <span><i className="fas fa-map-marker crouge"></i> 27 points {'\u003C'} Performance Globale </span> <span><i className="fas fa-map-marker cgris"></i> Pas de valeur </span>
-      </div>
+          <span><i className="fas fa-map-marker crouge"></i> 27 points {'\u003C'} Performance Globale </span> 
+      </div><div className="d24"></div><div className="map_legende"> <span>Indicateur rouge = 3 points</span> <span>Indicateur jaune = 2 points</span> <span>Indicateur vert = 1 point</span></div></div>
     }else{
       return this.state.indicateur_n.map((result, index) => ( 
       <div key={index} className="map_legende">

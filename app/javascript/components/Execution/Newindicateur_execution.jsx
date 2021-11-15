@@ -3,6 +3,7 @@ import React from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import Dropzone from 'react-dropzone';
+import Moment from 'moment';
 
 
 class Newindicateur_execution extends React.Component {
@@ -14,10 +15,23 @@ class Newindicateur_execution extends React.Component {
           this.state = {
             files: [],
             loading: false,
+            date_fichier: null,
           };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+    const url = "/api/v1/indicateur_executions/new";
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ date_fichier: response.date_fichier }))
+      .catch(() => this.props.history.push("/"));
+    }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -58,15 +72,22 @@ class Newindicateur_execution extends React.Component {
         return (
         <div>
         <Header />
-        <div className="d32"></div>
-            <div className="row loader_box">
-              <div className="col-sm-12 col-lg-6 offset-lg-3">
+        <div className="pd24">
+            <div className="d32"></div>
+            <div className="row loader_box align_center">
+              <div className="col-sm-12 col-lg-6">
+              <div className="titre_part">Fichier MP3</div>
+              <div className="d24"></div>
+              <div className="texte_etiquette">Dernière importation : {Moment(this.state.date_fichier).format('DD/MM/YYYY')}</div>
+              </div>
+              <div className="col-sm-12 col-lg-6">
 
               { this.state.loading ? <div className="loader_box"><div className="texte_etiquette text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </div><div className="d24"></div> <div className ="loader"></div></div> : 
                 <div>
-                <h1 className="font-weight-normal mb-5 text-center">
+                <h1 className="titre_part text-center">
                  Ajouter un fichier 
                 </h1>
+                <div className="d24"></div>
                 <form onSubmit={this.handleSubmit}> 
                  <Dropzone accept='.xlsx' onDrop={this.onDrop}>
                   {({getRootProps, getInputProps}) => (
@@ -90,7 +111,7 @@ class Newindicateur_execution extends React.Component {
               }
               </div>
             </div>
-      
+        </div>
         <Footer />
         </div>
         );

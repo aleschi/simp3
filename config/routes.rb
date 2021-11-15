@@ -39,7 +39,6 @@ Rails.application.routes.draw do
   
   root 'home#index'
   get 'check_user_status' => 'home#check_user_status'
-  get 'checkout' => 'home#checkout'
   get '/*path' => 'home#index' #redirige toutes les pages sans url vers la page d'accueil
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

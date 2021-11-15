@@ -123,7 +123,7 @@ input[type="checkbox"]:checked {
 .nav_link_active{
   border-bottom:2px solid blue;
 }
-.nav_link a{
+.nav_link a, .nav_link button{
   color:#1E1E1E;
   font-size:14px;
   &:hover{
@@ -646,4 +646,11 @@ text-align:center;
 }
 .italic{
   font-style: italic;
+}
+.titre_part{
+  font-size:40px;
+  font-weight:bold;
+}
+.align_center{
+  align-items:center;
 }

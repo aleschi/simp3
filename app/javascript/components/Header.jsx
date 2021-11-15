@@ -10,7 +10,7 @@ class Header extends React.Component {
 	      isLoggedIn: false,
 	      isAdmin: false,
 	     };
-	    this.handleLogout = this.handleLogout.bind(this);
+	    
 	}
 
 	
@@ -24,21 +24,10 @@ class Header extends React.Component {
           throw new Error("Network response was not ok.");
         })
         .then(response => this.setState({ isLoggedIn: response.isLoggedIn, isAdmin: response.isAdmin }))
-        .catch(error => console.log(error));
+        .catch(() => this.props.history.push("/"));
   }
 
-    handleLogout = () => {
-	    const url = "/checkout";
-	    fetch(url)
-	      .then(response => {
-	        if (response.ok) {
-	          return response.json();
-	        }
-	        throw new Error("Network response was not ok.");
-	      })
-	      .then(response => this.setState({ isLoggedIn: false, isAdmin: false }))
-	    .catch(error => console.log(error));
-	  }
+
     render() {
     return (  
 		<div>
@@ -53,7 +42,7 @@ class Header extends React.Component {
 			  		<div className="nav_link"><NavLink exact to='/indicateurs' activeClassName="nav_link nav_link_active">Liste des indicateurs</NavLink></div>
 			  		{this.state.isAdmin ? <div className="nav_link"><NavLink exact to='/indicateur_executions/new' activeClassName="nav_link nav_link_active">Ajouter un document</NavLink></div> : null }
 			  		
-			  		{this.state.isLoggedIn ? <div className="nav_link"><button  onClick={this.handleLogout} >Se déconnecter</button></div> : null }
+			  		{this.state.isLoggedIn ? <div className="nav_link"><a rel="nofollow" data-method="delete" href="/logout" >Se déconnecter</a></div> : null }
 			  		
 
 			  	</div>

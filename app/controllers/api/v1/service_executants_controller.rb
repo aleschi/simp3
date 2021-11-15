@@ -1,4 +1,5 @@
 class Api::V1::ServiceExecutantsController < ApplicationController
+  before_action :authenticate_user!
   protect_from_forgery with: :null_session
   def index
     autoCompleteResults = ServiceExecutant.all.order(libelle: :asc)
@@ -167,23 +168,9 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       cgf = 0
     end 
     #calcul moyenne de l'execution sur chaque se 
-    moyenne_seuil1 = (Indicateur.sum(:seuil_1)/Indicateur.all.count).round(2)
-    moyenne_seuil2 = (Indicateur.sum(:seuil_2)/Indicateur.all.count).round(2)
     se_color = Hash.new
     autoCompleteResults.each do |se|
-      if se.indicateur_executions.count > 0
-        execution = se.indicateur_executions.where.not(valeur: nil).where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
-        moyenne = execution.sum(:valeur)/(execution.count).to_f 
-        if moyenne <= moyenne_seuil1
-          se_color[se.id] = "vert"
-        elsif moyenne > moyenne_seuil1 && moyenne < moyenne_seuil2
-          se_color[se.id] = "jaune"
-        elsif moyenne >= moyenne_seuil2
-          se_color[se.id] = "rouge"
-        end
-      else
-        se_color[se.id] = "noir"
-      end
+        se_color[se.id] = "jaune"
     end 
 
     response = {autoCompleteResults: autoCompleteResults, autoCompleteList: autoCompleteList, term: term, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
