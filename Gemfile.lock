@@ -93,6 +93,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     faraday (1.8.0)
       faraday-em_http (~> 1.0)
@@ -332,6 +336,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   caxlsx
   devise
+  dotenv-rails (~> 2.7, >= 2.7.6)
   font-awesome-rails
   geocoder
   jbuilder (~> 2.7)

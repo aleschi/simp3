@@ -34,6 +34,7 @@ gem "roo", "~> 2.8.0"
 gem "appengine"
 gem 'devise'
 gem 'caxlsx'
+gem 'dotenv-rails', "~> 2.7", ">= 2.7.6"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
