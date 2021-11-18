@@ -5,7 +5,7 @@ class Indicateur < ApplicationRecord
   
   	def self.import(file)
     	CSV.foreach(file.tempfile) do |row|
-      		if !row[0].nil? && !row[0].empty?
+      		if !row[0].nil? && !row[0].empty? && row[0] != "Code"
       			@indicateur = Indicateur.new 
       			@indicateur.name = row[0]
       			@indicateur.description = row[1]

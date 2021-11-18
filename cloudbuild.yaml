@@ -25,6 +25,7 @@ substitutions:
   _SERVICE_NAME: datason
   _INSTANCE_NAME: direction-budget
   _SECRET_NAME: datason-secret
+  
 
 availableSecrets:
   secretManager:

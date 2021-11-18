@@ -81,7 +81,11 @@ test:
 #
 production:
   <<: *default
-  database: datason_production
-  username: datason
-  password: <%= ENV['DATASON_DATABASE_PASSWORD'] %>
+ # database: datason_production
+#  username: datason
+ # password: <%= ENV['DATASON_DATABASE_PASSWORD'] %>
  # url: <%= ENV['DATABASE_URL'] %>
+  database: <%= ENV["PRODUCTION_DB_NAME"] %>
+  username: <%= ENV["PRODUCTION_DB_USERNAME"] %>
+  password: <%= Rails.application.credentials.gcp[:db_password] %>
+  host:   "/cloudsql/<%= ENV["CLOUD_SQL_CONNECTION_NAME"] %>"
