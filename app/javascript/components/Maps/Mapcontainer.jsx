@@ -1,5 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import fr from 'date-fns/locale/fr';
 registerLocale('fr', fr)
@@ -154,9 +156,9 @@ export class Mapcontainer extends React.Component {
      
     if (this.state.indicateur_n.length == 0){
       return <div><div className="map_legende">
-          <span><i className="fas fa-map-marker cvert"></i> Performance Globale {'\u003C'} 19 points </span>
-          <span><i className="fas fa-map-marker cjaune"></i> 19 points {'\u003C'}  Performance Globale {'\u003C'} 27 points </span>
-          <span><i className="fas fa-map-marker crouge"></i> 27 points {'\u003C'} Performance Globale </span> 
+          <span><i className="fas fa-map-marker cvert"></i> Performance Globale {'\u003C'} X </span>
+          <span><i className="fas fa-map-marker cjaune"></i> X {'\u003C'}  Performance Globale {'\u003C'} Y </span>
+          <span><i className="fas fa-map-marker crouge"></i> Y {'\u003C'} Performance Globale </span> 
       </div><div className="d24"></div><div className="map_legende"> <span>Indicateur rouge = 3 points</span> <span>Indicateur jaune = 2 points</span> <span>Indicateur vert = 1 point</span></div></div>
     }else{
       return this.state.indicateur_n.map((result, index) => ( 

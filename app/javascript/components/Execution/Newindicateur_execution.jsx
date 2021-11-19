@@ -4,7 +4,8 @@ import Header from "../Header";
 import Footer from "../Footer";
 import Dropzone from 'react-dropzone';
 import Moment from 'moment';
-
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class Newindicateur_execution extends React.Component {
         constructor() {
@@ -15,7 +16,7 @@ class Newindicateur_execution extends React.Component {
           this.state = {
             files: [],
             loading: false,
-            date_fichier: null,
+            date_fichier: false,
           };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -74,13 +75,15 @@ class Newindicateur_execution extends React.Component {
         <Header />
         <div className="pd24">
             <div className="d32"></div>
-            <div className="row loader_box align_center">
-              <div className="col-sm-12 col-lg-6">
-              <div className="titre_part">Fichier MP3</div>
-              <div className="d24"></div>
-              <div className="texte_etiquette">Dernière importation : {Moment(this.state.date_fichier).format('DD/MM/YYYY')}</div>
-              </div>
-              <div className="col-sm-12 col-lg-6">
+            <Row className=" loader_box align_center">
+              <Col sm={12} lg={6}>
+                <div className="titre_part">Fichier MP3</div>
+                <div className="d24"></div>
+                { this.state.date_fichier ? 
+                <div className="texte_etiquette">Dernière importation : {Moment(this.state.date_fichier).format('DD/MM/YYYY')}</div>          
+                : null }
+              </Col>
+              <Col sm={12} lg={6}>
 
               { this.state.loading ? <div className="loader_box"><div className="texte_etiquette text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </div><div className="d24"></div> <div className ="loader"></div></div> : 
                 <div>
@@ -109,8 +112,8 @@ class Newindicateur_execution extends React.Component {
                 <div className="d32"></div>
                 </div>
               }
-              </div>
-            </div>
+              </Col>
+            </Row>
         </div>
         <Footer />
         </div>

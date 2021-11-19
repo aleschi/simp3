@@ -3,10 +3,14 @@ class Indicateur < ApplicationRecord
 
 	require 'csv'
   
-  	def self.import(file)
+  def self.import(file)
     	CSV.foreach(file.tempfile) do |row|
       		if !row[0].nil? && !row[0].empty? && row[0] != "Code"
-      			@indicateur = Indicateur.new 
+            if Indicateur.where('name = ?',row[0]).count > 0
+              @indicateur = Indicateur.where('name = ?',row[0]).first
+            else
+        			@indicateur = Indicateur.new 
+            end
       			@indicateur.name = row[0]
       			@indicateur.description = row[1]
       			@indicateur.type_indicateur = row[2]
@@ -18,5 +22,8 @@ class Indicateur < ApplicationRecord
       			@indicateur.save
     		end
   		end
+    if Indicateur.where('description = ?','Libellés des indicateurs ').count > 0
+      Indicateur.where('description = ?','Libellés des indicateurs ').first.destroy
+    end
 	end
 end

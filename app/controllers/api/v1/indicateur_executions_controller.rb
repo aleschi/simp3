@@ -62,7 +62,11 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   end
 
   def new
-    date_fichier = IndicateurExecution.order(date: :desc).first.date
+    if IndicateurExecution.count > 0
+      date_fichier = IndicateurExecution.order(date: :desc).first.date
+    else
+      date_fichier = false
+    end
     response = {date_fichier: date_fichier}
     render json: response
   end

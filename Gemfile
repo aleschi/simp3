@@ -31,7 +31,7 @@ gem "font-awesome-rails"
 gem 'geocoder'
 gem 'ransack'
 gem "roo", "~> 2.8.0"
-gem "appengine"
+#gem "appengine"
 gem 'devise'
 gem 'caxlsx'
 gem 'dotenv-rails', "~> 2.7", ">= 2.7.6"
