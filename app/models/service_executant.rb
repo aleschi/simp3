@@ -8,51 +8,69 @@ class ServiceExecutant < ApplicationRecord
   reverse_geocoded_by :latitude, :longitude
   after_validation :geocode, :reverse_geocode
 
-  require 'csv'
-  
-    def self.import(file)
-      CSV.foreach(file.tempfile) do |row|
-          if !row[0].nil? && !row[0].empty? && row[0] != "Code Service Executant"
-            OrganisationFinanciere.where('name = ?',row[2]).first_or_create do |orga|
-              orga.name = row[2]
-            end
-            Ministere.where('name = ?',row[3]).first_or_create do |ministere|
-              ministere.name = row[3]
-            end
-            TypeService.where('name = ?',row[4]).first_or_create do |type|
-              type.name = row[4]
-            end 
-            if ServiceExecutant.where('code = ?',row[0]).count > 0
-              @service = ServiceExecutant.where('code = ?',row[0]).first
-            else
-              @service = ServiceExecutant.new 
-            end
-            @service.code = row[0]
-            @service.libelle = row[1]
-            @service.organisation_financiere_id = OrganisationFinanciere.where('name = ?',row[2]).first.id
-            @service.ministere_id = Ministere.where('name = ?',row[3]).first.id
-            @service.type_service_id = TypeService.where('name = ?',row[4]).first.id
-            @service.address = row[5]+' '+row[6] + ' ' + row[9]
-            @service.effectif = row[7]
-            @service.type_structure = row[8]
-            if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? && !@service.type_service_id.nil? 
-              @service.save
-            end
+  require 'roo'
+  require 'axlsx'
+
+  def self.import(file)
+    IndicateurExecution.destroy_all
+    OrganisationFinanciere.destroy_all
+    Ministere.destroy_all
+    TypeService.destroy_all
+    ServiceExecutant.destroy_all
+
+    data = Roo::Spreadsheet.open(file.path)
+    headers = data.row(1) # get header row
+    data.each_with_index do |row, idx|
+      next if idx == 0 # skip header
+      row_data = Hash[[headers, row].transpose]
+      
+      OrganisationFinanciere.where('name = ?',row_data['Organisation']).first_or_create do |orga|
+        orga.name = row_data['Organisation']
+      end
+      Ministere.where('name = ?',row_data['Ministere']).first_or_create do |ministere|
+        ministere.name = row_data['Ministere']
+      end
+      TypeService.where('name = ?',row_data['Type de service']).first_or_create do |type|
+        type.name = row_data['Type de service']
+      end 
+      if ServiceExecutant.where('code = ?',row_data['Code']).count > 0
+        @service = ServiceExecutant.where('code = ?',row_data['Code']).first
+      else
+        @service = ServiceExecutant.new 
+      end
+
+      @service.code = row_data['Code']
+      if ServiceExecutant.where('libelle = ?',row_data['Libelle']).count > 0 #on evite les doublons de libelle
+        @service.libelle = row_data['Libelle'].to_s + '-' + row_data['Code'].to_s
+      else
+        @service.libelle = row_data['Libelle']
+      end
+      @service.organisation_financiere_id = OrganisationFinanciere.where('name = ?',row_data['Organisation']).first.id
+      @service.ministere_id = Ministere.where('name = ?',row_data['Ministere']).first.id
+      @service.type_service_id = TypeService.where('name = ?',row_data['Type de service']).first.id
+      @service.address = row_data['CP'].to_s + ' ' + row_data['Ville'].to_s + ' ' + row_data['Pays'].to_s
+      @service.effectif = row_data['Effectif'].to_i
+      @service.type_structure = row_data['Type2']
+      if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? && !@service.type_service_id.nil? 
+        @service.save
+      end
+    end
+    #on relance si long ou lat nil 
+    while ServiceExecutant.where(longitude: nil).count > 0
+      ServiceExecutant.where(longitude: nil).each do |s|
+        s.address = s.address
+        s.save
+      end 
+    end
+    @liste_adresse = ServiceExecutant.all.pluck(:address).uniq
+    @liste_adresse.each do |adresse|
+      if ServiceExecutant.where('address = ?', adresse).count > 1 #plusieurs avec meme adresse on les décalle
+        ServiceExecutant.where('address = ?', adresse).each_with_index do |service,i|
+          service.address = Geocoder.search([service.latitude, service.longitude+0.03*i]).first.address
+          service.save
         end
       end
-      ServiceExecutant.order(created_at: :desc).all.each do |service|
-        if ServiceExecutant.where('code = ?',service.code).count > 1
-          service.destroy
-        end 
-      end
-      @liste_adresse = ServiceExecutant.all.pluck(:address).uniq
-      @liste_adresse.each do |adresse|
-        if ServiceExecutant.where('address = ?', adresse).count > 1 #plusieurs avec meme adresse on les décalle
-          ServiceExecutant.where('address = ?', adresse).each_with_index do |service,i|
-            service.address = Geocoder.search([service.latitude, service.longitude+0.03*i]).first.address
-            service.save
-          end
-        end
-      end
-  end
+    end
+  end 
+
 end

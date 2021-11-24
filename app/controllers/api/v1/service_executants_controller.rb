@@ -25,30 +25,6 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     se_color = Hash.new
 
     autoCompleteResults.each do |se|
-      #point = 0
-      #total_ind = 0
-
-      #se.indicateur_executions.where.not(valeur: nil).where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month).each do |exec|
-      #  if exec.valeur <= exec.indicateur.seuil_1
-      #    point += 1
-      #  elsif exec.valeur > exec.indicateur.seuil_1 && exec.valeur <= exec.indicateur.seuil_2
-      #    point += 2
-      #  elsif exec.valeur > exec.indicateur.seuil_2
-      #    point += 3
-      #  end
-      #  total_ind += 1
-      
-      #end 
-
-      #  valeur_noir = point / total_ind
-      #  point += valeur_noir * se.indicateur_executions.where(valeur: nil).where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month).count 
-      #  if point <= 19
-      #    se_color[se.id] = "vert"
-      #  elsif point > 19 && point <= 27
-      #    se_color[se.id] = "jaune"
-      #  elsif point > 27
-      #    se_color[se.id] = "rouge"
-      #  end
       se_color[se.id] = "jaune"
     end 
 
@@ -63,39 +39,20 @@ class Api::V1::ServiceExecutantsController < ApplicationController
   end
 
   def search #page carto se
-    if params[:search_service_executants] && params[:search_service_executants].length != 0
-      autoCompleteList = ServiceExecutant.ransack(libelle_cont: params[:search_service_executants]).result(distinct: true)
-      autoCompleteResults = ServiceExecutant.ransack(libelle_cont: params[:search_service_executants]).result(distinct: true)
-      term = params[:search_service_executants]
-    elsif params[:search_ministeres] && params[:search_ministeres].length != 0 
-      autoCompleteList = Ministere.ransack(name_cont: params[:search_ministeres]).result(distinct: true)
-      @arr_ministere = autoCompleteList.pluck(:id).uniq
-      autoCompleteResults = ServiceExecutant.where(ministere_id: @arr_ministere)
-      term = params[:search_ministeres]
-    elsif params[:search_blocs] && params[:search_blocs].length != 0 
-      autoCompleteList = OrganisationFinanciere.ransack(name_cont: params[:search_blocs]).result(distinct: true)
-      @arr_bloc = autoCompleteList.pluck(:id).uniq
-      autoCompleteResults = ServiceExecutant.where(organisation_financiere_id: @arr_bloc)
-      term = params[:search_blocs]
-    elsif params[:search_type_services] && params[:search_type_services].length != 0
-      autoCompleteList = TypeService.ransack(name_cont: params[:search_type_services]).result(distinct: true)
-      @arr_type = autoCompleteList.pluck(:id).uniq
-      autoCompleteResults = ServiceExecutant.where(type_service_id: @arr_type)
-      term = params[:search_type_services]
+    if params[:search_service_executants].length != 0
+      search_service_executants = params[:search_service_executants]
+      autoCompleteResults = ServiceExecutant.where(id: search_service_executants)
+    elsif params[:search_ministeres].length != 0 
+      ministeres_id = params[:search_ministeres]
+      autoCompleteResults = ServiceExecutant.where(ministere_id: ministeres_id)
+    elsif params[:search_blocs].length != 0 
+      blocs_id = params[:search_blocs]
+      autoCompleteResults = ServiceExecutant.where(organisation_financiere_id: blocs_id)
+    elsif params[:search_type_services].length != 0
+      types_id = params[:search_type_services]
+      autoCompleteResults = ServiceExecutant.where(type_service_id: types_id)
     else
-      if params[:showSe] == true 
-        autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
-      elsif params[:showMinistere] == true 
-        autoCompleteList = Ministere.all.order(name: :asc)
-      elsif params[:showType] == true 
-        autoCompleteList = TypeService.all.order(name: :asc)
-      elsif params[:showBloc] == true
-        autoCompleteList = OrganisationFinanciere.all.order(name: :asc)
-      else
-        autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
-      end
       autoCompleteResults = ServiceExecutant.all
-      term= ''
     end 
     if params[:effectif] && params[:effectif].length != 0
       autoCompleteResults = autoCompleteResults.where('effectif <= ?', params[:effectif].to_i)
@@ -113,7 +70,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       cgf = 0
     end 
 
-    response = {autoCompleteResults: autoCompleteResults, autoCompleteList: autoCompleteList, term: term, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services]}
+    response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services]}
     render json: response
   end 
 
@@ -176,6 +133,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     response = {autoCompleteResults: autoCompleteResults, autoCompleteList: autoCompleteList, term: term, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
     render json: response
   end 
+
 
   def search_marker
     service_executant = ServiceExecutant.where(id: params[:q])

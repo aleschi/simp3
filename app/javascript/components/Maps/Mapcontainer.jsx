@@ -159,14 +159,14 @@ export class Mapcontainer extends React.Component {
           <span><i className="fas fa-map-marker cvert"></i> Performance Globale {'\u003C'} X </span>
           <span><i className="fas fa-map-marker cjaune"></i> X {'\u003C'}  Performance Globale {'\u003C'} Y </span>
           <span><i className="fas fa-map-marker crouge"></i> Y {'\u003C'} Performance Globale </span> 
-      </div><div className="d24"></div><div className="map_legende"> <span>Indicateur rouge = 3 points</span> <span>Indicateur jaune = 2 points</span> <span>Indicateur vert = 1 point</span></div></div>
+      </div><div className="d24"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
     }else{
       return this.state.indicateur_n.map((result, index) => ( 
-      <div key={index} className="map_legende">
+      <div key={index}><div className="map_legende">
           <span><i className="fas fa-map-marker cvert"></i> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
           <span><i className="fas fa-map-marker cjaune"></i> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
           <span><i className="fas fa-map-marker crouge"></i> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span><i className="fas fa-map-marker cgris"></i> Pas de valeur </span>
+          <span><i className="fas fa-map-marker cgris"></i> Pas de valeur </span></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
       </div>
       ))
     }

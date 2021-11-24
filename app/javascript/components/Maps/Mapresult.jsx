@@ -6,31 +6,41 @@ export class Mapresult extends React.Component {
         super(props);
         this.state = {
             service_ex: this.props.service_ex,
-            indicateur_executions: this.props.indicateur_executions
+            indicateur_executions: this.props.indicateur_executions,
+            showind: 0,
         }
+        this.handlePopoverOpen = this.handlePopoverOpen.bind(this);
+        this.handlePopoverClose = this.handlePopoverClose.bind(this);
     }
     componentDidUpdate(prevProps) {
       if (this.props.service_ex !== prevProps.service_ex) {
         this.setState({service_ex: this.props.service_ex, indicateur_executions: this.props.indicateur_executions});
       }
     }
+    handlePopoverOpen(event){   
+      this.setState({ showind: event.target.id}); 
+    }
+    handlePopoverClose(event){
+      this.setState({showind: 0});
+    }
+
     displayInd = () => {
     return this.state.indicateur_executions.map((indicateur_execution, index) => {
     if (indicateur_execution.valeur == null ){
-    return <span key={index}  className="box_indn">{indicateur_execution.indicateur.name} : X {indicateur_execution.indicateur.unite} </span>
+    return <span key={index}  className="box_indn" id={indicateur_execution.indicateur.id}  onMouseOver={this.handlePopoverOpen} onMouseOut={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : X {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
     }
     else if (indicateur_execution.valeur <= indicateur_execution.indicateur.seuil_1 ){
-      return <span key={index}  className="box_indv">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+      return <span key={index}  className="box_indv" id={indicateur_execution.indicateur.id} onMouseOver={this.handlePopoverOpen} onMouseOut={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
      }
      else if(indicateur_execution.valeur > indicateur_execution.indicateur.seuil_1 && indicateur_execution.valeur < indicateur_execution.indicateur.seuil_2 ){
-     return <span key={index}  className="box_indj">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+     return <span key={index}  className="box_indj" id={indicateur_execution.indicateur.id} onMouseOver={this.handlePopoverOpen} onMouseOut={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
 
      }
      else if(indicateur_execution.valeur >= indicateur_execution.indicateur.seuil_2 ){
-      return <span key={index}  className="box_indr">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+      return <span key={index}  className="box_indr" id={indicateur_execution.indicateur.id} onMouseOver={this.handlePopoverOpen} onMouseOut={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
      }
      else {
-     return <span key={index}  className="box_indn">{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} </span>
+     return <span key={index}  className="box_indn" id={indicateur_execution.indicateur.id}  onMouseOver={this.handlePopoverOpen} onMouseOut={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
      }
     })
 
