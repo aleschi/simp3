@@ -73,24 +73,17 @@ class Newindicateur_execution extends React.Component {
         return (
         <div>
         <Header />
-        <div className="pd24">
-            <div className="d32"></div>
-            <Row className=" loader_box align_center">
-              <Col sm={12} lg={6}>
-                <div className="titre_part">Fichier MP3</div>
-                <div className="d24"></div>
-                { this.state.date_fichier ? 
-                <div className="texte_etiquette">Dernière importation : {Moment(this.state.date_fichier).format('DD/MM/YYYY')}</div>          
+        <div className="fr-container">    
+        <div className="fr-grid-row fr-grid-row--gutters">
+          <div className="fr-col-lg-8">
+            <h1 className="fr-my-5w">Ajouter un fichier </h1>
+            { this.state.date_fichier ? 
+                <p className="fr-mb-5w">Dernière importation : {Moment(this.state.date_fichier).format('DD/MM/YYYY')}</p>          
                 : null }
-              </Col>
-              <Col sm={12} lg={6}>
 
-              { this.state.loading ? <div className="loader_box"><div className="texte_etiquette text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </div><div className="d24"></div> <div className ="loader"></div></div> : 
-                <div>
-                <h1 className="titre_part text-center">
-                 Ajouter un fichier 
-                </h1>
-                <div className="d24"></div>
+
+              { this.state.loading ? <div className="loader_box"><p className="fr-my-5w text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </p> <div className ="loader"></div></div> : 
+                <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}> 
                  <Dropzone accept='.xlsx' onDrop={this.onDrop}>
                   {({getRootProps, getInputProps}) => (
@@ -107,13 +100,13 @@ class Newindicateur_execution extends React.Component {
                     </div>
                   )}
                   </Dropzone>
-                  <div className="text-center"><button type="submit" className="bouton">Envoyer</button></div>
+                  <div><button type="submit" className="fr-btn">Envoyer</button></div>
                 </form>               
-                <div className="d32"></div>
+              
                 </div>
               }
-              </Col>
-            </Row>
+             </div>
+            </div>
         </div>
         <Footer />
         </div>

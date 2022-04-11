@@ -225,16 +225,28 @@ class Carto_perf extends React.Component {
     <div>
         <Header />
         
-        <div className="map_component">
+        <div className="fr-container">    
+        <div className="fr-grid-row fr-grid-row--gutters">
+          <div className="fr-col-lg-12">
+            <h1 className="fr-my-5w">Cartographie des performances</h1>
+          </div>
+        </div>
+        <div className="fr-grid-row fr-grid-row--gutters">
+
+          <div className="fr-col-12 fr-col-lg-4">
           <Mapsearch_perf handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
           indicateurs={this.state.indicateurs}
           service_executants={this.state.service_executants}
-          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} autoCompleteList={this.state.autoCompleteList} t/>
+          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} autoCompleteList={this.state.autoCompleteList} />
+          </div>
+          <div className="fr-col-12 fr-col-lg-8">
         
         { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
           <Mapcontainer handleSubmitDate={this.handleSubmitDate} startDate={this.state.startDate} service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} /> 
    
         }
+        </div>
+        </div>
         </div>
         
         <Footer />    

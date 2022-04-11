@@ -1,5 +1,5 @@
 import React from "react";
-
+import Moment from 'moment';
 
 export class Mapresult extends React.Component {
     constructor(props){
@@ -8,6 +8,7 @@ export class Mapresult extends React.Component {
             service_ex: this.props.service_ex,
             indicateur_executions: this.props.indicateur_executions,
             showind: 0,
+            startDate: this.props.startDate,
         }
         this.handlePopoverOpen = this.handlePopoverOpen.bind(this);
         this.handlePopoverClose = this.handlePopoverClose.bind(this);
@@ -63,13 +64,13 @@ render() {
             <div className="d12"></div>
             <div className="texte_etiquette">Type de structure : {service_executant.type_structure}</div>
             <div className="d12"></div>
-            <div className="texte_etiquette"><b>{service_executant.effectif}</b> agents</div>
+            <div className="texte_etiquette"><b>{service_executant.effectif}</b> utilisateurs Chorus</div>
             <div className="d12"></div>
             <div className="align_flex">
                 <div className="box_infor">5 EJ</div><div className="box_infor">3 SF</div><div className="box_infor">1 DP</div>
             </div>
             <div className="d12"></div>
-            <div className="texte_etiquette">Dernières données reçues </div>
+            <div className="texte_etiquette">Valeurs des indicateurs sur le mois ({Moment(this.state.startDate).format('MMM YYYY')}) </div>
             <div className="d12"></div>
             <div>
                 {this.displayInd()} 

@@ -59,7 +59,7 @@ class Newindicateur extends React.Component {
                     <input type="file" ref={this.fileInput} name="file" accept='.csv' onChange={this.changeHandler}/>
                   </label>
                   <br />
-                  <button type="submit" className="bouton mt-3">Envoyer</button>
+                  <button type="submit" className="fr-btn mt-3">Envoyer</button>
                 </form>
                 <div className="d24"></div>
                 <div className="d24"></div>

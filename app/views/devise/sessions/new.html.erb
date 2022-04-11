@@ -1,34 +1,53 @@
-<div class="logo_header">
-  <%= image_tag 'logo_ministere2.svg'%>
-</div>
-<div class='w100'>
-
-
-    <div class="login_box">
+<header role="banner" class="fr-header">
+    <div class="fr-header__body">
+        <div class="fr-container">
+            <div class="fr-header__body-row">
+                <div class="fr-header__brand fr-enlarge-link">
+                    <div class="fr-header__brand-top">
+                        <div class="fr-header__logo">
+                            <p class="fr-logo">
+                                Ministère
+                                <br>de l'économie<br>des finances<br>et de la relance
+                            </p>
+                        </div>
+                    </div>
+                    <div class="fr-header__service">
+                        <a href="/" title="Accueil - SIMULAE">
+                          <p class="fr-header__service-title">SIMP3</p>
+                        </a>
+                        <p class="fr-header__service-tagline">Suivi des indicateurs MP3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="fr-container">    
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-lg-6 fr-col-offset-lg-3">
        
-      <h1 class="logo_connexion ">Connectez-vous</h1>
-      <div class="d32"></div>
+      <h1 class="fr-my-5w">Connectez-vous</h1>
+    
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-        <div class="form">
-          <%= f.label :email, "Adresse mail" %>
-          <%= f.email_field :email,required: true, autofocus: true, autocomplete: "email",class:"form-field", id: "form-field1" %>
-        </div>
-        <div class="d24"></div>
-        <div class="form">
-          <%= f.label :password, "Mot de passe" %>
-          <%= f.password_field :password,required: true, autocomplete: "current-password",class:"form-field", id: "form-field2" %>
+        <div class="fr-input-group ">
+          <label class="fr-label" for="form-field1">Adresse mail</label>
+          <%= f.email_field :email,required: true, autofocus: true, autocomplete: "email",class:"fr-input", id: "form-field1" %>
         </div>
 
-        <div class="d32"></div>
-        <div class="text-center">
-          <%= f.submit "Connexion", class:"bouton" %>
+        <div class="fr-input-group ">
+          <label class="fr-label" for="form-field1">Mot de passe</label>
+          <%= f.password_field :password,required: true, autocomplete: "current-password",class:"fr-input", id: "form-field2" %>
         </div>
-        <div class="d24"></div>
+
+     
+        <div class="">
+          <%= f.submit "Connexion", class:"fr-btn" %>
+        </div>
+
       <% end %>
     </div>
-    <div class="d32"></div>
- 
-
+  </div>
 </div>
+
 

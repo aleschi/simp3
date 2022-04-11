@@ -97,7 +97,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         title: {
             text: title_i,
             style: {
-            fontSize: '15px',
+            fontSize: '16px',
             fontWeight: "900",
             color: '#1E1E1E',
             }

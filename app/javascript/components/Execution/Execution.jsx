@@ -142,25 +142,32 @@ class Execution extends React.Component {
 
     <div>
         <Header /> 
-        
-          
-          <div className="indicateurs_component">  
+        <div className="fr-container">    
+        <div className="fr-grid-row fr-grid-row--gutters">
+          <div className="fr-col-lg-12">
+            <h1 className="fr-my-5w">Suivi des indicateurs</h1>
+          </div>
+        </div>
+        <div className="fr-grid-row fr-grid-row--gutters">
+
+          <div className="fr-col-12 fr-col-lg-4">        
             <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
             indicateurs={this.state.indicateurs}
             service_executants={this.state.service_executants}
             handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term}/>
+          </div>
+
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :
-            <div className="indicateurs_chart_box">
+            <div className="fr-col-12 fr-col-lg-8">
+                <Execution_infos indicateur_n={this.state.indicateur_n}/>
                 <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name} data_inter_ministerielle={this.state.data_inter_ministerielle}/>
 
                 <Execution_table indicateur_executions={this.state.indicateur_executions}/>
             </div>
           }
-            <Execution_infos indicateur_n={this.state.indicateur_n}/>
-          </div>
-      
             
-        
+          </div>
+        </div>
         <Footer />    
     </div>
     

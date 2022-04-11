@@ -11,36 +11,36 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 	
 	    return (
 
-	    <div className="indicateurs_search_box">
+	    <div>
 	    	<div className="align_flex">
 	          <div className="map_se"><span>{csp}</span><br/>CSP</div>
 	          <div className="map_se"><span>{sfact}</span><br/>SFACT</div>
 	          <div className="map_se"><span>{cgf}</span><br/>CGF</div>
 	        </div>
-	        <div className="d24"></div>
-			<div className="box_etiquette">
-				<div className="titre_etiquette text-center">Ma recherche </div>
-				<div className="d12"></div>
+	   
+
+			<div className="fr-my-3w">
+				<h3 className="fr-mb-3w">Ma recherche </h3>
 				
-				<div className="texte_etiquette formw">Je souhaite visualiser l'indicateur 
-				<select name="search_indicateur" onChange={handleChange} required>
+				<div className="fr-select-group">
+				<label htmlFor="indicateur" className="fr-label" >Je souhaite visualiser l'indicateur</label> 
+				<select className="fr-select" name="search_indicateur" id="indicateur" onChange={handleChange} required>
 					{indicateurs.map((indicateur, index) => (
 		              <option key={index} value={indicateur.name}>{indicateur.name}</option>
 		            ))}
 				</select></div>
 
-				<div className="d12"></div>
-				<div className="texte_etiquette formw">Concernant les 
-				<select name="type_structure" onChange={handleChangeStructure}>					
+				<div className="fr-select-group">
+				<label htmlFor="choixservice" className="fr-label" >Concernant les </label>
+				<select className="fr-select" name="type_structure" id="choixservice" onChange={handleChangeStructure}>					
 		            <option value="Service">Services Exécutants</option>
 		            <option value="Ministere">Ministères</option>
 		            <option value="Bloc">Organisation financière</option>
 		            <option value="Type">Type de service</option>		            
 				</select></div>
 
-				<div className="d12"></div>
-				<div className="texte_etiquette formw">
-				Ma recherche concerne 
+				<div className="fr-select-group">
+				<label htmlFor="choix" className="fr-label" >Ma recherche concerne </label>
 				{ showSe ? 
 				<div className="form_checkbox">
 		            <Autocomplete
@@ -161,25 +161,25 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 				
 				</div>
 
-				<div className="d12"></div>
-	            <div className="texte_etiquette formw">Afficher 
-	            <select name="type_structure" onChange={handleChange} >  
+				<div className="fr-select-group">
+				<label htmlFor="structure" className="fr-label" >Afficher </label>
+	            <select className="fr-select" name="type_structure" id="structure" onChange={handleChange} >  
 	                    <option value="ALL">Toutes les structures</option>
 	                    <option value="CSP">CSP</option>
 	                    <option value="SFACT">SFACT</option>
 	                    <option value="CGF">CGF</option>             
 	            </select></div>
 
-				<div className="d12"></div>
-				<div className="texte_etiquette formw">Afficher les SE de 
-				<select name="effectif" onChange={handleChange} >
+				<div className="fr-select-group">
+				<label htmlFor="se" className="fr-label" >Afficher les SE de </label>
+				<select className="fr-select" name="effectif" id="se" onChange={handleChange} >
 					<option value="200">Tous les effectifs</option>					
 		            <option value="100">Moins de 100 Utilisateurs Chorus</option>
 		            <option value="50">Moins de 50 Utilisateurs Chorus</option>
 		            <option value="10">Moins de 10 Utilisateurs Chorus</option>
 		            <option value="5">Moins de 5 Utilisateurs Chorus</option>		            
 				</select></div>
-				<div className="d24"></div>
+				
 				
 			</div>  
 	    </div>

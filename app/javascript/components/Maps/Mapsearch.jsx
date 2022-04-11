@@ -10,19 +10,20 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export default ({autoCompleteResults,autoCompleteList,csp, sfact,cgf,handleSubmit, handleChange,handleChangeStructure, showSe, showMinistere, showType, showBloc}) => {
 	
     return (
-    <div className="map_box">
+    <div>
         <div className="align_flex">
           <div className="map_se"><span>{csp}</span><br/>CSP</div>
             <div className="map_se"><span>{sfact}</span><br/>SFACT</div>
             <div className="map_se"><span>{cgf}</span><br/>CGF</div>
       
         </div>
-        <div className="d24"></div>
-        <div className="box_etiquette">
-            <div className="titre_etiquette text-center">Ma recherche </div>
-            <div className="d12"></div>
-            <div className="texte_etiquette formw">Je souhaite afficher un 
-            <select name="type_structure" onChange={handleChangeStructure}>         
+        
+        <div className="fr-my-3w">
+            <h3 className="fr-mb-3w">Ma recherche </h3>
+     
+            <div className="fr-select-group">
+            <label htmlFor="choixservice" className="fr-label" >Je souhaite afficher un </label>
+            <select className="fr-select"  name="type_structure" id="choixservice" onChange={handleChangeStructure}>         
                 <option value="Service">Service Exécutant</option>
                 <option value="Ministere">Ministère</option>
                 <option value="Bloc">Organisation financière</option>
@@ -30,8 +31,8 @@ export default ({autoCompleteResults,autoCompleteList,csp, sfact,cgf,handleSubmi
             </select></div>
             <div className="d12"></div>
             
-            <div className="texte_etiquette formw">
-            Ma recherche concerne 
+            <div className="fr-select-group">
+            <label htmlFor="choix" className="fr-label" >Ma recherche concerne </label>
             { showSe ? 
             <div className="form_checkbox">
                     <Autocomplete
@@ -156,18 +157,18 @@ export default ({autoCompleteResults,autoCompleteList,csp, sfact,cgf,handleSubmi
 
             
 
-            <div className="d12"></div>
-            <div className="texte_etiquette formw">Afficher
-            <select name="type_structure" onChange={ handleChange} >  
+            <div className="fr-select-group">
+            <label htmlFor="structure" className="fr-label" >Afficher </label>
+            <select className="fr-select" id="structure" name="type_structure" onChange={ handleChange} >  
                     <option value="ALL">Toutes les structures</option>
                     <option value="CSP">CSP</option>
                     <option value="SFACT">SFACT</option>
                     <option value="CGF">CGF</option>             
             </select></div>
 
-            <div className="d12"></div>
-            <div className="texte_etiquette formw">Afficher les SE de
-            <select name="effectif" onChange={ handleChange} >  
+            <div className="fr-select-group">
+            <label htmlFor="se" className="fr-label" >Afficher les SE de </label>
+            <select className="fr-select" id="se" name="effectif" onChange={ handleChange} >  
                     <option value="200">Tous les effectifs</option>
                     <option value="100">Moins de 100 Utilisateurs Chorus</option>
                     <option value="50">Moins de 50 Utilisateurs Chorus</option>

@@ -11,29 +11,28 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 
 	    return (
 
-	    <div className="indicateurs_search_box">
-			<div className="box_etiquette">
-				<div className="titre_etiquette text-center">Ma recherche </div>
-				<div className="d12"></div>
+			<div>
+				<h3 className="fr-mb-3w">Ma recherche </h3>
+				
 		
-				<div className="texte_etiquette formw">Je souhaite visualiser l'indicateur 
-				<select name="search_indicateur" onChange={handleChange} required>
+				<div className="fr-select-group">
+				<label htmlFor="indicateur" className="fr-label" >Je souhaite visualiser l'indicateur </label>
+				<select className="fr-select" id="indicateur" name="search_indicateur" onChange={handleChange} required>
 					{indicateurs.map((indicateur, index) => (
 		              <option key={index} value={indicateur.name}>{indicateur.name}</option>
 		            ))}
 				</select></div>
 
-				<div className="d12"></div>
-				<div className="texte_etiquette formw">Concernant les 
-				<select name="type_structure" onChange={handleChangeStructure}>					
+				<div className="fr-select-group">
+				<label htmlFor="choixservice" className="fr-label" >Concernant les </label>
+				<select className="fr-select" id="choixservice" name="type_structure" onChange={handleChangeStructure}>					
 		            <option value="Service">Services Exécutants</option>
 		            <option value="Ministere">Ministères</option>
 		                      
 				</select></div>
 
-				<div className="d12"></div>
-				<div className="texte_etiquette formw">
-				Ma recherche concerne 
+				<div className="fr-select-group">
+				<label htmlFor="choix" className="fr-label" >Ma recherche concerne </label>
 				{ showSe ? 
 				<div className="form_checkbox">
 		            <Autocomplete
@@ -96,9 +95,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 
 				
 				</div>
-				<div className="d24"></div>
-				
-			</div>  
+ 
 	    </div>
 	    
 	    );

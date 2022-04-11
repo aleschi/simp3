@@ -57,36 +57,36 @@ export class Execution_table extends React.Component {
             ))
 
     return (
-    <div>
-    <div className="d24"></div>
-    <div className="tr"><CSVLink data={data_to_download} headers={headers} filename={"table_indicateurs.csv"} className="bouton">
-        <i className="fas fa-cloud-download-alt"></i>
+    <div className="fr-my-3w">
+   
+      <div className="tr"><CSVLink data={data_to_download} headers={headers} filename={"table_indicateurs.csv"} className="fr-btn">
+       <span className="fr-fi-file-download-fill" aria-hidden="true"></span> Télécharger le tableau
       </CSVLink></div>
-    <div className="table" >
-	    <table className="table-striped">
-	      	<thead>
-	        <tr>
-	        	<th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date"><i className="fas fa-sort"></i></button></th>
-	        	<th scope="col">Service Exécutant</th>
-	        	<th scope="col">Code Service Exécutant</th>
-	        	<th scope="col">Ministère</th>
-	        	<th scope="col">Organisation Financière</th>
-	        	<th scope="col">Type Service</th>
-	          	<th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur"><i className="fas fa-sort"></i></button></th>
-	          	
-	     	
-	        </tr>
-	      	</thead>
 
-	      	<tbody>
-	      	{this.state.indicateur_executions.map((indicateur_execution, index) => (
-	        <tr key={index}><td>{indicateur_execution.date}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{indicateur_execution.service_executant.type_service.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }{indicateur_execution.indicateur.unite}</td></tr>
-	        	))}
-	      	</tbody>
-	    </table>
+      <div className="fr-table fr-my-2w fr-table--no-caption">
+        <table>
+           <caption>Liste des indicateurs MP3</caption>
+            <thead>
+                <tr>
+                  <th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date"><i className="fas fa-sort"></i></button></th>
+                  <th scope="col">Service Exécutant</th>
+                  <th scope="col">Code Service Exécutant</th>
+                  <th scope="col">Ministère</th>
+                  <th scope="col">Organisation Financière</th>
+                  <th scope="col">Type Service</th>
+                    <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur"><i className="fas fa-sort"></i></button></th>
+                </tr>
+            </thead>
+            <tbody>
+                {this.state.indicateur_executions.map((indicateur_execution, index) => (
+                  <tr key={index}><td>{indicateur_execution.date}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{indicateur_execution.service_executant.type_service.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }{indicateur_execution.indicateur.unite}</td></tr>
+                ))}
+            
+            </tbody>
+        </table>
+      </div>
 
-
-    </div>
+  
     </div>
     
     );

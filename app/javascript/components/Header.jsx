@@ -1,8 +1,7 @@
 import React from "react";
-import logoUrl from '../../assets/images/logo_ministere2.svg';
 import { Link } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
-import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'react-bootstrap';
+
 
 class Header extends React.Component {
 	constructor(props) {
@@ -10,10 +9,8 @@ class Header extends React.Component {
 	    this.state = { 
 	      isLoggedIn: false,
 	      isAdmin: false,
-	     };
-	    
+	     };	    
 	}
-
 	
     componentDidMount() {
       const url = "/check_user_status";
@@ -31,31 +28,79 @@ class Header extends React.Component {
 
     render() {
     return (  
-		<div>
-		  	<div className="logo_header">
-		    	<img src={logoUrl} alt="DB" />
-		  	</div>
-		  	<div className="nav_header_box">
-			  	<div className="nav_header">
-			  		<div className="nav_link"><NavLink exact to='/' activeClassName="nav_link nav_link_active">Cartographie des services exécutants</NavLink></div>
-			  		<div className="nav_link"><NavLink exact to='/cartographie_performance' activeClassName="nav_link nav_link_active">Cartographie des performances</NavLink></div>
-			  		<div className="nav_link"><NavLink exact to='/indicateur_executions' activeClassName="nav_link nav_link_active">Suivi des indicateurs</NavLink></div>
-			  		<div className="nav_link"><NavLink exact to='/indicateurs' activeClassName="nav_link nav_link_active">Liste des indicateurs</NavLink></div>
-			  		
-			  		
-			  		
-			  		
-			  		<Dropdown className="user_dropdown">
-			  			<Dropdown.Toggle  className="user_dropdown_button"><i className="fas fa-user-circle"></i></Dropdown.Toggle>
-			  			<Dropdown.Menu className="">
-			  				{this.state.isAdmin ? <div className="nav_link"><Link to='/indicateur_executions/new'>Ajouter un document</Link></div> : null }
-			  				{this.state.isLoggedIn ? <div className="nav_link"><a rel="nofollow" data-method="delete" href="/logout" >Se déconnecter</a></div> : null }
-			  			</Dropdown.Menu>
-			  		</Dropdown>
+    	<header role="banner" className="fr-header">
+		    <div className="fr-header__body">
+		        <div className="fr-container">
+		            <div className="fr-header__body-row">
+		                <div className="fr-header__brand fr-enlarge-link">
+		                    <div className="fr-header__brand-top">
+		                        <div className="fr-header__logo">
+		                            <p className="fr-logo">
+		                                Ministère
+                                		<br/>de l'économie<br/>des finances<br/>et de la relance
+		                            </p>
+		                        </div>
+		                        <div className="fr-header__navbar">
+		                            <button className="fr-btn--menu fr-btn fr-link" data-fr-opened="false" aria-controls="modal-833" aria-haspopup="menu" title="Menu" id="fr-btn-menu-mobile">
+		                                Menu
+		                            </button>
+		                        </div>
+		                    </div>
+		                    <div className="fr-header__service">
+		                        <a href="/" title="Accueil - Datason | Direction du Budget">
+		                            <p className="fr-header__service-title">SIMP3</p>
+		                        </a>
+		                        <p className="fr-header__service-tagline">Suivi des indicateurs MP3</p>
+		                    </div>
+		                </div>
+		                <div className="fr-header__tools">
+		                    <div className="fr-header__tools-links">
+		                        <ul className="fr-links-group">
+		                        	{(this.state.isAdmin) &&
+		                            <li>
+		                                <a className="fr-link fr-fi-add-circle-line" href="/indicateur_executions/new" target="_self">Ajouter un document</a>
+		                            </li>
+		                            }
+		                            {this.state.isLoggedIn ?
+		                            <li>
+		                                <a className="fr-link fr-fi-lock-line" data-method="delete" href="/logout">Se déconnecter</a>
+		                            </li>
+		                            :
+		                            <li>
+		                                <a className="fr-link fr-fi-lock-line" href="/connexion">Se connecter</a>
+		                            </li>
+		                            }
+		                        </ul>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    <div className="fr-header__menu fr-modal" id="modal-833" aria-labelledby="fr-btn-menu-mobile">
+		        <div className="fr-container">
+		            <button className="fr-btn--close fr-link" aria-controls="modal-833">Fermer</button>
+		            <div className="fr-header__menu-links fr-hidden"></div>
+		            <nav className="fr-nav" id="navigation-832" role="navigation" aria-label="Menu principal">
+		                <ul className="fr-nav__list">
+		                    <li className="fr-nav__item">
+		                        <a className="fr-nav__link" href="/" target="_self">Cartographie des services exécutants</a>
+		                    </li>
+		                    <li className="fr-nav__item">
+		                        <a className="fr-nav__link" href="/cartographie_performance" target="_self">Cartographie des performances</a>
+		                    </li>
+		                    <li className="fr-nav__item">
+		                        <a className="fr-nav__link" href="/indicateur_executions" target="_self">Suivi des indicateurs</a>
+		                    </li>
+		                    <li className="fr-nav__item">
+		                        <a className="fr-nav__link" href="/indicateurs" target="_self">Liste des indicateurs</a>
+		                    </li>
+		                </ul>
+		            </nav>
+		        </div>
+		    </div>
+		</header>
 
-			  	</div>
-		  	</div>
-	    </div>
+		
     );
     }
 }

@@ -8,8 +8,8 @@ registerLocale('fr', fr)
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import Mapresult from "./Mapresult";
 const mapStyles = {
-	  width: '45%',
-	  height: '400px',
+	  width: '100%',
+	  height: '500px',
 
 	};
 import iconR from '../../../assets/images/icon_lieu_rouge.svg';
@@ -178,11 +178,11 @@ export class Mapcontainer extends React.Component {
     
    
       return (
-        <div className="map_map align_flex">
-        <div className="map_center">
+        <div className="map_map">
+        <div className="">
            
           <div className="map_date_box">
-            <div className="texte_etiquette">Date <i className="fas fa-caret-down"></i></div>
+            <p>Date <span className="fr-fi-arrow-down-s-line" aria-hidden="true"></span></p>
             <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
           </div>
           <div className="d12"></div>
@@ -213,7 +213,7 @@ export class Mapcontainer extends React.Component {
           
         </div>
         
-         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo}/> : null }
+         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} startDate={this.state.startDate} /> : null }
         </div>
       );
    }

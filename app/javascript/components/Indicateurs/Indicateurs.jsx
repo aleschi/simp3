@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 
 class Indicateurs extends React.Component {
   constructor(props) {
@@ -28,39 +30,45 @@ class Indicateurs extends React.Component {
    render() {
 
     const noIndicateur = (
-        <div className="texte_etiquette">Aucun indicateur</div>  
+        <p className="fr-my-2w">Aucun indicateur</p>  
     );
 
     return (
       <>
       <Header />
       
-      <div className="pd24">    
-  
-        {this.state.indicateurs.length > 0 ?  
-        <div className="table" >
-          <table className="table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Indicateur</th>
-                <th scope="col">Libellé</th>
-                <th scope="col">Type</th>
-                <th scope="col">Unité</th>
-                <th scope="col">Seuil 1</th>
-                <th scope="col">Seuil 2</th>
-              </tr>
-            </thead>
+      <div className="fr-container">    
+        <div className="fr-grid-row fr-grid-row--gutters">
+          <div className="fr-col-lg-12">
+          <h1 className="fr-my-5w">Liste des indicateurs MP3</h1>
+          {this.state.indicateurs.length > 0 ?  
+            <div className="fr-table fr-my-2w fr-table--no-caption">
+              <table>
+                 <caption>Liste des indicateurs MP3</caption>
+                  <thead>
+                      <tr>
+                          <th scope="col">Indicateur</th>
+                          <th scope="col">Libellé</th>
+                          <th scope="col">Type</th>
+                          <th scope="col">Unité</th>
+                          <th scope="col">Seuil 1</th>
+                          <th scope="col">Seuil 2</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {this.state.indicateurs.map((indicateur, index) => (
+                        <tr key={index}><td>{indicateur.name}</td><td>{indicateur.description}</td><td>{indicateur.type_indicateur}</td><td>{indicateur.unite}</td><td>{indicateur.seuil_1}</td><td>{indicateur.seuil_2}</td></tr>
+                          ))}
+                  
+                  </tbody>
+              </table>
+            </div>
+   
+              : noIndicateur }
+         
 
-            <tbody>
-              {this.state.indicateurs.map((indicateur, index) => (
-              <tr key={index}><td>{indicateur.name}</td><td>{indicateur.description}</td><td>{indicateur.type_indicateur}</td><td>{indicateur.unite}</td><td>{indicateur.seuil_1}</td><td>{indicateur.seuil_2}</td></tr>
-                ))}
-              </tbody>
-          </table>
+            </div>
           </div>
-            : noIndicateur }
-       
-          <div className="d24"></div> 
         </div>
       <Footer />
       </>
