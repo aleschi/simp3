@@ -45,6 +45,9 @@ export class Mapcontainer extends React.Component {
             activeMarker: {},          // Shows the active marker upon click
             selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
             startDate: this.props.startDate,
+            csp: this.props.csp,
+            sfact: this.props.sfact,
+            cgf: this.props.cgf,
         }
       this.onCloseInfo = this.onCloseInfo.bind(this);  
    
@@ -58,6 +61,9 @@ export class Mapcontainer extends React.Component {
       }
       if (this.props.indicateur_n !== prevProps.indicateur_n) {
         this.setState({indicateur_n: this.props.indicateur_n});
+      }
+      if (this.props.cgf !== prevProps.cgf) {
+      this.setState({cgf: this.props.cgf,sfact: this.props.sfact,csp: this.props.csp});
       }
     }
     
@@ -156,17 +162,17 @@ export class Mapcontainer extends React.Component {
      
     if (this.state.indicateur_n.length == 0){
       return <div><div className="map_legende">
-          <span><i className="fas fa-map-marker cvert"></i> Performance Globale {'\u003C'} X </span>
-          <span><i className="fas fa-map-marker cjaune"></i> X {'\u003C'}  Performance Globale {'\u003C'} Y </span>
-          <span><i className="fas fa-map-marker crouge"></i> Y {'\u003C'} Performance Globale </span> 
+          <span><span className="fr-fi-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Performance Globale {'\u003C'} X </span>
+          <span><span className="fr-fi-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> X {'\u003C'}  Performance Globale {'\u003C'} Y </span>
+          <span><span className="fr-fi-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Y {'\u003C'} Performance Globale </span> 
       </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
     }else{
       return this.state.indicateur_n.map((result, index) => ( 
       <div key={index}><div className="map_legende">
-          <span><i className="fas fa-map-marker cvert"></i> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-          <span><i className="fas fa-map-marker cjaune"></i> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-          <span><i className="fas fa-map-marker crouge"></i> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span><i className="fas fa-map-marker cgris"></i> Pas de valeur </span></div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+          <span><span className="fr-fi-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+          <span><span className="fr-fi-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+          <span><span className="fr-fi-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+          <span><span className="fr-fi-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span></div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
       </div>
       ))
     }
@@ -178,43 +184,51 @@ export class Mapcontainer extends React.Component {
     
    
       return (
-        <div className="map_map">
-        <div className="">
-           
-          <div className="map_date_box">
-            <p>Date <span className="fr-fi-arrow-down-s-line" aria-hidden="true"></span></p>
-            <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
+      <div className="fr-grid-row fr-grid-row--gutters">
+        <div className="fr-col-12 fr-col-lg-8">
+          <div className="map_map">        
+            <div className="map_date_box">
+              <p>Date <span className="fr-fi-arrow-down-s-line" aria-hidden="true"></span></p>
+              <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
+            </div>
+            <div className="d12"></div>
+            <div className="map">
+    	        <Map
+    	          google={this.props.google}
+    	          zoom={5}
+    	          style={mapStyles}
+    	          
+    	          initialCenter={{ lat: 48.52, lng: 2.19}}
+    	          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
+    	        >
+    	        {this.displayMarkers()}  
+    	        
+    	        <InfoWindow
+    	          marker={this.state.activeMarker}
+    	          visible={this.state.showingInfoWindow}
+    	          onClose={this.onClose}
+    	        >
+    	          <div>
+    	            <h4>{this.state.selectedPlace.name}</h4>
+    	          </div>
+    	        </InfoWindow>
+    	        </Map>
+            </div>
+            <div className="fr-my-3w">
+            {this.displayLegend()} 
+            </div>
           </div>
-          <div className="d12"></div>
-          <div className="map">
-  	        <Map
-  	          google={this.props.google}
-  	          zoom={5}
-  	          style={mapStyles}
-  	          
-  	          initialCenter={{ lat: 48.52, lng: 2.19}}
-  	          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
-  	        >
-  	        {this.displayMarkers()}  
-  	        
-  	        <InfoWindow
-  	          marker={this.state.activeMarker}
-  	          visible={this.state.showingInfoWindow}
-  	          onClose={this.onClose}
-  	        >
-  	          <div>
-  	            <h4>{this.state.selectedPlace.name}</h4>
-  	          </div>
-  	        </InfoWindow>
-  	        </Map>
-          </div>
-          <div className="d12"></div>
-          {this.displayLegend()} 
-          
         </div>
-        
+
+        <div className="fr-col-12 fr-col-lg-4">
+          <div className="align_flex">
+            <div className="map_se"><span>{this.state.csp}</span><br/>CSP</div>
+            <div className="map_se"><span>{this.state.sfact}</span><br/>SFACT</div>
+            <div className="map_se"><span>{this.state.cgf}</span><br/>CGF</div>    
+          </div>
          { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} startDate={this.state.startDate} /> : null }
         </div>
+      </div>
       );
    }
 }

@@ -1,13 +1,12 @@
 @import 'react-datepicker/dist/react-datepicker';
-@import "font-awesome";
 
 html{
   height: 100%;
 }
 
 body div{
-  font-family: 'Marianne', sans-serif;
-  color: #1E1E1E;
+  font-family: Marianne, sans-serif;
+  color: var(--text-title-grey);
 }
 a{
   color: inherit !important; 
@@ -75,6 +74,9 @@ p{
 }
 .tr{
   text-align:right;
+}
+.tc{
+  text-align:center;
 }
 .w100{
   width:100%;
@@ -168,13 +170,13 @@ p{
   color:var(--text-label-grey) !important;
   font-size:1rem !important;
  
-  font-family: 'Marianne', sans-serif;
+  font-family: Marianne, sans-serif;
   }
 }
 .checkbox_li{
   color:var(--text-label-grey) !important;
   font-size:1rem !important;
-  font-family: 'Marianne', sans-serif; 
+  font-family: Marianne, sans-serif; 
   padding-left:10px;
 }
 
@@ -204,13 +206,6 @@ border-color:transparent;
   -o-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding:12px;
 }
-.titre_etiquette{
-  font-size:16px;
-  font-weight:bold;
-}
-.texte_etiquette{
-  font-size:13px;
-}
 
 .highcharts-credits{
   color:#fff !important;
@@ -218,11 +213,11 @@ border-color:transparent;
 }
 .map_se{
   width:33.3%;
-  color:#1E1E1E;
+  color:var(--text-title-grey) !important;
   font-size:16px;
   font-weight:bold;
   span{
-  color:#2323EA;
+  color:var(--text-action-high-blue-france) !important;
   }
 }
 
@@ -230,8 +225,8 @@ border-color:transparent;
   background-color: #23EADE;
   border-radius: 50px;
   padding: 4px 8px;
-  color:#000;
-  font-size:13px;
+  color:var(--text-title-grey);
+  font-size:14px;
   margin-right:5px;
 }
 
@@ -240,7 +235,7 @@ border-color:transparent;
   border-radius: 4px;
   padding: 4px;
   color:#42BAB3;
-  font-size:13px;
+  font-size:14px;
   margin:5px;
   display:inline-block;
   position:relative;
@@ -250,7 +245,7 @@ border-color:transparent;
   border-radius: 4px;
   padding: 4px;
   color:#E8CF4E;
-  font-size:13px;
+  font-size:14px;
   margin:5px;
   display:inline-block;
   position:relative;
@@ -260,7 +255,7 @@ border-color:transparent;
   border-radius: 4px;
   padding: 4px;
   color:#FF3E14;
-  font-size:13px;
+  font-size:14px;
   margin:5px;
   display:inline-block;
   position:relative;
@@ -270,7 +265,7 @@ border-color:transparent;
   border-radius: 4px;
   padding: 4px;
   color:#000;
-  font-size:13px;
+  font-size:14px;
   margin:5px;
   display:inline-block;
   position:relative;
@@ -278,16 +273,19 @@ border-color:transparent;
 
 .map_legende{
 text-align:center;
-  color:#6A6A6A;
+  color: var(--text-title-grey);
   font-size:10px;
   span{
-  margin-right:10px;
+  margin-right:5px;
   }
 }
 .react-datepicker__input-container input{
   border:none;
   border-bottom: 1px solid rgba(0,0,0,0.2);
   padding:4px 0px;
+  font-size:1rem;
+  font-family: Marianne !important;
+  color: var(--text-title-grey);
   &:hover{
   cursor:pointer;
   }
@@ -303,8 +301,14 @@ text-align:center;
   text-align:left !important;
 }
 
+.fr-card-pointer{
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0,0.1), 0 8px 16px -16px rgba(0, 0, 0,0.32) !important;
+}
+
+
 .map_date_box{
   width:150px;
+
   input{
   max-width:150px !important;
   }
@@ -315,11 +319,6 @@ text-align:center;
   font-weight:300;
   color:#8F8F8F;
   background-color:transparent;
-}
-
-.titre_part{
-  font-size:40px;
-  font-weight:bold;
 }
 
 .box_ind_hover{
@@ -342,7 +341,7 @@ text-align:center;
   padding:0 12px;
 }
 .map{
-  height:400px;
+  height:500px;
   width:100%;
 }
 .map_component, .indicateurs_component{
@@ -377,7 +376,4 @@ text-align:center;
 }
 .map_infos{
   width:33.3%;
-  position:absolute;
-  top:0px;
-  right:0px;
 }

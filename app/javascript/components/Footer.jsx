@@ -41,6 +41,9 @@ const Footer = () => (
 	                <li className="fr-footer__bottom-item">
 	                    <a href="#" className="fr-footer__bottom-link">Données personnelles & Gestion des cookies</a>
 	                </li>
+	                <li className="fr-footer__bottom-item">
+	                  <button className="fr-footer__bottom-link fr-fi-theme-fill fr-link--icon-left" aria-controls="fr-theme-modal" data-fr-opened="false">Paramètres d'affichage</button>
+	                </li>
 
 	            </ul>
 	            <div className="fr-footer__bottom-copy">

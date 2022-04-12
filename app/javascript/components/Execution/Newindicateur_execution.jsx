@@ -89,7 +89,7 @@ class Newindicateur_execution extends React.Component {
                   {({getRootProps, getInputProps}) => (
                     <div className="document-file-input" {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <div><i className="fas fa-plus-circle"></i></div>
+                      <div><span className="fr-fi-add-circle-fill cbleu" aria-hidden="true"></span></div>
                       <div className="d24"></div>
                       <div className="cgris"> Glissez votre fichier ici</div> 
                       <div className="d12"></div>

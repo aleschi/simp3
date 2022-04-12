@@ -28,20 +28,21 @@ export class Mapresult extends React.Component {
     displayInd = () => {
     return this.state.indicateur_executions.map((indicateur_execution, index) => {
     if (indicateur_execution.valeur == null ){
-    return <span key={index}  className="box_indn" id={indicateur_execution.indicateur.id}  onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : X {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
+    return <p key={index} className="fr-badge fr-mr-0-5v
+    fr-mb-0-5v" id={indicateur_execution.indicateur.id}  onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : X {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
     }
     else if (indicateur_execution.valeur <= indicateur_execution.indicateur.seuil_1 ){
-      return <span key={index}  className="box_indv" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
+      return <p key={index}  className="fr-mr-0-5v fr-mb-0-5v fr-badge fr-badge--green-emeraude " id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
      }
      else if(indicateur_execution.valeur > indicateur_execution.indicateur.seuil_1 && indicateur_execution.valeur < indicateur_execution.indicateur.seuil_2 ){
-     return <span key={index}  className="box_indj" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
+     return <p key={index}  className="fr-mr-0-5v fr-mb-0-5v fr-badge fr-badge--yellow-tournesol" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
 
      }
      else if(indicateur_execution.valeur >= indicateur_execution.indicateur.seuil_2 ){
-      return <span key={index}  className="box_indr" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
+      return <p key={index}  className="fr-mr-0-5v fr-mb-0-5v fr-badge fr-badge--pink-tuile" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
      }
      else {
-     return <span key={index}  className="box_indn" id={indicateur_execution.indicateur.id}  onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</span>
+     return <p key={index}  className="fr-badge fr-mr-0-5v" id={indicateur_execution.indicateur.id}  onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
      }
     })
 
@@ -49,34 +50,36 @@ export class Mapresult extends React.Component {
 render() {
 
     return (
-    <div className="map_infos">
+    <div className="fr-container fr-my-3w">
         {this.state.service_ex.map((service_executant, index) => (
         <div key={index}>
-        <div className="box_etiquette">
-            <div><button className="button_close" onClick={this.props.onCloseInfo}><i className="far fa-times-circle"></i></button></div>
-            <div className="titre_etiquette text-center">{service_executant.libelle}</div>
-            <div className="d12"></div>
-            <div className="texte_etiquette">Ministère : {service_executant.ministere.name}</div>
-            <div className="d12"></div>
-            <div className="texte_etiquette">Type de service : {service_executant.type_service.name}</div>
-            <div className="d12"></div>
-            <div className="texte_etiquette">Organisation Financière : {service_executant.organisation_financiere.name}</div>
-            <div className="d12"></div>
-            <div className="texte_etiquette">Type de structure : {service_executant.type_structure}</div>
-            <div className="d12"></div>
-            <div className="texte_etiquette"><b>{service_executant.effectif}</b> utilisateurs Chorus</div>
-            <div className="d12"></div>
-            <div className="align_flex">
-                <div className="box_infor">5 EJ</div><div className="box_infor">3 SF</div><div className="box_infor">1 DP</div>
-            </div>
-            <div className="d12"></div>
-            <div className="texte_etiquette">Valeurs des indicateurs sur le mois ({Moment(this.state.startDate).format('MMM YYYY')}) </div>
-            <div className="d12"></div>
-            <div>
-                {this.displayInd()} 
+          <div className="fr-card fr-card--no-arrow fr-card-pointer">
+            <div className="fr-card__body fr-pb-0">
+              <div><button className="fr-btn--close fr-btn fr-link" onClick={this.props.onCloseInfo}>Fermer</button></div>
+              <h3 className="fr-card__title tc">{service_executant.libelle}</h3>
               
+              <div className="fr-text--sm fr-mb-3v">Ministère : {service_executant.ministere.name}</div>
+             
+              <div className="fr-text--sm fr-mb-3v">Type de service : {service_executant.type_service.name}</div>
+             
+              <div className="fr-text--sm fr-mb-3v">Organisation Financière : {service_executant.organisation_financiere.name}</div>
+      
+              <div className="fr-text--sm fr-mb-3v">Type de structure : {service_executant.type_structure}</div>
+            
+              <div className="fr-text--sm fr-mb-3v"><b>{service_executant.effectif}</b> utilisateurs Chorus</div>
+             
+              <div className="align_flex fr-mb-3v">
+                  <p className="fr-tag fr-mr-0-5v">5 EJ</p><p className="fr-tag fr-mr-0-5v">3 SF</p><p className="fr-tag">1 DP</p>
+              </div>
+            
+              <div className="fr-text--sm fr-mb-3v">Valeurs des indicateurs sur le mois ({Moment(this.state.startDate).format('MMM YYYY')}) </div>
+             
+              <div className="fr-mb-3w">
+                  {this.displayInd()} 
+                
+              </div>
             </div>
-        </div>
+          </div>
         </div>
         ))}
     </div>

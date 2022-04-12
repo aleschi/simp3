@@ -36,7 +36,7 @@ class Indicateurs extends React.Component {
     return (
       <>
       <Header />
-      
+    
       <div className="fr-container">    
         <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-lg-12">
@@ -70,6 +70,7 @@ class Indicateurs extends React.Component {
             </div>
           </div>
         </div>
+
       <Footer />
       </>
     );

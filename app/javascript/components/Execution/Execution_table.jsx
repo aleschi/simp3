@@ -68,13 +68,13 @@ export class Execution_table extends React.Component {
            <caption>Liste des indicateurs MP3</caption>
             <thead>
                 <tr>
-                  <th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date"><i className="fas fa-sort"></i></button></th>
+                  <th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date"><span className="fr-fi-arrow-up-fill" aria-hidden="true"></span></button></th>
                   <th scope="col">Service Exécutant</th>
                   <th scope="col">Code Service Exécutant</th>
                   <th scope="col">Ministère</th>
                   <th scope="col">Organisation Financière</th>
                   <th scope="col">Type Service</th>
-                    <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur"><i className="fas fa-sort"></i></button></th>
+                    <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur"><span className="fr-fi-arrow-up-fill" aria-hidden="true"></span></button></th>
                 </tr>
             </thead>
             <tbody>

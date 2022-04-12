@@ -8,16 +8,16 @@ export default ({indicateur_n}) => {
     	
       {indicateur_n.map((indicateur, index) => (
         <div key={index}>
-        <div className="fr-callout fr-fi-information-line">
-          <p className="fr-callout__title">Indicateur {indicateur.name}</p>
-          <p className="fr-callout__text">
+        <div className="fr-highlight fr-mb-3w">
+          <p className="fr-text--lg fr-text--bold fr-mb-1w">Indicateur {indicateur.name}</p>
+          <p className="fr-text--sm fr-mb-1w">
           {indicateur.description}</p>
-          <p className="fr-callout__text">Unité : {indicateur.type_indicateur} en {indicateur.unite}</p>
-          <p className="fr-callout__text fr-hidden">Méthode de calcul : {indicateur.calcul}</p>
-          <p className="fr-callout__text fr-hidden">Remarques principales : {indicateur.remarque}</p>
+          <p className="fr-text--sm">Unité : {indicateur.type_indicateur} en {indicateur.unite}</p>
+          <p className="fr-text--sm fr-hidden">Méthode de calcul : {indicateur.calcul}</p>
+          <p className="fr-text--sm fr-hidden">Remarques principales : {indicateur.remarque}</p>
           <button className="fr-btn fr-hidden">Accéder à la liste des indicateurs</button>
         </div>
-        <div className="d24"></div>
+       
         </div>
       ))}
 	 

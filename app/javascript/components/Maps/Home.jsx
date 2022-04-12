@@ -214,22 +214,20 @@ class Home extends React.Component {
         <Header /> 
         
         <div className="fr-container">    
-        <div className="fr-grid-row fr-grid-row--gutters">
-          <div className="fr-col-lg-12">
-            <h1 className="fr-my-5w">Cartographie des services exécutants</h1>
+          <div className="fr-grid-row fr-grid-row--gutters">
+            <div className="fr-col-lg-12">
+              <h1 className="fr-my-5w">Cartographie des services exécutants</h1>
+            </div>
           </div>
-        </div>
-        <div className="fr-grid-row fr-grid-row--gutters">
-
-          <div className="fr-col-12 fr-col-lg-4">
-            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList}  csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}/>
-          </div>
-          <div className="fr-col-12 fr-col-lg-8">
+        
+            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}/>
+     
+        
+          
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
-            <Mapcontainer handleSubmitDate={this.handleSubmitDate} startDate={this.state.startDate} service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} /> 
+            <Mapcontainer handleSubmitDate={this.handleSubmitDate} startDate={this.state.startDate} service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} /> 
           }
-          </div>
-        </div>
+
         </div>
         
   
