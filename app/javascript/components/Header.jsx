@@ -63,7 +63,7 @@ class Header extends React.Component {
 		                            }
 		                            {this.state.isLoggedIn ?
 		                            <li>
-		                                <a className="fr-link fr-fi-lock-line" data-method="delete" href="/logout">Se déconnecter</a>
+		                                <a className="fr-link fr-fi-logout-box-r-line" data-method="delete" href="/logout">Se déconnecter</a>
 		                            </li>
 		                            :
 		                            <li>

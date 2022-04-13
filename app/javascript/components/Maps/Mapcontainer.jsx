@@ -63,7 +63,13 @@ export class Mapcontainer extends React.Component {
         this.setState({indicateur_n: this.props.indicateur_n});
       }
       if (this.props.cgf !== prevProps.cgf) {
-      this.setState({cgf: this.props.cgf,sfact: this.props.sfact,csp: this.props.csp});
+      this.setState({cgf: this.props.cgf});
+      }
+      if (this.props.sfact !== prevProps.sfact) {
+      this.setState({sfact: this.props.sfact});
+      }
+      if (this.props.csp !== prevProps.csp) {
+      this.setState({csp: this.props.csp});
       }
     }
     
@@ -184,7 +190,7 @@ export class Mapcontainer extends React.Component {
     
    
       return (
-      <div className="fr-grid-row fr-grid-row--gutters">
+      <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
         <div className="fr-col-12 fr-col-lg-8">
           <div className="map_map">        
             <div className="map_date_box">

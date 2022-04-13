@@ -220,7 +220,7 @@ class Home extends React.Component {
             </div>
           </div>
         
-            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}/>
+            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} handleSubmit={this.handleSubmit}/>
      
         
           

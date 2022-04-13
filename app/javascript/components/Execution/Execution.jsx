@@ -156,7 +156,7 @@ class Execution extends React.Component {
        
 
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :
-            <div className="fr-grid-row fr-grid-row--gutters fr-mt-3w">
+            <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
                 
                 <div className="fr-col-12 fr-col-lg-8">
                 <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name} data_inter_ministerielle={this.state.data_inter_ministerielle}/>

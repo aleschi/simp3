@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, csp, sfact,cgf, autoCompleteList}) => {
+export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, autoCompleteList}) => {
 	
 	    return (
 
@@ -180,7 +180,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 	        </div>
 	        <div className="fr-col-12 fr-col-lg-4">
 				<div className="fr-select-group">
-				<label htmlFor="se" className="fr-label" >Afficher les SE de </label>
+				<label htmlFor="se" className="fr-label" >Afficher les services exécutants de </label>
 				<select className="fr-select" name="effectif" id="se" onChange={handleChange} >
 					<option value="200">Tous les effectifs</option>					
 		            <option value="100">Moins de 100 Utilisateurs Chorus</option>

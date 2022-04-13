@@ -171,7 +171,14 @@ p{
   font-size:1rem !important;
  
   font-family: Marianne, sans-serif;
+  
   }
+}
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+  transform: translate(14px, 8px) scale(1) !important;
+}
+.css-16awh2u-MuiAutocomplete-root .MuiOutlinedInput-root{
+  padding:1.4px !important;
 }
 .checkbox_li{
   color:var(--text-label-grey) !important;
@@ -376,4 +383,11 @@ text-align:center;
 }
 .map_infos{
   width:33.3%;
+}
+.highcharts-button-symbol{
+  stroke:#FFF !important;
+  fill:#FFF !important;
+}
+.highcharts-button-box{
+  fill:var(--text-action-high-blue-france) !important;
 }
