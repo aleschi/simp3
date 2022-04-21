@@ -239,7 +239,7 @@ export class Mapcontainer extends React.Component {
    }
 }
 export default GoogleApiWrapper({
-       apiKey: ('AIzaSyCzB6sn07VIK_DzRsbm87THvZtEO1qPaNg'),
+       apiKey: ('AIzaSyCBEVHq2EbsHz4m37nb6nG-Fh-5PxK5o98'),
      
 })(Mapcontainer)
 

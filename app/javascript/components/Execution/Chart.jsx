@@ -38,7 +38,10 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         chart: {
             style:{
                 fontFamily: "Marianne",
-            },      
+
+            }, 
+            height:600,
+            reflow: true,     
         },
         rangeSelector: {
 

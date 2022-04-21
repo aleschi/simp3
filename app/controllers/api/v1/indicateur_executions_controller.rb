@@ -100,7 +100,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     end
 
     if service_executant_n.count > 0
-      indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :desc)
+      indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :asc)
     else
       indicateur_execution = []
     end

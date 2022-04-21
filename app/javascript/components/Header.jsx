@@ -83,16 +83,16 @@ class Header extends React.Component {
 		            <nav className="fr-nav" id="navigation-832" role="navigation" aria-label="Menu principal">
 		                <ul className="fr-nav__list">
 		                    <li className="fr-nav__item">
-		                        <a className="fr-nav__link" href="/" target="_self">Cartographie des services exécutants</a>
+		                        <NavLink exact to='/' activeClassName="fr-nav__link" className="fr-nav__link" target="_self" >Cartographie des services exécutants</NavLink>
 		                    </li>
 		                    <li className="fr-nav__item">
-		                        <a className="fr-nav__link" href="/cartographie_performance" target="_self">Cartographie des performances</a>
+		                        <NavLink exact to="/cartographie_performance" activeClassName="fr-nav__link" className="fr-nav__link" target="_self">Cartographie des performances</NavLink>
 		                    </li>
 		                    <li className="fr-nav__item">
-		                        <a className="fr-nav__link" href="/indicateur_executions" target="_self">Suivi des indicateurs</a>
+		                        <NavLink exact to="/indicateur_executions" activeClassName="fr-nav__link" className="fr-nav__link" target="_self">Suivi des indicateurs</NavLink>
 		                    </li>
 		                    <li className="fr-nav__item">
-		                        <a className="fr-nav__link" href="/indicateurs" target="_self">Liste des indicateurs</a>
+		                        <NavLink exact to="/indicateurs" activeClassName="fr-nav__link" className="fr-nav__link" target="_self">Liste des indicateurs</NavLink>
 		                    </li>
 		                </ul>
 		            </nav>

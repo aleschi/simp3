@@ -4,8 +4,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import Dropzone from 'react-dropzone';
 import Moment from 'moment';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+
 
 class Newindicateur_execution extends React.Component {
         constructor() {

@@ -1,5 +1,4 @@
 import React from "react";
-import logoUrl from '../../assets/images/logo_ministere2.svg';
 
 const Footer = () => (
 	<footer className="fr-footer" role="contentinfo" id="footer">
