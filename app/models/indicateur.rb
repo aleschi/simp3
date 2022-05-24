@@ -1,29 +1,36 @@
 class Indicateur < ApplicationRecord
-	has_many :indicateur_executions
+	has_many :indicateur_executions, dependent: :destroy
 
 	require 'csv'
+
+  require 'roo'
+  require 'axlsx'
   
   def self.import(file)
-    	CSV.foreach(file.tempfile) do |row|
-      		if !row[0].nil? && !row[0].empty? && row[0] != "Code"
-            if Indicateur.where('name = ?',row[0]).count > 0
-              @indicateur = Indicateur.where('name = ?',row[0]).first
-            else
-        			@indicateur = Indicateur.new 
-            end
-      			@indicateur.name = row[0]
-      			@indicateur.description = row[1]
-      			@indicateur.type_indicateur = row[2]
-      			@indicateur.unite = row[3]
-      			@indicateur.calcul = row[4]
-      			@indicateur.remarque = row[5]
-            @indicateur.seuil_1 = row[6]
-            @indicateur.seuil_2 = row[7]
-      			@indicateur.save
-    		end
-  		end
-    if Indicateur.where('description = ?','Libellés des indicateurs ').count > 0
-      Indicateur.where('description = ?','Libellés des indicateurs ').first.destroy
-    end
+      Indicateur.destroy_all
+      data = Roo::Spreadsheet.open(file.path)
+      headers = data.row(1) # get header row
+
+      data.each_with_index do |row, idx|
+        next if idx == 0 # skip header
+        row_data = Hash[[headers, row].transpose]
+        if Indicateur.where('name = ?',row_data['Code']).count > 0
+            @indicateur = Indicateur.where('name = ?',row_data['Code']).first
+        else
+            @indicateur = Indicateur.new 
+        end
+        @indicateur.name = row_data['Code']
+        @indicateur.description = row_data['Libellés des indicateurs']
+        @indicateur.type_indicateur = row_data['Informations à afficher']
+        @indicateur.unite = row_data['Unité indicateur']
+        @indicateur.calcul = row_data['Calcul']
+        @indicateur.remarque = row_data['Remarques principales']
+        if !row_data['seuil 1'].blank? && !row_data['seuil 1'].nil?
+          @indicateur.seuil_1 = row_data['seuil 1'].to_f
+          @indicateur.seuil_2 = row_data['seuil 2'].to_f
+        end
+        @indicateur.save
+      end
 	end
+  
 end

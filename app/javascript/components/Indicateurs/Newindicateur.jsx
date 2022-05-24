@@ -47,25 +47,23 @@ class Newindicateur extends React.Component {
         return (
         <div>
         <Header />
-        <div className="container mt-5">
-            <div className="row">
-              <div className="col-sm-12 col-lg-6 offset-lg-3">
-                <h1 className="font-weight-normal mb-5">
-                 Ajouter un fichier 
-                </h1>
+        <div className="fr-container">    
+          <div className="fr-grid-row fr-grid-row--gutters">
+            <div className="fr-col-lg-12">
+              <h1 className="fr-my-5w">Ajouter un fichier </h1>
+              <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}>
                   <label>
                     Envoyer un fichier :
-                    <input type="file" ref={this.fileInput} name="file" accept='.csv' onChange={this.changeHandler}/>
+                    <input type="file" ref={this.fileInput} name="file" accept='.xlsx' onChange={this.changeHandler}/>
                   </label>
                   <br />
                   <button type="submit" className="fr-btn mt-3">Envoyer</button>
                 </form>
-                <div className="d24"></div>
-                <div className="d24"></div>
-                
               </div>
+                
             </div>
+          </div>
         </div>
         <Footer />
         </div>

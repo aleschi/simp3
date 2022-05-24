@@ -33,9 +33,12 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     bloc = OrganisationFinanciere.all.order(name: :asc)
     type_service = TypeService.all.order(name: :asc)
 
-    indicateur_execution = indicateur_n.first.indicateur_executions.where('date >= ? AND date <= ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month)
+    date = Indicateur.first.indicateur_executions.order(date: :asc).last.date #derniere date ajoutée
+
+    indicateur_execution = indicateur_n.first.indicateur_executions.where('date = ?', date)
     @service_executant_n_arr = indicateur_execution.pluck(:service_executant_id).uniq
-    service_executant_n = ServiceExecutant.where(id: @service_executant_n_arr)
+    #service_executant_n = ServiceExecutant.where(id: @service_executant_n_arr)
+    service_executant_n = ServiceExecutant.all
     search_service_executants = service_executant_n.pluck(:id).uniq
     if !service_executant_n.nil?
       csp = service_executant_n.where('type_structure = ?', 'CSP').count
@@ -63,7 +66,9 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
 
     autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
 
-    response = {data1: indicateur, data2: ministere, data3: service_executant, data4: bloc, data5: type_service, data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants, se_color: se_color, autoCompleteList: autoCompleteList }
+    
+
+    response = {data1: indicateur, data2: ministere, data3: service_executant, data4: bloc, data5: type_service, data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants, se_color: se_color, autoCompleteList: autoCompleteList, date: date }
     render json: response
   end
 

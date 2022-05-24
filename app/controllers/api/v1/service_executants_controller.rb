@@ -19,6 +19,8 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     blocs = OrganisationFinanciere.all.order(name: :asc)
     type_services = TypeService.all.order(name: :asc)
 
+    date = Indicateur.first.indicateur_executions.order(date: :asc).last.date #derniere date ajoutée
+
     #calcul moyenne de l'execution sur chaque se 
     moyenne_seuil1 = Indicateur.sum(:seuil_1).round(2)
     moyenne_seuil2 = Indicateur.sum(:seuil_2).round(2)
@@ -28,7 +30,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       se_color[se.id] = "jaune"
     end 
 
-    response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color}
+    response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color, date: date}
     render json: response
   end
 

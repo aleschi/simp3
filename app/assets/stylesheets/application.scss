@@ -309,31 +309,6 @@ text-align:center;
   height:500px;
   width:100%;
 }
-.map_component, .indicateurs_component{
-  display: inline-flex;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flex;
-  display: -moz-inline-flex;
-  padding:24px;
-  width:100%;
-  
-}
-.indicateurs_search_box{
-  width:25% !important;
-}
-.indicateurs_infos_box{
-  width:15% !important;
-}
-.indicateurs_chart_box{
-  width:60%;
-  padding:0px 24px;
-}
-.map_component > div {
-  width:75%;
-}
-.map_box{
-  width:25% !important;
-}
 .map_map{
   width:100%;
   position:relative;
@@ -375,4 +350,9 @@ text-align:center;
   &:hover{
   border-radius:0px !important;
   }
+}
+.card_title{
+  text-align:center;
+  order:0 !important;
+  margin-bottom: 2rem !important;
 }

@@ -168,19 +168,31 @@ export class Mapcontainer extends React.Component {
      
     if (this.state.indicateur_n.length == 0){
       return <div><div className="map_legende">
-          <span><span className="fr-fi-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Performance Globale {'\u003C'} X </span>
-          <span><span className="fr-fi-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> X {'\u003C'}  Performance Globale {'\u003C'} Y </span>
-          <span><span className="fr-fi-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Y {'\u003C'} Performance Globale </span> 
+          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Performance Globale {'\u003C'} X </span>
+          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> X {'\u003C'}  Performance Globale {'\u003C'} Y </span>
+          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Y {'\u003C'} Performance Globale </span> 
       </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
     }else{
-      return this.state.indicateur_n.map((result, index) => ( 
-      <div key={index}><div className="map_legende">
-          <span><span className="fr-fi-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-          <span><span className="fr-fi-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-          <span><span className="fr-fi-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span><span className="fr-fi-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span></div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+      return this.state.indicateur_n.map((result, index) => { 
+      
+        if (result.seuil_1 != null) {
+         return <div key={index}>
+
+         <div className="map_legende">
+          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+          <span><span className="fr-icon-map-pin-2-fill cnoir fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span>
+        </div>
+        <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
       </div>
-      ))
+      } else {
+        return <div key={index}>
+
+          <div className="d12"></div><div className="map_legende"><span><span className="fr-icon-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> 1 marqueur = 1 service exécutant</span></div>
+        </div>
+      }
+      })
     }
     
     }
@@ -194,8 +206,8 @@ export class Mapcontainer extends React.Component {
         <div className="fr-col-12 fr-col-lg-8">
           <div className="map_map">        
             <div className="map_date_box">
-              <p>Date <span className="fr-fi-arrow-down-s-line" aria-hidden="true"></span></p>
-              <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={new Date()} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
+              <p>Date <span className="fr-icon-arrow-down-s-line" aria-hidden="true"></span></p>
+              <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={this.state.startDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
             </div>
             <div className="d12"></div>
             <div className="map">
