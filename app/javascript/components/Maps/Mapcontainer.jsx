@@ -239,6 +239,7 @@ export class Mapcontainer extends React.Component {
     	          zoom={5}
     	          style={mapStyles}
     	          streetViewControl={false}
+                mapTypeControl={false}
     	          initialCenter={{ lat: 48.52, lng: 2.19}}
     	          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
     	        >
