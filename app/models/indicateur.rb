@@ -7,7 +7,7 @@ class Indicateur < ApplicationRecord
   require 'axlsx'
   
   def self.import(file)
-      Indicateur.destroy_all
+      #Indicateur.destroy_all
       data = Roo::Spreadsheet.open(file.path)
       headers = data.row(1) # get header row
 

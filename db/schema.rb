@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_05_130655) do
+ActiveRecord::Schema.define(version: 2022_06_13_140304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_11_05_130655) do
     t.float "valeur"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "point"
     t.index ["indicateur_id"], name: "index_indicateur_executions_on_indicateur_id"
     t.index ["service_executant_id"], name: "index_indicateur_executions_on_service_executant_id"
   end
@@ -49,6 +50,15 @@ ActiveRecord::Schema.define(version: 2021_11_05_130655) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "performances", force: :cascade do |t|
+    t.date "date"
+    t.bigint "service_executant_id", null: false
+    t.integer "valeur"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["service_executant_id"], name: "index_performances_on_service_executant_id"
   end
 
   create_table "service_executants", force: :cascade do |t|
@@ -89,6 +99,7 @@ ActiveRecord::Schema.define(version: 2021_11_05_130655) do
 
   add_foreign_key "indicateur_executions", "indicateurs"
   add_foreign_key "indicateur_executions", "service_executants"
+  add_foreign_key "performances", "service_executants"
   add_foreign_key "service_executants", "ministeres"
   add_foreign_key "service_executants", "organisation_financieres"
   add_foreign_key "service_executants", "type_services"

@@ -225,7 +225,7 @@ class Carto_perf extends React.Component {
     <div>
         <Header />
         
-        <div className="fr-container">    
+        <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-lg-12">
             <h1 className="fr-my-5w">Cartographie des performances</h1>

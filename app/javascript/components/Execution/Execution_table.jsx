@@ -58,23 +58,23 @@ export class Execution_table extends React.Component {
 
     return (
     <div className="fr-my-3w">
-   
-      <div className="tr"><CSVLink data={data_to_download} headers={headers} filename={"table_indicateurs.csv"} className="fr-btn">
-       <span className="fr-icon-download-fill fr-mr-3v" aria-hidden="true"></span> Télécharger le tableau
-      </CSVLink></div>
+      <h2 className="fr-my-2w">Tableau des valeurs</h2>
+
+      <div className="fr-download"><p><CSVLink data={data_to_download} headers={headers} filename={"table_indicateurs.csv"} className="fr-download__link"> Télécharger le tableau
+      <span className="fr-download__detail">CSV</span></CSVLink></p></div>
 
       <div className="fr-table fr-my-2w fr-table--no-caption">
         <table>
-           <caption>Liste des indicateurs MP3</caption>
+           <caption>Tableau des valeurs</caption>
             <thead>
                 <tr>
-                  <th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date"><span className="fr-fi-arrow-up-fill" aria-hidden="true"></span></button></th>
+                  <th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date"><span className="fr-icon-code-view fr-fi--xs rotate90" aria-hidden="true"></span></button></th>
                   <th scope="col">Service Exécutant</th>
                   <th scope="col">Code Service Exécutant</th>
                   <th scope="col">Ministère</th>
                   <th scope="col">Organisation Financière</th>
                   <th scope="col">Type Service</th>
-                    <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur"><span className="fr-fi-arrow-up-fill" aria-hidden="true"></span></button></th>
+                    <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur"><span className="fr-icon-code-view fr-fi--xs rotate90" aria-hidden="true"></span></button></th>
                 </tr>
             </thead>
             <tbody>

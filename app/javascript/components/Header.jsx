@@ -37,7 +37,7 @@ class Header extends React.Component {
 		                        <div className="fr-header__logo">
 		                            <p className="fr-logo">
 		                                Ministère
-                                		<br/>de l'économie<br/>des finances<br/>et de la relance
+                                		<br/>de l'économie,<br/>des finances<br/>et de la souveraineté<br/> industrielle et numérique
 		                            </p>
 		                        </div>
 		                        <div className="fr-header__navbar">
@@ -47,9 +47,9 @@ class Header extends React.Component {
 		                        </div>
 		                    </div>
 		                    <div className="fr-header__service">
-		                        <a href="/" title="Accueil - Datason | Direction du Budget">
+		                        <Link to="/" title="Accueil - Datason | Direction du Budget">
 		                            <p className="fr-header__service-title">SIMP3</p>
-		                        </a>
+		                        </Link>
 		                        <p className="fr-header__service-tagline">Suivi des indicateurs MP3</p>
 		                    </div>
 		                </div>

@@ -84,10 +84,10 @@ class Home extends React.Component {
 
         const effectif = this.state.effectif;
         const type_structure = this.state.type_structure;
-        
+        const startDate = this.state.startDate;
 
         const body = {
-          search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure
+          search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure,startDate
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -116,6 +116,7 @@ class Home extends React.Component {
         const search_ministeres = this.state.search_ministeres
         const search_blocs = this.state.search_blocs
         const search_type_services = this.state.search_type_services
+        const startDate = this.state.startDate
         
         if (event.target.name == "effectif"){
           var effectif = event.target.value
@@ -127,7 +128,7 @@ class Home extends React.Component {
         }
     
         const body = {
-          search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,
+          search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,startDate
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -213,7 +214,7 @@ class Home extends React.Component {
     <div>
         <Header /> 
         
-        <div className="fr-container">    
+        <div className="fr-container pr">    
           <div className="fr-grid-row fr-grid-row--gutters">
             <div className="fr-col-lg-12">
               <h1 className="fr-my-5w">Cartographie des services exécutants</h1>
@@ -221,7 +222,6 @@ class Home extends React.Component {
           </div>
         
             <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} handleSubmit={this.handleSubmit}/>
-     
         
           
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  

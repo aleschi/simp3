@@ -2,7 +2,8 @@ class ServiceExecutant < ApplicationRecord
   belongs_to :organisation_financiere
   belongs_to :ministere
   belongs_to :type_service
-  has_many :indicateur_executions
+  has_many :indicateur_executions, dependent: :destroy
+  has_many :performances, dependent: :destroy
 
   geocoded_by :address
   reverse_geocoded_by :latitude, :longitude

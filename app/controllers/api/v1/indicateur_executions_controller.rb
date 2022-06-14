@@ -52,12 +52,14 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     se_color = Hash.new
     indicateur_execution.each do |ex|
       if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? && !ex.valeur.nil?
-        if ex.valeur <= indicateur_n.first.seuil_1
+        if ex.point == 3
           se_color[ex.service_executant_id] = "vert"
-        elsif ex.valeur > indicateur_n.first.seuil_1 && ex.valeur <= indicateur_n.first.seuil_2
+        elsif ex.point == 2
           se_color[ex.service_executant_id] = "jaune"
-        elsif ex.valeur > indicateur_n.first.seuil_2
+        elsif ex.point == 1
           se_color[ex.service_executant_id] = "rouge"
+        else
+          se_color[ex.service_executant_id] = "noir"
         end
       else
         se_color[ex.service_executant_id] = "noir"
@@ -164,12 +166,14 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     se_color = Hash.new
     indicateur_execution.each do |ex|
       if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? && !ex.valeur.nil?
-        if ex.valeur <= indicateur_n.first.seuil_1
+        if ex.point == 3
           se_color[ex.service_executant_id] = "vert"
-        elsif ex.valeur > indicateur_n.first.seuil_1 && ex.valeur <= indicateur_n.first.seuil_2
+        elsif ex.point == 2
           se_color[ex.service_executant_id] = "jaune"
-        elsif ex.valeur > indicateur_n.first.seuil_2
+        elsif ex.point == 1
           se_color[ex.service_executant_id] = "rouge"
+        else 
+          se_color[ex.service_executant_id] = "noir"
         end
       else
         se_color[ex.service_executant_id] = "noir"

@@ -22,12 +22,23 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     date = Indicateur.first.indicateur_executions.order(date: :asc).last.date #derniere date ajoutée
 
     #calcul moyenne de l'execution sur chaque se 
-    moyenne_seuil1 = Indicateur.sum(:seuil_1).round(2)
-    moyenne_seuil2 = Indicateur.sum(:seuil_2).round(2)
+    
     se_color = Hash.new
 
     autoCompleteResults.each do |se|
-      se_color[se.id] = "jaune"
+      if se.performances.where(date: date).count > 0 
+        if se.performances.where(date: date).first.valeur >= 40 
+          se_color[se.id] = "vert"
+        elsif se.performances.where(date: date).first.valeur >= 30
+          se_color[se.id] = "jaune"
+        elsif se.performances.where(date: date).first.valeur > 0
+          se_color[se.id] = "rouge"
+        else 
+          se_color[se.id] = "noir"
+        end
+      else
+        se_color[se.id] = "noir"
+      end
     end 
 
     response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color, date: date}
@@ -75,7 +86,19 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     se_color = Hash.new
 
     autoCompleteResults.each do |se|
-      se_color[se.id] = "jaune"
+      if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).count > 0 
+        if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 40 
+          se_color[se.id] = "vert"
+        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 30
+          se_color[se.id] = "jaune"
+        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur > 0
+          se_color[se.id] = "rouge"
+        else 
+          se_color[se.id] = "noir"
+        end
+      else
+        se_color[se.id] = "noir"
+      end
     end 
 
     response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
@@ -112,7 +135,19 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     #calcul moyenne de l'execution sur chaque se 
     se_color = Hash.new
     autoCompleteResults.each do |se|
-        se_color[se.id] = "jaune"
+      if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).count > 0 
+        if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 40 
+          se_color[se.id] = "vert"
+        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 30
+          se_color[se.id] = "jaune"
+        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur > 0
+          se_color[se.id] = "rouge"
+        else 
+          se_color[se.id] = "noir"
+        end
+      else
+        se_color[se.id] = "noir"
+      end
     end 
 
     response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}

@@ -9,7 +9,8 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
     const series_i = [];
     let date;
     const title_i = "Suivi temporel de l'indicateur "+indicateur_name;
-    
+    const unite = indicateur_n[0].unite;
+
     series_i.push({
             name: "Moyenne interministérielle",
             data:[]
@@ -109,11 +110,19 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             shared: true,
             borderColor: 'transparent',
             borderRadius: 16,
-            backgroundColor: '#fff', 
+            backgroundColor: '#fff',
+            xDateFormat:'%b %Y',
+            pointFormat: '{series.name} : <b>{point.y}'+unite+'</b>',
+            
         },
         xAxis:{
             type: 'datetime',
             //minTickInterval: 3*28*24*3600*1000,
+            labels: {
+            formatter: function() {
+            return Highcharts.dateFormat('%b', this.value);
+            },
+            },
         },
         yAxis: { 
         title: {

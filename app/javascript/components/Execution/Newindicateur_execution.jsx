@@ -72,16 +72,16 @@ class Newindicateur_execution extends React.Component {
         return (
         <div>
         <Header />
-        <div className="fr-container">    
+        <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-lg-8">
             <h1 className="fr-my-5w">Ajouter un fichier </h1>
             { this.state.date_fichier ? 
-                <p className="fr-mb-5w">Dernière importation : {Moment(this.state.date_fichier).format('DD/MM/YYYY')}</p>          
+                <p className="fr-mb-5w">Dernier mois importé : {Moment(this.state.date_fichier).format('MM/YYYY')}</p>          
                 : null }
 
 
-              { this.state.loading ? <div className="loader_box"><p className="fr-my-5w text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </p> <div className ="loader"></div></div> : 
+              { this.state.loading ? <div><p className="fr-my-5w text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </p> <div className="loader_box"><div className ="loader"></div></div></div> : 
                 <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}> 
                  <Dropzone accept='.xlsx' onDrop={this.onDrop}>

@@ -17,6 +17,7 @@ import iconJ from '../../../assets/images/icon_lieu_jaune.svg';
 import iconV from '../../../assets/images/icon_lieu_vert.svg';
 import iconN from '../../../assets/images/icon_lieu_noir.svg';
 import iconG from '../../../assets/images/icon_lieu_gris.svg';
+import iconB from '../../../assets/images/icon_lieu_bleu.svg';
 
 const image_v = {
                           path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
@@ -144,8 +145,15 @@ export class Mapcontainer extends React.Component {
      }}
      onClick={this.onMarkerClick2} />
      }
+     else if (this.state.secolor[result.id] == "bleu"){
+      return <Marker key={index} id={result.id} icon={iconB} name={result.libelle} position={{
+       lat: result.latitude,
+       lng: result.longitude
+     }}
+     onClick={this.onMarkerClick2} />
+     }
      else if (this.state.secolor[result.id] == "noir"){
-      return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
+      return <Marker key={index} id={result.id} icon={iconN} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
@@ -168,14 +176,28 @@ export class Mapcontainer extends React.Component {
      
     if (this.state.indicateur_n.length == 0){
       return <div><div className="map_legende">
-          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Performance Globale {'\u003C'} X </span>
-          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> X {'\u003C'}  Performance Globale {'\u003C'} Y </span>
-          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Y {'\u003C'} Performance Globale </span> 
+          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Performance Globale {'\u003C'} 30 </span>
+          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> 30 {'\u003C'}  Performance Globale {'\u003C'} 40 </span>
+          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> 40 {'\u003C'} Performance Globale </span> 
+          <span><span className="fr-icon-map-pin-2-fill cnoir fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span>
       </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
     }else{
       return this.state.indicateur_n.map((result, index) => { 
       
         if (result.seuil_1 != null) {
+        if (result.name == 'IB4 - 2' || result.name == 'IB4 - 3' || result.name == 'IB4 - 4'){
+          return <div key={index}>
+
+         <div className="map_legende">
+          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+          <span><span className="fr-icon-map-pin-2-fill cnoir fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span>
+        </div>
+        <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+        </div>
+        }
+        else{
          return <div key={index}>
 
          <div className="map_legende">
@@ -185,7 +207,8 @@ export class Mapcontainer extends React.Component {
           <span><span className="fr-icon-map-pin-2-fill cnoir fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span>
         </div>
         <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
-      </div>
+        </div>
+        }
       } else {
         return <div key={index}>
 
@@ -206,7 +229,7 @@ export class Mapcontainer extends React.Component {
         <div className="fr-col-12 fr-col-lg-8">
           <div className="map_map">        
             <div className="map_date_box">
-              <p>Date <span className="fr-icon-arrow-down-s-line" aria-hidden="true"></span></p>
+             
               <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={this.state.startDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
             </div>
             <div className="d12"></div>
@@ -215,7 +238,7 @@ export class Mapcontainer extends React.Component {
     	          google={this.props.google}
     	          zoom={5}
     	          style={mapStyles}
-    	          
+    	          streetViewControl={false}
     	          initialCenter={{ lat: 48.52, lng: 2.19}}
     	          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
     	        >

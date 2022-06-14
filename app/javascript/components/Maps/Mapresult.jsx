@@ -26,6 +26,10 @@ export class Mapresult extends React.Component {
     }
 
     displayInd = () => {
+    if (this.state.indicateur_executions.length == 0){
+    return  <div className="fr-text--sm fr-mb-3v">Aucune donnée pour ce mois-ci</div>
+    }
+    else {
     return this.state.indicateur_executions.map((indicateur_execution, index) => {
     if (indicateur_execution.valeur == null){
       return <p key={index} className="fr-badge fr-mr-0-5v fr-mb-0-5v pr" id={indicateur_execution.indicateur.id}  onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : X {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
@@ -33,26 +37,27 @@ export class Mapresult extends React.Component {
     else if (indicateur_execution.valeur == null || indicateur_execution.indicateur.seuil_1 == null){
       return <p key={index}  className="fr-mr-0-5v fr-mb-0-5v fr-badge pr" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
     }
-    else if (indicateur_execution.valeur <= indicateur_execution.indicateur.seuil_1 ){
+    else if (indicateur_execution.point == 3 ){
       return <p key={index}  className="fr-mr-0-5v fr-mb-0-5v fr-badge fr-badge--green-emeraude pr" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
      }
-     else if(indicateur_execution.valeur > indicateur_execution.indicateur.seuil_1 && indicateur_execution.valeur < indicateur_execution.indicateur.seuil_2 ){
+     else if(indicateur_execution.point == 2 ){
      return <p key={index}  className="fr-mr-0-5v fr-mb-0-5v fr-badge fr-badge--yellow-tournesol pr" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
 
      }
-     else if(indicateur_execution.valeur >= indicateur_execution.indicateur.seuil_2 ){
+     else if(indicateur_execution.point == 1 ){
       return <p key={index}  className="fr-mr-0-5v fr-mb-0-5v fr-badge fr-badge--pink-tuile pr" id={indicateur_execution.indicateur.id} onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} >{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
      }
      else {
      return <p key={index}  className="fr-badge fr-mr-0-5v pr" id={indicateur_execution.indicateur.id}  onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>{indicateur_execution.indicateur.name} : {Math.round(indicateur_execution.valeur * 100) / 100} {indicateur_execution.indicateur.unite} { (this.state.showind==indicateur_execution.indicateur.id) ? <span className="box_ind_hover">{indicateur_execution.indicateur.name}: {indicateur_execution.indicateur.description}</span> : null }</p>
      }
     })
+    }
 
     };
 render() {
-
+ 
     return (
-    <div className="fr-container fr-my-3w">
+    <div className="fr-my-3w">
         {this.state.service_ex.map((service_executant, index) => (
         <div key={index}>
           <div className="fr-card fr-card--no-arrow fr-card-pointer">
@@ -71,7 +76,7 @@ render() {
             
               <div className="fr-text--sm fr-mb-3v"><b>{service_executant.effectif}</b> utilisateurs Chorus</div>
             
-              <div className="fr-text--sm fr-mb-3v">Valeurs des indicateurs sur le mois ({Moment(this.state.startDate).format('MM/YYYY')}) </div>
+              <div className="fr-text--sm fr-mb-3v"><b>Valeurs des indicateurs sur le mois ({Moment(this.state.startDate).format('MM/YYYY')}) </b></div>
              
               <div className="fr-mb-3w">
                   {this.displayInd()} 
