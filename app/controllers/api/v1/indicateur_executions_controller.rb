@@ -185,11 +185,27 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
 
   def sort_table
     if params[:search] == "date"
-      indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(date: :asc)
+      if params[:date_croissant] == true #cetait deja croissant donc on change en desc
+        indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(date: :desc)
+        date_croissant = false 
+        valeur_croissant = params[:valeur_croissant]
+      else
+        indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(date: :asc)
+        date_croissant = true
+        valeur_croissant = params[:valeur_croissant]
+      end
     elsif params[:search] == "valeur"
-      indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(valeur: :desc)
+      if params[:valeur_croissant] == true
+        indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(valeur: :desc)
+        valeur_croissant = false 
+        date_croissant = params[:date_croissant]
+      else
+        indicateur_execution = IndicateurExecution.where(id: params[:indicateur_executions].map{|x| x[:id]}).order(valeur: :asc)
+        valeur_croissant = true 
+        date_croissant = params[:date_croissant]
+      end
     end
-    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}])}
+    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), date_croissant: date_croissant, valeur_croissant: valeur_croissant}
     render json: response
   end 
 

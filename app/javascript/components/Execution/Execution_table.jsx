@@ -8,6 +8,8 @@ export class Execution_table extends React.Component {
         super(props);
         this.state = {
             indicateur_executions: this.props.indicateur_executions,
+            date_croissant: true,
+            valeur_croissant: false,
         }
         this.sortTable = this.sortTable.bind(this);
    
@@ -21,8 +23,10 @@ export class Execution_table extends React.Component {
     sortTable = (params) => {
    
       const indicateur_executions = this.state.indicateur_executions;
+      const date_croissant = this.state.date_croissant;
+      const valeur_croissant = this.state.valeur_croissant;
         const body = {
-          indicateur_executions
+          indicateur_executions,date_croissant,valeur_croissant
         };
         const url = "/api/v1/indicateur_executions/sort_table?search=" + params;
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -40,7 +44,7 @@ export class Execution_table extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6}))
+      .then(response => this.setState({ indicateur_executions: response.data6, date_croissant: response.date_croissant, valeur_croissant: response.valeur_croissant}))
       .catch(error => console.log(error.message));
     }
 
