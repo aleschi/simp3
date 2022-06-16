@@ -9,13 +9,14 @@ export class Mapresult extends React.Component {
             indicateur_executions: this.props.indicateur_executions,
             showind: 0,
             startDate: this.props.startDate,
+            performance: this.props.performance,
         }
         this.handlePopoverOpen = this.handlePopoverOpen.bind(this);
         this.handlePopoverClose = this.handlePopoverClose.bind(this);
     }
     componentDidUpdate(prevProps) {
       if (this.props.service_ex !== prevProps.service_ex) {
-        this.setState({service_ex: this.props.service_ex, indicateur_executions: this.props.indicateur_executions});
+        this.setState({service_ex: this.props.service_ex, indicateur_executions: this.props.indicateur_executions, performance: this.props.performance});
       }
     }
     handlePopoverOpen(event){   
@@ -75,6 +76,8 @@ render() {
               <div className="fr-text--sm fr-mb-3v">Type de structure : {service_executant.type_structure}</div>
             
               <div className="fr-text--sm fr-mb-3v"><b>{service_executant.effectif}</b> utilisateurs Chorus</div>
+
+              <div className="fr-text--sm fr-mb-3v">Performance globale du service : {this.state.performance}</div>
             
               <div className="fr-text--sm fr-mb-3v"><b>Valeurs des indicateurs sur le mois ({Moment(this.state.startDate).format('MM/YYYY')}) </b></div>
              

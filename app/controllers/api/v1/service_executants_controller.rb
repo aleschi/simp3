@@ -24,21 +24,26 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     #calcul moyenne de l'execution sur chaque se 
     
     se_color = Hash.new
-
-    autoCompleteResults.each do |se|
-      if se.performances.where(date: date).count > 0 
-        if se.performances.where(date: date).first.valeur >= 40 
-          se_color[se.id] = "vert"
-        elsif se.performances.where(date: date).first.valeur >= 30
-          se_color[se.id] = "jaune"
-        elsif se.performances.where(date: date).first.valeur > 0
-          se_color[se.id] = "rouge"
+    se_id = Performance.where(date: date).order(service_executant_id: :asc).pluck(:service_executant_id)
+    valeur_id = Performance.where(date: date).order(service_executant_id: :asc).pluck(:valeur)
+    #autoCompleteResults.each do |se|
+    se_id.each_with_index do |se,i|
+      #if se.performances.where(date: date).count > 0 
+        #if se.performances.where(date: date).first.valeur >= 40 
+        if valeur_id[i] >= 40 
+          se_color[se] = "vert"
+        #elsif se.performances.where(date: date).first.valeur >= 30
+        elsif valeur_id[i] >= 30 
+          se_color[se] = "jaune"
+        #elsif se.performances.where(date: date).first.valeur > 0
+        elsif valeur_id[i] > 0 
+          se_color[se] = "rouge"
         else 
-          se_color[se.id] = "noir"
+          se_color[se] = "noir"
         end
-      else
-        se_color[se.id] = "noir"
-      end
+      #else
+      #  se_color[se.id] = "noir"
+      #end
     end 
 
     response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color, date: date}
@@ -84,21 +89,23 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     end 
 
     se_color = Hash.new
+   
 
-    autoCompleteResults.each do |se|
-      if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).count > 0 
-        if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 40 
-          se_color[se.id] = "vert"
-        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 30
-          se_color[se.id] = "jaune"
-        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur > 0
-          se_color[se.id] = "rouge"
+    se_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:service_executant_id)
+    valeur_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:valeur)
+   
+    se_id.each_with_index do |se,i|     
+        if valeur_id[i] >= 40 
+          se_color[se] = "vert"
+     
+        elsif valeur_id[i] >= 30 
+          se_color[se] = "jaune"
+      
+        elsif valeur_id[i] > 0 
+          se_color[se] = "rouge"
         else 
-          se_color[se.id] = "noir"
+          se_color[se] = "noir"
         end
-      else
-        se_color[se.id] = "noir"
-      end
     end 
 
     response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
@@ -132,22 +139,26 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       sfact = 0
       cgf = 0
     end 
-    #calcul moyenne de l'execution sur chaque se 
+  
     se_color = Hash.new
-    autoCompleteResults.each do |se|
-      if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).count > 0 
-        if se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 40 
-          se_color[se.id] = "vert"
-        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur >= 30
-          se_color[se.id] = "jaune"
-        elsif se.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur > 0
-          se_color[se.id] = "rouge"
+   
+
+    se_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:service_executant_id)
+    valeur_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:valeur)
+   
+    se_id.each_with_index do |se,i|     
+        if valeur_id[i] >= 40 
+          se_color[se] = "vert"
+     
+        elsif valeur_id[i] >= 30 
+          se_color[se] = "jaune"
+      
+        elsif valeur_id[i] > 0 
+          se_color[se] = "rouge"
         else 
-          se_color[se.id] = "noir"
+          se_color[se] = "noir"
         end
-      else
-        se_color[se.id] = "noir"
-      end
+
     end 
 
     response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
@@ -159,7 +170,8 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     service_executant = ServiceExecutant.where(id: params[:q])
 
     indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
-    response = {service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}])}
+    performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
+    response = {service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance}
     render json: response
   end
 

@@ -46,9 +46,11 @@ export class Mapcontainer extends React.Component {
             activeMarker: {},          // Shows the active marker upon click
             selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
             startDate: this.props.startDate,
+            maxDate: this.props.maxDate,
             csp: this.props.csp,
             sfact: this.props.sfact,
             cgf: this.props.cgf,
+            performance: null,
         }
       this.onCloseInfo = this.onCloseInfo.bind(this);  
    
@@ -56,6 +58,9 @@ export class Mapcontainer extends React.Component {
     componentDidUpdate(prevProps) {
       if (this.props.autoCompleteResults !== prevProps.autoCompleteResults) {
         this.setState({autoCompleteResults: this.props.autoCompleteResults});
+      }
+      if (this.props.service_ex !== prevProps.service_ex) {
+        this.setState({service_ex: this.props.service_ex});
       }
       if (this.props.secolor !== prevProps.secolor) {
         this.setState({secolor: this.props.secolor});
@@ -71,6 +76,9 @@ export class Mapcontainer extends React.Component {
       }
       if (this.props.csp !== prevProps.csp) {
       this.setState({csp: this.props.csp});
+      }
+      if (this.props.startDate !== prevProps.startDate) {
+      this.setState({startDate: this.props.startDate});
       }
     }
     
@@ -101,7 +109,7 @@ export class Mapcontainer extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ service_ex: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions}))
+      .then(response => this.setState({ service_ex: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions, performance: response.performance}))
       .catch(error => console.log(error.message));
        
     };
@@ -230,7 +238,7 @@ export class Mapcontainer extends React.Component {
           <div className="map_map">        
             <div className="map_date_box">
              
-              <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={this.state.startDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
+              <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={this.state.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
             </div>
             <div className="d12"></div>
             <div className="map">
@@ -268,7 +276,7 @@ export class Mapcontainer extends React.Component {
             <div className="map_se"><span>{this.state.sfact}</span><br/>SFACT</div>
             <div className="map_se"><span>{this.state.cgf}</span><br/>CGF</div>    
           </div>
-         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} startDate={this.state.startDate} /> : null }
+         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} performance={this.state.performance} onCloseInfo={this.onCloseInfo} startDate={this.state.startDate} /> : null }
         </div>
       </div>
       );

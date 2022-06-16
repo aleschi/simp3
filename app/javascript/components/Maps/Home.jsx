@@ -35,6 +35,7 @@ class Home extends React.Component {
           indicateur_n: [], // restera vide pour indiquer que ca représente tous les ind
           loading: true,
           startDate: new Date(),
+          maxDate: new Date(),
 
         };
     
@@ -53,7 +54,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, serviceexecutant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services, se_color: response.se_color, loading: false, startDate: new Date(response.date) }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, serviceexecutant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services, se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date) }))
       .catch(() => this.props.history.push("/"));
     }
 
@@ -78,7 +79,7 @@ class Home extends React.Component {
         else if (this.state.showType){                   
           value.forEach(el => search_type_services.push(el.id))
         }
-        this.setState({ loading: true });
+        
         
         const url = "/api/v1/service_executants/search";
 
@@ -105,7 +106,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, loading: false, se_color: response.se_color}))
+      .then(response => this.setState({autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, loading: false, }))
       .catch(error => console.log(error.message));
     }
 
@@ -168,7 +169,7 @@ class Home extends React.Component {
 
     handleSubmitDate(e){
 
-        this.setState({ startDate: e, loading: true });
+        this.setState({ startDate: e});
         const url = "/api/v1/service_executants/search_date";
         const autoCompleteResults = this.state.autoCompleteResults;
         const autoCompleteList = this.state.autoCompleteList;
@@ -225,7 +226,7 @@ class Home extends React.Component {
         
           
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
-            <Mapcontainer handleSubmitDate={this.handleSubmitDate} startDate={this.state.startDate} service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} /> 
+            <Mapcontainer handleSubmitDate={this.handleSubmitDate} maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} /> 
           }
 
         </div>

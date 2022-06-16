@@ -36,6 +36,7 @@ class Carto_perf extends React.Component {
           se_color: {},
           loading: true,
           startDate: new Date(),
+          maxDate: new Date(),
           autoCompleteList: [],
 
         };
@@ -55,7 +56,7 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, se_color: response.se_color, loading: false, autoCompleteList: response.autoCompleteList , startDate: new Date(response.date)   }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, se_color: response.se_color, loading: false, autoCompleteList: response.autoCompleteList , startDate: new Date(response.date) , maxDate: new Date(response.date)  }))
       .catch(() => this.props.history.push("/"));
     }
     
@@ -147,7 +148,7 @@ class Carto_perf extends React.Component {
           value.forEach(el => search_type_services.push(el.id))
         }
 
-        this.setState({ loading: true });
+       
         const url = "/api/v1/indicateur_executions/search_carto";
         const search_indicateur = this.state.search_indicateur;
 
@@ -181,7 +182,7 @@ class Carto_perf extends React.Component {
 
     handleSubmitDate(event) {
        
-        this.setState({ startDate: event, loading: true });
+        this.setState({ startDate: event});
  
         const url = "/api/v1/indicateur_executions/search_carto";
         const search_indicateur = this.state.search_indicateur;
@@ -240,7 +241,7 @@ class Carto_perf extends React.Component {
       
         
         { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
-          <Mapcontainer handleSubmitDate={this.handleSubmitDate} startDate={this.state.startDate} service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n}  csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} /> 
+          <Mapcontainer handleSubmitDate={this.handleSubmitDate} maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n}  csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} /> 
    
         }
      
