@@ -369,3 +369,10 @@ text-align:center;
 .rotate90::before{
   transform: rotate(90deg) !important;
 }
+.highcharts-background{
+  fill: var(--background-default-grey) !important;
+}
+.highcharts-title, .highcharts-subtitle, .highcharts-no-data, .btn-plus{
+  color:var(--text-title-grey) !important;
+  fill:var(--text-title-grey) !important;
+}

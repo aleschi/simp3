@@ -44,6 +44,18 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             height:600,
             reflow: true,     
         },
+        lang: {
+                downloadCSV:"Télécharger en format CSV",
+                downloadJPEG:"Télécharger l'image en JPEG",
+                downloadPDF:"Télécharger en format PDF",
+                downloadPNG:"Télécharger l'image en PNG",
+                downloadSVG:"Télécharger l'image en SVG",
+                downloadXLS:"Télécharger en format XLS",
+                printChart:"Imprimer le graphique",
+                viewFullscreen: "Voir en plein écran",
+                viewData: "Voir la table des données",
+                noData: "Les courbes s'afficheront lorsque vous aurez <br>renseigné et validé les informations du formulaire."
+            },
         rangeSelector: {
 
             buttons: [ {
