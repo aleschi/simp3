@@ -144,7 +144,7 @@ class Execution extends React.Component {
         <Header /> 
         <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
-          <div className="fr-col-lg-12">
+          <div className="fr-col-12 fr-col-lg-12">
             <h1 className="fr-my-5w">Suivi des indicateurs</h1>
           </div>
         </div>

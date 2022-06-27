@@ -234,6 +234,13 @@ export class Mapcontainer extends React.Component {
    
       return (
       <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
+        <div className="fr-col-12 fr-hidden-sm">
+          <div className="align_flex">
+            <div className="map_se"><span>{this.state.csp}</span><br/>CSP</div>
+            <div className="map_se"><span>{this.state.sfact}</span><br/>SFACT</div>
+            <div className="map_se"><span>{this.state.cgf}</span><br/>CGF</div>    
+          </div>
+        </div>
         <div className="fr-col-12 fr-col-lg-8">
           <div className="map_map">        
             <div className="map_date_box">
@@ -271,10 +278,12 @@ export class Mapcontainer extends React.Component {
         </div>
 
         <div className="fr-col-12 fr-col-lg-4">
+          <div className="fr-hidden fr-unhidden-sm">
           <div className="align_flex">
             <div className="map_se"><span>{this.state.csp}</span><br/>CSP</div>
             <div className="map_se"><span>{this.state.sfact}</span><br/>SFACT</div>
             <div className="map_se"><span>{this.state.cgf}</span><br/>CGF</div>    
+          </div>
           </div>
          { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} performance={this.state.performance} onCloseInfo={this.onCloseInfo} startDate={this.state.startDate} /> : null }
         </div>

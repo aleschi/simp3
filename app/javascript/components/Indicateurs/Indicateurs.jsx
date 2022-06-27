@@ -39,7 +39,7 @@ class Indicateurs extends React.Component {
     
       <div className="fr-container">    
         <div className="fr-grid-row fr-grid-row--gutters">
-          <div className="fr-col-lg-12">
+          <div className="fr-col-12 fr-col-lg-12">
           <h1 className="fr-my-5w">Liste des indicateurs MP3</h1>
           {this.state.indicateurs.length > 0 ?  
             <div className="fr-table fr-my-2w fr-table--no-caption">
