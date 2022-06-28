@@ -243,7 +243,8 @@ border-color:transparent;
 .map_legende{
 text-align:center;
   color: var(--text-title-grey);
-  font-size:10px;
+  font-size:13px;
+
   span{
   margin-right:5px;
   }
@@ -388,4 +389,6 @@ text-align:center;
 .css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator, .css-iqd1hh-MuiButtonBase-root-MuiChip-root, .css-uge3vf, .css-5vxoam, .css-zun73v, .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root, .css-i4bv87-MuiSvgIcon-root, .css-vubbuv, .css-1k33q06{
   color: var(--text-title-grey) !important;
 }
-
+.mapicon img{
+  height:18px;
+}

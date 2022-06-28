@@ -17,16 +17,8 @@ import iconJ from '../../../assets/images/icon_lieu_jaune.svg';
 import iconV from '../../../assets/images/icon_lieu_vert.svg';
 import iconN from '../../../assets/images/icon_lieu_noir.svg';
 import iconG from '../../../assets/images/icon_lieu_gris.svg';
-import iconB from '../../../assets/images/icon_lieu_bleu.svg';
 
-const image_v = {
-                          path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
-                          fillColor: '#42BAB3',
-                          fillOpacity: 1,
-                          scale: 0.5,
-                          strokeColor: '#42BAB3',
-                          strokeWeight: 1,
-                        };
+
 
 const mapStyle = [ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#444444" } ] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry.fill", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.country", "elementType": "labels", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.province", "elementType": "all", "stylers": [ { "visibility": "on" }, { "saturation": "-22" }, { "lightness": "-17" }, { "gamma": "1.48" } ] }, { "featureType": "administrative.province", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.province", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "visibility": "on" }, { "hue": "#00b3ff" }, { "saturation": "66" }, { "lightness": "43" }, { "gamma": "5.99" }, { "weight": "4.75" } ] }, { "featureType": "landscape.man_made", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "landscape.natural.landcover", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "saturation": -100 }, { "lightness": 45 }, { "visibility": "off" } ] }, { "featureType": "road", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "color": "#efefef" }, { "visibility": "on" } ] } ]
 
@@ -161,14 +153,14 @@ export class Mapcontainer extends React.Component {
      onClick={this.onMarkerClick2} />
      }
      else if (this.state.secolor[result.id] == "noir"){
-      return <Marker key={index} id={result.id} icon={iconN} name={result.libelle} position={{
+      return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
      onClick={this.onMarkerClick2} />
      }
      else {
-     return <Marker key={index} id={result.id} icon={iconN} name={result.libelle} position={{
+     return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
@@ -184,10 +176,10 @@ export class Mapcontainer extends React.Component {
      
     if (this.state.indicateur_n.length == 0){
       return <div><div className="map_legende">
-          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Performance Globale {'\u003C'} 30 </span>
-          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> 30 {'\u003C'}  Performance Globale {'\u003C'} 40 </span>
-          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> 40 {'\u003C'} Performance Globale </span> 
-          <span><span className="fr-icon-map-pin-2-fill cnoir fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span>
+          <span className="mapicon"><img src={iconR} alt="icone map" /> Performance Globale {'\u003C'} 30 </span>
+          <span className="mapicon"><img src={iconJ} alt="icone map" /> 30 {'\u003C'}  Performance Globale {'\u003C'} 40 </span>
+          <span className="mapicon"><img src={iconV} alt="icone map" /> 40 {'\u003C'} Performance Globale </span> 
+          <span className="mapicon"><img src={iconG} alt="icone map" />Pas de valeur </span>
       </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
     }else{
       return this.state.indicateur_n.map((result, index) => { 
@@ -197,10 +189,10 @@ export class Mapcontainer extends React.Component {
           return <div key={index}>
 
          <div className="map_legende">
-          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span><span className="fr-icon-map-pin-2-fill cnoir fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span>
+          <span className="mapicon"><img src={iconR} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+          <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+          <span className="mapicon"><img src={iconV} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+          <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
         </div>
         <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
         </div>
@@ -209,10 +201,10 @@ export class Mapcontainer extends React.Component {
          return <div key={index}>
 
          <div className="map_legende">
-          <span><span className="fr-icon-map-pin-2-fill cvert fr-fi--sm" aria-hidden="true"></span> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-          <span><span className="fr-icon-map-pin-2-fill cjaune fr-fi--sm" aria-hidden="true"></span> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-          <span><span className="fr-icon-map-pin-2-fill crouge fr-fi--sm" aria-hidden="true"></span> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span><span className="fr-icon-map-pin-2-fill cnoir fr-fi--sm" aria-hidden="true"></span> Pas de valeur </span>
+          <span className="mapicon"><img src={iconV} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+          <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+          <span className="mapicon"><img src={iconR} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+          <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
         </div>
         <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
         </div>
