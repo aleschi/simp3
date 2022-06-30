@@ -222,7 +222,7 @@ export class Mapcontainer extends React.Component {
     
 
     render() {
-    
+   
    
       return (
       <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">

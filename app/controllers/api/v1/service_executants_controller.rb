@@ -175,9 +175,22 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     render json: response
   end
 
+  def se_empty
+    @ids = IndicateurExecution.all.pluck(:service_executant_id).uniq!
+    @se_empty = ServiceExecutant.where.not(id: @ids)
+    @se_empty.destroy_all
+    response = {se: @se_empty}
+    render json: response
+  end 
+
 
   def import
     ServiceExecutant.import(params[:file])
     render json: { message: 'se ajouté!' }
+  end 
+
+  def import_ministere
+    Ministere.import(params[:file])
+    render json: { message: 'ministere modifié!' }
   end 
 end

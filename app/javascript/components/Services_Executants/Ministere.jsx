@@ -8,11 +8,25 @@ class Newservice_executant extends React.Component {
         super(props);
         this.state = {
           file_csv: null,
+          se: [],
 
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fileInput = React.createRef();
         this.changeHandler = this.changeHandler.bind(this);
+    }
+
+    componentDidMount() {
+    const url = "/api/v1/service_executants/se_empty";
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ se: response.se  }))
+      .catch(() => this.props.history.push("/"));
     }
 
     changeHandler(event){
@@ -21,7 +35,7 @@ class Newservice_executant extends React.Component {
 
     handleSubmit(event) {
       event.preventDefault();
-        const url = "/api/v1/service_executants/import";
+        const url = "/api/v1/service_executants/import_ministere";
         const formData = new FormData();
 
         formData.append('file', this.state.file_csv);
@@ -51,7 +65,12 @@ class Newservice_executant extends React.Component {
         <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-lg-8">
             <h1 className="fr-my-5w">Ajouter un fichier </h1>
-
+            <div className="fr-mb-5w">
+            <div>{this.state.se.length}</div>
+            {this.state.se.map((se, index) => (
+            <div key={index}>{se.libelle}</div>
+            ))}
+            </div>
             <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}>
                   <label>
@@ -59,10 +78,10 @@ class Newservice_executant extends React.Component {
                     <input type="file" ref={this.fileInput} name="file" accept='.xlsx' onChange={this.changeHandler}/>
                   </label>
                   <br />
-                  <button type="submit" className="fr-btn">Envoyer</button>
+                  <div><button type="submit" className="fr-btn">Envoyer</button></div>
                 </form>
-
-            </div>    
+            </div>
+                
             </div>
           </div>
         </div>
