@@ -29,11 +29,12 @@ export class Mapcontainer extends React.Component {
         super(props);
         this.state = {
             autoCompleteResults: this.props.autoCompleteResults,
-            service_ex: this.props.service_executant,
+            service_executant: this.props.service_executant,
             secolor: this.props.secolor,
             indicateur_n: this.props.indicateur_n,
-            indicateur_executions: [],
-            showResults: false,
+
+            indicateur_executions: this.props.indicateur_executions,
+            showResults: this.props.showResults,
             showingInfoWindow: false,  // Hides or shows the InfoWindow
             activeMarker: {},          // Shows the active marker upon click
             selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
@@ -42,17 +43,17 @@ export class Mapcontainer extends React.Component {
             csp: this.props.csp,
             sfact: this.props.sfact,
             cgf: this.props.cgf,
-            performance: null,
+            performance: this.props.performance,
         }
-      this.onCloseInfo = this.onCloseInfo.bind(this);  
+       
    
     }
     componentDidUpdate(prevProps) {
       if (this.props.autoCompleteResults !== prevProps.autoCompleteResults) {
         this.setState({autoCompleteResults: this.props.autoCompleteResults});
       }
-      if (this.props.service_ex !== prevProps.service_ex) {
-        this.setState({service_ex: this.props.service_ex});
+      if (this.props.service_executant !== prevProps.service_executant) {
+        this.setState({service_executant: this.props.service_executant});
       }
       if (this.props.secolor !== prevProps.secolor) {
         this.setState({secolor: this.props.secolor});
@@ -72,39 +73,17 @@ export class Mapcontainer extends React.Component {
       if (this.props.startDate !== prevProps.startDate) {
       this.setState({startDate: this.props.startDate});
       }
+      if (this.props.performance !== prevProps.performance) {
+      this.setState({performance: this.props.performance});
+      }
+      if (this.props.showResults !== prevProps.showResults) {
+      this.setState({showResults: this.props.showResults});
+      }
+      if (this.props.indicateur_executions !== prevProps.indicateur_executions) {
+      this.setState({indicateur_executions: this.props.indicateur_executions});
+      }
     }
     
-    onCloseInfo(event) {
-    this.setState({ showResults: false });
-    }
-
-    onMarkerClick2= (props, marker, e) => { 
-       
-   
-        const url = "/api/v1/service_executants/search_marker?q=" + props.id;
-        const token = document.querySelector('meta[name="csrf-token"]').content;
-        const startDate = this.state.startDate;
-        const body = {
-          startDate
-        };
-        fetch(url, {
-          method: "POST",
-          headers: {
-            "X-CSRF-Token": token,
-            "Content-Type": "application/json"
-          },
-        body: JSON.stringify(body)
-        })
-        .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Network response was not ok.");
-      })
-      .then(response => this.setState({ service_ex: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions, performance: response.performance}))
-      .catch(error => console.log(error.message));
-       
-    };
 
     onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -128,14 +107,14 @@ export class Mapcontainer extends React.Component {
        lat: result.latitude,
        lng: result.longitude
      }}
-     onClick={this.onMarkerClick2} />
+     onClick={this.props.onMarkerClick2} />
      }
      else if(this.state.secolor[result.id] == "jaune"){
      return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
-     onClick={this.onMarkerClick2} />
+     onClick={this.props.onMarkerClick2} />
 
      }
      else if(this.state.secolor[result.id] == "rouge"){
@@ -143,28 +122,28 @@ export class Mapcontainer extends React.Component {
        lat: result.latitude,
        lng: result.longitude
      }}
-     onClick={this.onMarkerClick2} />
+     onClick={this.props.onMarkerClick2} />
      }
      else if (this.state.secolor[result.id] == "bleu"){
       return <Marker key={index} id={result.id} icon={iconB} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
-     onClick={this.onMarkerClick2} />
+     onClick={this.props.onMarkerClick2} />
      }
      else if (this.state.secolor[result.id] == "noir"){
       return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
-     onClick={this.onMarkerClick2} />
+     onClick={this.props.onMarkerClick2} />
      }
      else {
      return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
        lat: result.latitude,
        lng: result.longitude
      }}
-     onClick={this.onMarkerClick2} />
+     onClick={this.props.onMarkerClick2} />
      }
     })
 
@@ -223,7 +202,6 @@ export class Mapcontainer extends React.Component {
 
     render() {
    
-   
       return (
       <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
         <div className="fr-col-12 fr-hidden-sm">
@@ -277,7 +255,7 @@ export class Mapcontainer extends React.Component {
             <div className="map_se"><span>{this.state.cgf}</span><br/>CGF</div>    
           </div>
           </div>
-         { this.state.showResults ? <Mapresult service_ex={this.state.service_ex} indicateur_executions={this.state.indicateur_executions} performance={this.state.performance} onCloseInfo={this.onCloseInfo} startDate={this.state.startDate} /> : null }
+         { this.state.showResults ? <Mapresult service_executant={this.state.service_executant} indicateur_executions={this.state.indicateur_executions} performance={this.state.performance} onCloseInfo={this.props.onCloseInfo} startDate={this.state.startDate} /> : null }
         </div>
       </div>
       );

@@ -182,11 +182,12 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 				<div className="fr-select-group">
 				<label htmlFor="se" className="fr-label" >Afficher les services exécutants de </label>
 				<select className="fr-select" name="effectif" id="se" onChange={handleChange} >
-					<option value="200">Tous les effectifs</option>					
-		            <option value="100">Moins de 100 Utilisateurs Chorus</option>
-		            <option value="50">Moins de 50 Utilisateurs Chorus</option>
-		            <option value="10">Moins de 10 Utilisateurs Chorus</option>
-		            <option value="5">Moins de 5 Utilisateurs Chorus</option>		            
+					<option value="200">Tous les effectifs</option>
+					<option value="101">Plus de 100 Utilisateurs Chorus</option>
+                    <option value="100">Entre 50 de 100 Utilisateurs Chorus</option>
+                    <option value="50">Entre 10 de 50 Utilisateurs Chorus</option>
+                    <option value="10">Entre 5 et 10 Utilisateurs Chorus</option>
+                    <option value="5">Moins de 5 Utilisateurs Chorus</option>  	            
 				</select></div>
 			</div>  
 	    </div>

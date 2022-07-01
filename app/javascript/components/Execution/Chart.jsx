@@ -4,7 +4,7 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
-export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name,data_inter_ministerielle}) => {
+export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name,data_inter_ministerielle,liste_se_empty}) => {
 
     const series_i = [];
     let date;
@@ -54,7 +54,11 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
                 printChart:"Imprimer le graphique",
                 viewFullscreen: "Voir en plein écran",
                 viewData: "Voir la table des données",
-                noData: "Les courbes s'afficheront lorsque vous aurez <br>renseigné et validé les informations du formulaire."
+                noData: "Les courbes s'afficheront lorsque vous aurez <br>renseigné et validé les informations du formulaire.",
+                loading: 'Chargement...',
+                months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+                weekdays: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
+                shortMonths: ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aoû', 'sep', 'oct', 'nov', 'déc'],
             },
         rangeSelector: {
 
@@ -109,6 +113,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         },
         legend: {
             enabled: true,
+            maxHeight: 80,
         },
         title: {
             text: title_i,

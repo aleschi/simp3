@@ -48,7 +48,7 @@ class Header extends React.Component {
 		                    </div>
 		                    <div className="fr-header__service">
 		                        <Link to="/" title="Accueil - Datason | Direction du Budget">
-		                            <p className="fr-header__service-title">SIMP3</p>
+		                            <p className="fr-header__service-title">SIMP3 <span className="fr-badge fr-badge--success fr-badge--no-icon">BETA</span></p>
 		                        </Link>
 		                        <p className="fr-header__service-tagline">Suivi des indicateurs MP3</p>
 		                    </div>
@@ -56,11 +56,7 @@ class Header extends React.Component {
 		                <div className="fr-header__tools">
 		                    <div className="fr-header__tools-links">
 		                        <ul className="fr-links-group">
-		                        	{(this.state.isAdmin) &&
-		                            <li className="fr-shortcuts__item">
-		                                <a className="fr-link fr-fi-add-circle-line" href="/indicateur_executions/new" target="_self">Ajouter un document</a>
-		                            </li>
-		                            }
+		                        	
 		                          
 		                            <li className="fr-shortcuts__item">
 		                                <a className="fr-link fr-fi-logout-box-r-line" data-method="delete" href="/logout">Se déconnecter</a>

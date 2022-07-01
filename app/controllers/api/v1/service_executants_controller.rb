@@ -73,7 +73,17 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       autoCompleteResults = ServiceExecutant.all
     end 
     if params[:effectif] && params[:effectif].length != 0
-      autoCompleteResults = autoCompleteResults.where('effectif <= ?', params[:effectif].to_i)
+      if params[:effectif].to_i == 5
+        autoCompleteResults = autoCompleteResults.where('effectif < ?', params[:effectif].to_i)
+      elsif params[:effectif].to_i == 10
+        autoCompleteResults = autoCompleteResults.where('effectif < ? AND effectif >= ?', params[:effectif].to_i, 5)
+      elsif params[:effectif].to_i == 50
+        autoCompleteResults = autoCompleteResults.where('effectif < ? AND effectif >= ?', params[:effectif].to_i, 10)
+      elsif params[:effectif].to_i == 100
+        autoCompleteResults = autoCompleteResults.where('effectif < ? AND effectif >= ?', params[:effectif].to_i, 50)
+      elsif params[:effectif].to_i == 101
+        autoCompleteResults = autoCompleteResults.where('effectif >= ?',100)
+      end 
     end
     if params[:type_structure] && params[:type_structure].length != 0 && params[:type_structure] != "ALL"
       autoCompleteResults = autoCompleteResults.where('type_structure = ?', params[:type_structure].to_s)
@@ -125,7 +135,17 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       autoCompleteResults = ServiceExecutant.all
     end 
     if params[:effectif] && params[:effectif].length != 0
-      autoCompleteResults = autoCompleteResults.where('effectif <= ?', params[:effectif].to_i)
+      if params[:effectif].to_i == 5
+        autoCompleteResults = autoCompleteResults.where('effectif < ?', params[:effectif].to_i)
+      elsif params[:effectif].to_i == 10
+        autoCompleteResults = autoCompleteResults.where('effectif < ? AND effectif >= ?', params[:effectif].to_i, 5)
+      elsif params[:effectif].to_i == 50
+        autoCompleteResults = autoCompleteResults.where('effectif < ? AND effectif >= ?', params[:effectif].to_i, 10)
+      elsif params[:effectif].to_i == 100
+        autoCompleteResults = autoCompleteResults.where('effectif < ? AND effectif >= ?', params[:effectif].to_i, 50)
+        elsif params[:effectif].to_i == 101
+        autoCompleteResults = autoCompleteResults.where('effectif >= ?',100)
+      end
     end
     if params[:type_structure] && params[:type_structure].length != 0 && params[:type_structure] != "ALL"
       autoCompleteResults = autoCompleteResults.where('type_structure = ?', params[:type_structure].to_s)
@@ -160,8 +180,13 @@ class Api::V1::ServiceExecutantsController < ApplicationController
         end
 
     end 
+    #si se deja affiché 
+    service_executant = ServiceExecutant.where(id: params[:service_executant][0]['id'])
+    indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
+    performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
 
-    response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
+    response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color,
+    service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance}
     render json: response
   end 
 
@@ -179,7 +204,8 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     @ids = IndicateurExecution.all.pluck(:service_executant_id).uniq!
     @se_empty = ServiceExecutant.where.not(id: @ids)
     @se_empty.destroy_all
-    response = {se: @se_empty}
+    @se = ServiceExecutant.all
+    response = {se_empty: @se_empty, se: @se}
     render json: response
   end 
 

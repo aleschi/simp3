@@ -13,6 +13,7 @@ class Carto_perf extends React.Component {
           indicateurs: [],
           ministeres: [],
           service_executants: [],
+          service_executant: [],
           blocs:[],
           type_services: [],
           indicateur_executions: [],
@@ -39,12 +40,18 @@ class Carto_perf extends React.Component {
           maxDate: new Date(),
           autoCompleteList: [],
 
+          showResults: false,
+          indicateur_executions: [],
+          performance: null,
+
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeStructure = this.handleChangeStructure.bind(this);
         this.handleSubmitDate = this.handleSubmitDate.bind(this);
+        this.onMarkerClick2 = this.onMarkerClick2.bind(this);
+        this.onCloseInfo = this.onCloseInfo.bind(this); 
     }
 
     componentDidMount() {
@@ -56,7 +63,7 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, se_color: response.se_color, loading: false, autoCompleteList: response.autoCompleteList , startDate: new Date(response.date) , maxDate: new Date(response.date)  }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, service_executant: response.service_executant, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, se_color: response.se_color, loading: false, autoCompleteList: response.autoCompleteList , startDate: new Date(response.date) , maxDate: new Date(response.date)  }))
       .catch(() => this.props.history.push("/"));
     }
     
@@ -104,9 +111,10 @@ class Carto_perf extends React.Component {
       
       const se_color = this.state.se_color;
       const startDate = this.state.startDate;
+      const service_executant = this.state.service_executant;
 
       const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate,service_executant
       };
 
       const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -156,9 +164,10 @@ class Carto_perf extends React.Component {
         const type_structure = this.state.type_structure;
         const se_color = this.state.se_color;
         const startDate = this.state.startDate;
+        const service_executant = this.state.service_executant;
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate,service_executant
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -194,9 +203,10 @@ class Carto_perf extends React.Component {
         const type_structure = this.state.type_structure;
         const se_color = this.state.se_color;
         const startDate = event;
+        const service_executant = this.state.service_executant;
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate,service_executant
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -214,11 +224,40 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false}))
+      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance}))
       .catch(error => console.log(error.message));
     }
 
+    onMarkerClick2= (props, marker, e) => {    
+   
+        const url = "/api/v1/service_executants/search_marker?q=" + props.id;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const startDate = this.state.startDate;
+        const body = {
+          startDate
+        };
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+        body: JSON.stringify(body)
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ service_executant: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions, performance: response.performance}))
+      .catch(error => console.log(error.message));
+       
+    };
 
+    onCloseInfo(event) {
+    this.setState({ showResults: false });
+    }
 
   render() {
 
@@ -241,7 +280,7 @@ class Carto_perf extends React.Component {
       
         
         { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
-          <Mapcontainer handleSubmitDate={this.handleSubmitDate} maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.service_executant_n} autoCompleteResults={this.state.service_executant_n} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n}  csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} /> 
+          <Mapcontainer handleSubmitDate={this.handleSubmitDate} maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.service_executant} autoCompleteResults={this.state.service_executant_n} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n}  csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} showResults={this.state.showResults} performance={this.state.performance} indicateur_executions={this.state.indicateur_executions} onMarkerClick2={this.onMarkerClick2} onCloseInfo={this.onCloseInfo}/> 
    
         }
      

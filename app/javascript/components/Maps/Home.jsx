@@ -13,7 +13,7 @@ class Home extends React.Component {
         this.state = {
           autoCompleteResults: [],
           autoCompleteList: [],
-          serviceexecutant: [],
+          service_executant: [],
           service_executants: [],
           ministeres: [],
           blocs: [],
@@ -37,24 +37,30 @@ class Home extends React.Component {
           startDate: new Date(),
           maxDate: new Date(),
 
+          showResults: false,
+          indicateur_executions: [],
+          performance: null,
+
         };
     
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeStructure = this.handleChangeStructure.bind(this);
         this.handleSubmitDate = this.handleSubmitDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onMarkerClick2 = this.onMarkerClick2.bind(this);
+        this.onCloseInfo = this.onCloseInfo.bind(this); 
     }
 
     componentDidMount() {
-    const url = "/api/v1/service_executants/index";
-    fetch(url)
+      const url = "/api/v1/service_executants/index";
+      fetch(url)
       .then(response => {
         if (response.ok) {
           return response.json();
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, serviceexecutant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services, se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date) }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, service_executant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services, se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date) }))
       .catch(() => this.props.history.push("/"));
     }
 
@@ -185,10 +191,11 @@ class Home extends React.Component {
         const showMinistere = this.state.showMinistere;
         const showType = this.state.showType;
         const startDate = e;
+        const service_executant = this.state.service_executant;
     
 
         const body = {
-          autoCompleteList,autoCompleteResults,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,showSe,showBloc,showMinistere,showType,startDate
+          autoCompleteResults,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,showSe,showBloc,showMinistere,showType,startDate,service_executant
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -206,13 +213,45 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color, loading: false  }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance  }))
       .catch(error => console.log(error.message));
     }
 
+    onMarkerClick2= (props, marker, e) => {    
+   
+        const url = "/api/v1/service_executants/search_marker?q=" + props.id;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const startDate = this.state.startDate;
+        const body = {
+          startDate
+        };
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+        body: JSON.stringify(body)
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ service_executant: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions, performance: response.performance}))
+      .catch(error => console.log(error.message));
+       
+    };
+
+    onCloseInfo(event) {
+    this.setState({ showResults: false });
+    }
+
   render() {
+ 
     return (
-    <div>
+      <div>
         <Header /> 
         
         <div className="fr-container pr">    
@@ -226,14 +265,14 @@ class Home extends React.Component {
         
           
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
-            <Mapcontainer handleSubmitDate={this.handleSubmitDate} maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.serviceexecutant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} /> 
+            <Mapcontainer handleSubmitDate={this.handleSubmitDate} onMarkerClick2={this.onMarkerClick2} maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.service_executant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} showResults={this.state.showResults} performance={this.state.performance} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo}/> 
           }
 
         </div>
         
   
         <Footer />    
-    </div>
+      </div>
     
     );
   }

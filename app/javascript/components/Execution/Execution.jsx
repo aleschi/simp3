@@ -32,6 +32,8 @@ class Execution extends React.Component {
           data_inter_ministerielle: [],
           term: '',
           autoCompleteList: [],
+          liste_se_empty: [],
+          liste_se_empty_arr: [],
         };
 
        
@@ -131,15 +133,16 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
-       data_inter_ministerielle: response.data_inter_ministerielle}))
+       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty}))
       .catch(error => console.log(error.message));
     }
 
     
 
     render() {
-    return (
 
+    return (
+    
     <div>
         <Header /> 
         <div className="fr-container pr">    
@@ -149,18 +152,27 @@ class Execution extends React.Component {
           </div>
         </div>
         
-            <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
+          <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
             indicateurs={this.state.indicateurs}
             service_executants={this.state.service_executants}
             handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term}/>
-       
+
+          { this.state.liste_se_empty_arr.length > 0 && 
+            <div className="fr-alert fr-alert--error fr-mt-3w">
+              <p className="fr-alert__title fr-hidden"></p>
+              <p>Indicateur non suivi par certains services exécutants séléctionnés : {this.state.liste_se_empty.map((se, index) => ( 
+              <span key={index}>{se.libelle} - </span>
+              ))}</p>
+            </div>
+          }
+          
 
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :
             <div>
             <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
                 
                 <div className="fr-col-12 fr-col-lg-8">
-                <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name} data_inter_ministerielle={this.state.data_inter_ministerielle}/>
+                <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name} data_inter_ministerielle={this.state.data_inter_ministerielle} liste_se_empty={this.state.liste_se_empty}/>
 
                 
                 </div>
