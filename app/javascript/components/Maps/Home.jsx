@@ -40,6 +40,12 @@ class Home extends React.Component {
           showResults: false,
           indicateur_executions: [],
           performance: null,
+          regions: [],
+          region: "ALL",
+          zoom: 5,
+          lat: 48.52, 
+          lng: 2.19,
+          resetloc: false,
 
         };
     
@@ -49,6 +55,7 @@ class Home extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onMarkerClick2 = this.onMarkerClick2.bind(this);
         this.onCloseInfo = this.onCloseInfo.bind(this); 
+      
     }
 
     componentDidMount() {
@@ -60,7 +67,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, service_executant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services, se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date) }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, service_executant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services, se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date), regions: response.regions }))
       .catch(() => this.props.history.push("/"));
     }
 
@@ -92,9 +99,10 @@ class Home extends React.Component {
         const effectif = this.state.effectif;
         const type_structure = this.state.type_structure;
         const startDate = this.state.startDate;
+        const region = this.state.region;
 
         const body = {
-          search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure,startDate
+          search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure,startDate, region
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -112,7 +120,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, loading: false, se_color: response.se_color}))
+      .then(response => this.setState({autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, loading: false, se_color: response.se_color,showResults: false}))
       .catch(error => console.log(error.message));
     }
 
@@ -128,14 +136,24 @@ class Home extends React.Component {
         if (event.target.name == "effectif"){
           var effectif = event.target.value
           var type_structure = this.state.type_structure
+          var region = this.state.region
+          this.setState({ resetloc: false})
         }
         else if (event.target.name == "type_structure"){
           var type_structure = event.target.value
           var effectif = this.state.effectif
+          var region = this.state.region
+          this.setState({ resetloc: false})
+        }
+        else if (event.target.name == "regions"){
+          var region = event.target.value
+          var effectif = this.state.effectif
+          var type_structure = this.state.type_structure
+          this.setState({ resetloc: true, zoom: 5})
         }
     
         const body = {
-          search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,startDate
+          search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,startDate, region
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -153,23 +171,24 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults,csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color}))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults,csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color,showResults: false, region: response.region, zoom: response.zoom, lat: response.lat, lng: response.lng}))
       .catch(error => console.log(error.message));
     }
 
 
     handleChangeStructure(event){
+      this.setState({ resetloc: false})
       if (event.target.value == 'Ministere'){
-        this.setState({ showSe:  false, showMinistere: true, showBloc:  false, showType:  false, search_blocs: [], search_type_services:[], search_service_executants: [], autoCompleteList: this.state.ministeres }) 
+        this.setState({ showSe:  false, showMinistere: true, showBloc:  false, showType:  false, search_blocs: [], search_type_services:[], search_service_executants: [], autoCompleteList: this.state.ministeres,showResults: false }) 
       } 
       else if (event.target.value == 'Bloc'){
-      this.setState({ showSe:  false, showMinistere: false, showBloc:  true, showType:  false, search_ministeres: [], search_type_services:[], search_service_executants: [], autoCompleteList: this.state.blocs}) 
+      this.setState({ showSe:  false, showMinistere: false, showBloc:  true, showType:  false, search_ministeres: [], search_type_services:[], search_service_executants: [], autoCompleteList: this.state.blocs,showResults: false}) 
       }
       else if (event.target.value == 'Type'){
-      this.setState({ showSe:  false, showMinistere: false, showBloc:  false, showType:  true, search_ministeres: [], search_blocs:[], search_service_executants: [], autoCompleteList: this.state.type_services}) 
+      this.setState({ showSe:  false, showMinistere: false, showBloc:  false, showType:  true, search_ministeres: [], search_blocs:[], search_service_executants: [], autoCompleteList: this.state.type_services,showResults: false}) 
       }
       else if (event.target.value == 'Service') {
-      this.setState({ showSe:  true, showMinistere: false, showBloc:  false, showType:  false, search_ministeres: [], search_type_services:[], search_blocs: [], autoCompleteList: this.state.service_executants}) 
+      this.setState({ showSe:  true, showMinistere: false, showBloc:  false, showType:  false, search_ministeres: [], search_type_services:[], search_blocs: [], autoCompleteList: this.state.service_executants,showResults: false}) 
       }
     }
 
@@ -192,10 +211,11 @@ class Home extends React.Component {
         const showType = this.state.showType;
         const startDate = e;
         const service_executant = this.state.service_executant;
+        const region = this.state.region;
     
 
         const body = {
-          autoCompleteResults,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,showSe,showBloc,showMinistere,showType,startDate,service_executant
+          autoCompleteResults,search_service_executants,search_ministeres,search_blocs,search_type_services, effectif, type_structure,showSe,showBloc,showMinistere,showType,startDate,service_executant, region
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -213,12 +233,12 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance  }))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance,resetloc: false  }))
       .catch(error => console.log(error.message));
     }
 
     onMarkerClick2= (props, marker, e) => {    
-   
+
         const url = "/api/v1/service_executants/search_marker?q=" + props.id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
@@ -239,7 +259,7 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ service_executant: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions, performance: response.performance}))
+      .then(response => this.setState({ service_executant: response.service_executant, showResults: true, indicateur_executions: response.indicateur_executions, performance: response.performance, resetloc: false}))
       .catch(error => console.log(error.message));
        
     };
@@ -248,8 +268,9 @@ class Home extends React.Component {
     this.setState({ showResults: false });
     }
 
+
   render() {
- 
+   
     return (
       <div>
         <Header /> 
@@ -257,15 +278,15 @@ class Home extends React.Component {
         <div className="fr-container pr">    
           <div className="fr-grid-row fr-grid-row--gutters">
             <div className="fr-col-lg-12">
-              <h1 className="fr-my-5w">Cartographie des services exécutants</h1>
+              <h1 className="fr-my-5w">Cartographie de la performance globale</h1>
             </div>
           </div>
         
-            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} handleSubmit={this.handleSubmit}/>
+            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType} handleSubmit={this.handleSubmit} regions={this.state.regions}/>
         
           
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
-            <Mapcontainer handleSubmitDate={this.handleSubmitDate} onMarkerClick2={this.onMarkerClick2} maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.service_executant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} showResults={this.state.showResults} performance={this.state.performance} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo}/> 
+            <Mapcontainer handleSubmitDate={this.handleSubmitDate} onMarkerClick2={this.onMarkerClick2}  maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.service_executant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} showResults={this.state.showResults} performance={this.state.performance} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} zoom={this.state.zoom} lat={this.state.lat} lng={this.state.lng} resetloc={this.state.resetloc}/> 
           }
 
         </div>

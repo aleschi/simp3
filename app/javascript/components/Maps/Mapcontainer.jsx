@@ -44,6 +44,10 @@ export class Mapcontainer extends React.Component {
             sfact: this.props.sfact,
             cgf: this.props.cgf,
             performance: this.props.performance,
+            zoom: this.props.zoom,
+            lat: this.props.lat,
+            lng: this.props.lng,
+            
         }
        
    
@@ -82,70 +86,80 @@ export class Mapcontainer extends React.Component {
       if (this.props.indicateur_executions !== prevProps.indicateur_executions) {
       this.setState({indicateur_executions: this.props.indicateur_executions});
       }
+      if (this.props.zoom !== prevProps.zoom) {
+      this.setState({zoom: this.props.zoom});
+      }
+      if (this.props.lng !== prevProps.lng) {
+      this.setState({lng: this.props.lng});
+      }
+      if (this.props.lat !== prevProps.lat) {
+      this.setState({lat: this.props.lat});
+      }
+ 
     }
     
 
     onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null
+        });
+      }
     };
   
     _mapLoaded(mapProps, map) {
         map.setOptions({
-        styles: mapStyle
+          styles: mapStyle,
         })
     };
 
     displayMarkers = () => {
-    return this.state.autoCompleteResults.map((result, index) => {
-      if (this.state.secolor[result.id] == "vert"){
-      return <Marker key={index} id={result.id} icon={iconV} name={result.libelle} position={{
-       lat: result.latitude,
-       lng: result.longitude
-     }}
-     onClick={this.props.onMarkerClick2} />
-     }
-     else if(this.state.secolor[result.id] == "jaune"){
-     return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
-       lat: result.latitude,
-       lng: result.longitude
-     }}
-     onClick={this.props.onMarkerClick2} />
+      return this.state.autoCompleteResults.map((result, index) => {
+        if (this.state.secolor[result.id] == "vert"){
+        return <Marker key={index} id={result.id} icon={iconV} name={result.libelle} position={{
+         lat: result.latitude,
+         lng: result.longitude
+       }}
+       onClick={this.props.onMarkerClick2} />
+       }
+       else if(this.state.secolor[result.id] == "jaune"){
+       return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
+         lat: result.latitude,
+         lng: result.longitude
+       }}
+       onClick={this.props.onMarkerClick2} />
 
-     }
-     else if(this.state.secolor[result.id] == "rouge"){
-      return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} position={{
-       lat: result.latitude,
-       lng: result.longitude
-     }}
-     onClick={this.props.onMarkerClick2} />
-     }
-     else if (this.state.secolor[result.id] == "bleu"){
-      return <Marker key={index} id={result.id} icon={iconB} name={result.libelle} position={{
-       lat: result.latitude,
-       lng: result.longitude
-     }}
-     onClick={this.props.onMarkerClick2} />
-     }
-     else if (this.state.secolor[result.id] == "noir"){
-      return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
-       lat: result.latitude,
-       lng: result.longitude
-     }}
-     onClick={this.props.onMarkerClick2} />
-     }
-     else {
-     return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
-       lat: result.latitude,
-       lng: result.longitude
-     }}
-     onClick={this.props.onMarkerClick2} />
-     }
-    })
+       }
+       else if(this.state.secolor[result.id] == "rouge"){
+        return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} position={{
+         lat: result.latitude,
+         lng: result.longitude
+       }}
+       onClick={this.props.onMarkerClick2} />
+       }
+       else if (this.state.secolor[result.id] == "bleu"){
+        return <Marker key={index} id={result.id} icon={iconB} name={result.libelle} position={{
+         lat: result.latitude,
+         lng: result.longitude
+       }}
+       onClick={this.props.onMarkerClick2} />
+       }
+       else if (this.state.secolor[result.id] == "noir"){
+        return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
+         lat: result.latitude,
+         lng: result.longitude
+       }}
+       onClick={this.props.onMarkerClick2} />
+       }
+       else {
+       return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
+         lat: result.latitude,
+         lng: result.longitude
+       }}
+       onClick={this.props.onMarkerClick2} />
+       }
+      })
 
     };
 
@@ -153,55 +167,66 @@ export class Mapcontainer extends React.Component {
 
     displayLegend = () => {
      
-    if (this.state.indicateur_n.length == 0){
-      return <div><div className="map_legende">
-          <span className="mapicon"><img src={iconR} alt="icone map" /> Performance Globale {'\u003C'} 30 </span>
-          <span className="mapicon"><img src={iconJ} alt="icone map" /> 30 {'\u003C'}  Performance Globale {'\u003C'} 40 </span>
-          <span className="mapicon"><img src={iconV} alt="icone map" /> 40 {'\u003C'} Performance Globale </span> 
-          <span className="mapicon"><img src={iconG} alt="icone map" />Pas de valeur </span>
-      </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
-    }else{
-      return this.state.indicateur_n.map((result, index) => { 
-      
-        if (result.seuil_1 != null) {
-        if (result.name == 'IB4 - 2' || result.name == 'IB4 - 3' || result.name == 'IB4 - 4'){
+      if (this.state.indicateur_n.length == 0){
+        return <div><div className="map_legende">
+            <span className="mapicon"><img src={iconR} alt="icone map" /> Performance Globale {'\u003C'} 60% </span>
+            <span className="mapicon"><img src={iconJ} alt="icone map" /> 60% {'\u003C'}  Performance Globale {'\u003C'} 80% </span>
+            <span className="mapicon"><img src={iconV} alt="icone map" /> 80% {'\u003C'} Performance Globale </span> 
+            <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+        </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
+      }else{
+        return this.state.indicateur_n.map((result, index) => { 
+        
+          if (result.seuil_1 != null) {
+          if (result.name == 'IB4 - 2' || result.name == 'IB4 - 3' || result.name == 'IB4 - 4'){
+            return <div key={index}>
+
+           <div className="map_legende">
+            <span className="mapicon"><img src={iconR} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+            <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+            <span className="mapicon"><img src={iconV} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+            <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+          </div>
+          <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+          </div>
+          }
+          else{
+           return <div key={index}>
+
+           <div className="map_legende">
+            <span className="mapicon"><img src={iconV} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+            <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+            <span className="mapicon"><img src={iconR} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+            <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+          </div>
+          <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+          </div>
+          }
+        } else {
           return <div key={index}>
 
-         <div className="map_legende">
-          <span className="mapicon"><img src={iconR} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-          <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-          <span className="mapicon"><img src={iconV} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
-        </div>
-        <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
-        </div>
+            <div className="d12"></div><div className="map_legende"><span><span className="fr-icon-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> 1 marqueur = 1 service exécutant</span></div>
+          </div>
         }
-        else{
-         return <div key={index}>
-
-         <div className="map_legende">
-          <span className="mapicon"><img src={iconV} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-          <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-          <span className="mapicon"><img src={iconR} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-          <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
-        </div>
-        <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
-        </div>
-        }
-      } else {
-        return <div key={index}>
-
-          <div className="d12"></div><div className="map_legende"><span><span className="fr-icon-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> 1 marqueur = 1 service exécutant</span></div>
-        </div>
+        })
       }
-      })
-    }
     
     }
     
 
     render() {
    
+    var defaultProps;
+
+    if (this.props.resetloc == true){
+      defaultProps = {lat: this.props.lat, lng: this.props.lng} ;     
+      
+    } else {
+       defaultProps = {} ;
+       
+    }
+    
+
       return (
       <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
         <div className="fr-col-12 fr-hidden-sm">
@@ -218,29 +243,33 @@ export class Mapcontainer extends React.Component {
               <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={this.state.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
             </div>
             <div className="d12"></div>
-            <div className="map">
-    	        <Map
-    	          google={this.props.google}
-    	          zoom={5}
-    	          style={mapStyles}
-    	          streetViewControl={false}
+            
+            <div className="map">           
+              <Map
+                google={this.props.google}
+                zoom={this.state.zoom}
+                style={mapStyles}
+                streetViewControl={false}
                 mapTypeControl={false}
-    	          initialCenter={{ lat: 48.52, lng: 2.19}}
-    	          onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
-    	        >
-    	        {this.displayMarkers()}  
-    	        
-    	        <InfoWindow
-    	          marker={this.state.activeMarker}
-    	          visible={this.state.showingInfoWindow}
-    	          onClose={this.onClose}
-    	        >
-    	          <div>
-    	            <h4>{this.state.selectedPlace.name}</h4>
-    	          </div>
-    	        </InfoWindow>
-    	        </Map>
+                initialCenter={{ lat: this.state.lat, lng: this.state.lng}}
+                center={defaultProps}
+                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
+              
+              >
+           
+              {this.displayMarkers()}  
+              
+              <InfoWindow
+                marker={this.state.activeMarker}
+                visible={this.state.showingInfoWindow}
+                onClose={this.onClose}
+              >
+                <div><h4>{this.state.selectedPlace.name}</h4></div>
+              </InfoWindow>
+              </Map>
             </div>
+            
+     
             <div className="fr-my-3w">
             {this.displayLegend()} 
             </div>
@@ -263,6 +292,7 @@ export class Mapcontainer extends React.Component {
 }
 export default GoogleApiWrapper({
        apiKey: ('AIzaSyCBEVHq2EbsHz4m37nb6nG-Fh-5PxK5o98'),
+       language: 'fr',
      
 })(Mapcontainer)
 

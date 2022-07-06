@@ -10,7 +10,7 @@ class Newservice_executant extends React.Component {
           file_csv: null,
           se: [],
           se_empty: [],
-
+          regions: [],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fileInput = React.createRef();
@@ -26,7 +26,7 @@ class Newservice_executant extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ se_empty: response.se_empty, se: response.se  }))
+      .then(response => this.setState({ se_empty: response.se_empty, se: response.se, regions: response.regions  }))
       .catch(() => this.props.history.push("/"));
     }
 
@@ -69,6 +69,7 @@ class Newservice_executant extends React.Component {
             <div className="fr-mb-5w">
             <div>{this.state.se.length}</div>
             <div>{this.state.se_empty.length}</div>
+            <div>{this.state.regions}</div>
             {this.state.se_empty.map((se, index) => (
             <div key={index}>{se.libelle}</div>
             ))}

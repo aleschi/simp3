@@ -18,6 +18,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     ministeres = Ministere.all.order(name: :asc)
     blocs = OrganisationFinanciere.all.order(name: :asc)
     type_services = TypeService.all.order(name: :asc)
+    regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq!
 
     date = Indicateur.first.indicateur_executions.order(date: :asc).last.date #derniere date ajoutée
 
@@ -30,10 +31,10 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     se_id.each_with_index do |se,i|
       #if se.performances.where(date: date).count > 0 
         #if se.performances.where(date: date).first.valeur >= 40 
-        if valeur_id[i] >= 40 
+        if valeur_id[i] >= 80 
           se_color[se] = "vert"
         #elsif se.performances.where(date: date).first.valeur >= 30
-        elsif valeur_id[i] >= 30 
+        elsif valeur_id[i] >= 60
           se_color[se] = "jaune"
         #elsif se.performances.where(date: date).first.valeur > 0
         elsif valeur_id[i] > 0 
@@ -46,7 +47,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       #end
     end 
 
-    response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color, date: date}
+    response = {autoCompleteResults: autoCompleteResults, service_executant: service_executant, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, blocs: blocs, type_services: type_services, se_color: se_color, date: date, regions: regions}
     render json: response
   end
 
@@ -72,6 +73,19 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     else
       autoCompleteResults = ServiceExecutant.all
     end 
+
+    if params[:region] && params[:region].length > 0 && params[:region] != "ALL"
+      autoCompleteResults = autoCompleteResults.where(region: params[:region])
+      zoom = 8
+      result = Geocoder.search(params[:region],params: {language: :fr})
+      lat = result[0].geometry['location']['lat']
+      lng = result[0].geometry['location']['lng']
+    else
+      zoom = 5
+      lat = 48.52
+      lng = 2.19
+    end 
+
     if params[:effectif] && params[:effectif].length != 0
       if params[:effectif].to_i == 5
         autoCompleteResults = autoCompleteResults.where('effectif < ?', params[:effectif].to_i)
@@ -105,10 +119,10 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     valeur_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:valeur)
    
     se_id.each_with_index do |se,i|     
-        if valeur_id[i] >= 40 
+        if valeur_id[i] >= 80 
           se_color[se] = "vert"
      
-        elsif valeur_id[i] >= 30 
+        elsif valeur_id[i] >= 60 
           se_color[se] = "jaune"
       
         elsif valeur_id[i] > 0 
@@ -118,7 +132,8 @@ class Api::V1::ServiceExecutantsController < ApplicationController
         end
     end 
 
-    response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color}
+    response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], 
+      search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng}
     render json: response
   end 
 
@@ -134,6 +149,11 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     else
       autoCompleteResults = ServiceExecutant.all
     end 
+
+    if params[:region] && params[:region].length > 0 && params[:region] != "ALL"
+      autoCompleteResults = autoCompleteResults.where(region: params[:region])
+    end
+
     if params[:effectif] && params[:effectif].length != 0
       if params[:effectif].to_i == 5
         autoCompleteResults = autoCompleteResults.where('effectif < ?', params[:effectif].to_i)
@@ -167,10 +187,10 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     valeur_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:valeur)
    
     se_id.each_with_index do |se,i|     
-        if valeur_id[i] >= 40 
+        if valeur_id[i] >= 80 
           se_color[se] = "vert"
      
-        elsif valeur_id[i] >= 30 
+        elsif valeur_id[i] >= 60 
           se_color[se] = "jaune"
       
         elsif valeur_id[i] > 0 
@@ -205,7 +225,33 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     @se_empty = ServiceExecutant.where.not(id: @ids)
     @se_empty.destroy_all
     @se = ServiceExecutant.all
-    response = {se_empty: @se_empty, se: @se}
+
+    @se.each do |se|
+      #if se.region.nil?
+      @adress = Geocoder.search([se.latitude, se.longitude], params: {language: :fr})
+      if !@adress[0].nil?
+        @adress[0].address_components.each do |element|
+          if element["types"][0]=="administrative_area_level_1"
+            se.region = element["long_name"]
+            if element["long_name"] == "Windward Islands"
+              se.region = 'Îles du Vent'
+            elsif element["long_name"] == "Canton de Mamoudzou-3"
+              se.region = "Mayotte"
+            elsif element["long_name"] == "Saint-Denis"
+              se.region = "La Réunion"
+            end
+            se.save 
+          end
+        end
+      else
+        se.region = nil
+        se.save
+      end
+      #end
+    end 
+
+    @regions = ServiceExecutant.all.pluck(:region).uniq
+    response = {se_empty: @se_empty, se: @se, regions: @regions}
     render json: response
   end 
 

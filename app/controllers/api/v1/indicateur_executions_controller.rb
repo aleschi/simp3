@@ -33,6 +33,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     bloc = OrganisationFinanciere.all.order(name: :asc)
     type_service = TypeService.all.order(name: :asc)
     service_executant = ServiceExecutant.where(id: ServiceExecutant.first.id)
+    regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq!
 
     date = Indicateur.first.indicateur_executions.order(date: :asc).last.date #derniere date ajoutée
 
@@ -71,7 +72,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
 
     
 
-    response = {data1: indicateur, data2: ministere, data3: service_executants,service_executant: service_executant, data4: bloc, data5: type_service, data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants, se_color: se_color, autoCompleteList: autoCompleteList, date: date }
+    response = {data1: indicateur, data2: ministere, data3: service_executants,service_executant: service_executant, data4: bloc, data5: type_service, data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants, se_color: se_color, autoCompleteList: autoCompleteList, date: date, regions: regions }
     render json: response
   end
 
@@ -155,6 +156,18 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       service_executant_n = ServiceExecutant.all
     end
 
+    if params[:region] && params[:region].length > 0 && params[:region] != "ALL"
+      service_executant_n = service_executant_n.where(region: params[:region])
+      zoom = 8
+      result = Geocoder.search(params[:region],params: {language: :fr})
+      lat = result[0].geometry['location']['lat']
+      lng = result[0].geometry['location']['lng']
+    else
+      zoom = 5
+      lat = 48.52
+      lng = 2.19
+    end 
+
     if params[:effectif] && params[:effectif].length != 0 
       if params[:effectif].to_i == 5
         service_executant_n = service_executant_n.where('effectif < ?', params[:effectif].to_i)
@@ -205,7 +218,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
 
     response = { data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf, se_color: se_color,
-    service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance}
+    service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng}
     render json: response
   end 
 

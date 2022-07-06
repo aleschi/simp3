@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange,handleChangeStructure, showSe, showMinistere, showType, showBloc}) => {
+export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange,handleChangeStructure, showSe, showMinistere, showType, showBloc,regions}) => {
 	
     return (
     <div>
@@ -155,6 +155,24 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
 
           <div className="fr-col-12 fr-col-lg-4">
             <div className="fr-select-group">
+              <label htmlFor="region" className="fr-label" >Afficher les services de la région </label>
+              <select className="fr-select" id="region" name="regions" onChange={ handleChange} >
+                    <option value="ALL">Toutes les régions</option>  
+                    { regions.map((region, index) => (
+                      <option key={index} value={region}>{region}</option>   
+                      ))            
+                    }
+              </select>
+            </div>
+          </div>
+          
+        </div>
+
+        <div className="fr-grid-row fr-grid-row--gutters">
+          
+
+          <div className="fr-col-12 fr-col-lg-4">
+            <div className="fr-select-group">
               <label htmlFor="structure" className="fr-label" >Afficher </label>
               <select className="fr-select" id="structure" name="type_structure" onChange={ handleChange} >  
                       <option value="ALL">Toutes les structures</option>
@@ -164,24 +182,23 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
               </select>
             </div>
           </div>
-        </div>
 
-        <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-12 fr-col-lg-4">
             <div className="fr-select-group">
-              <label htmlFor="se" className="fr-label" >Afficher les SE de </label>
+              <label htmlFor="se" className="fr-label" >Afficher les services exécutants de </label>
               <select className="fr-select" id="se" name="effectif" onChange={ handleChange} >  
                       <option value="200">Tous les effectifs</option>
                       <option value="101">Plus de 100 Utilisateurs Chorus</option>
-                      <option value="100">Entre 50 de 100 Utilisateurs Chorus</option>
-                      <option value="50">Entre 10 de 50 Utilisateurs Chorus</option>
+                      <option value="100">Entre 50 et 100 Utilisateurs Chorus</option>
+                      <option value="50">Entre 10 et 50 Utilisateurs Chorus</option>
                       <option value="10">Entre 5 et 10 Utilisateurs Chorus</option>
                       <option value="5">Moins de 5 Utilisateurs Chorus</option>                
               </select>
             </div>
           </div>
-        </div>
-            
+
+          
+        </div>        
     
     </div>
     );

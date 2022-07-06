@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, autoCompleteList}) => {
+export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, autoCompleteList,regions}) => {
 	
 	    return (
 
@@ -25,7 +25,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						<label htmlFor="indicateur" className="fr-label" >Je souhaite visualiser l'indicateur</label> 
 						<select className="fr-select" name="search_indicateur" id="indicateur" onChange={handleChange} required>
 							{indicateurs.map((indicateur, index) => (
-				              <option key={index} value={indicateur.name}>{indicateur.name}</option>
+				              <option key={index} value={indicateur.name}>{indicateur.name} - {indicateur.description}</option>
 				            ))}
 						</select>
 					</div>
@@ -167,6 +167,19 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 				</div>
 			</div>
 		<div className="fr-grid-row fr-grid-row--gutters">
+			<div className="fr-col-12 fr-col-lg-4">
+	            <div className="fr-select-group">
+	              <label htmlFor="region" className="fr-label" >Afficher les services de la région </label>
+	              <select className="fr-select" id="region" name="regions" onChange={ handleChange} >
+	                    <option value="ALL">Toutes les régions</option>  
+	                    { regions.map((region, index) => (
+	                      <option key={index} value={region}>{region}</option>   
+	                      ))            
+	                    }
+	              </select>
+	            </div>
+          	</div>
+
 	        <div className="fr-col-12 fr-col-lg-4">
 				<div className="fr-select-group">
 				<label htmlFor="structure" className="fr-label" >Afficher </label>
@@ -184,8 +197,8 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 				<select className="fr-select" name="effectif" id="se" onChange={handleChange} >
 					<option value="200">Tous les effectifs</option>
 					<option value="101">Plus de 100 Utilisateurs Chorus</option>
-                    <option value="100">Entre 50 de 100 Utilisateurs Chorus</option>
-                    <option value="50">Entre 10 de 50 Utilisateurs Chorus</option>
+                    <option value="100">Entre 50 et 100 Utilisateurs Chorus</option>
+                    <option value="50">Entre 10 et 50 Utilisateurs Chorus</option>
                     <option value="10">Entre 5 et 10 Utilisateurs Chorus</option>
                     <option value="5">Moins de 5 Utilisateurs Chorus</option>  	            
 				</select></div>

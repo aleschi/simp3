@@ -23,7 +23,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						<label htmlFor="indicateur" className="fr-label" >Je souhaite visualiser l'indicateur </label>
 						<select className="fr-select" id="indicateur" name="search_indicateur" onChange={handleChange} required>
 							{indicateurs.map((indicateur, index) => (
-				              <option key={index} value={indicateur.name}>{indicateur.name}</option>
+				              <option key={index} value={indicateur.name}>{indicateur.name} - {indicateur.description}</option>
 				            ))}
 						</select>
 						</div>

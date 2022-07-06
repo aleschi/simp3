@@ -81,7 +81,8 @@ render() {
               <div className="fr-text--sm fr-mb-3v">Utilisateurs Chorus : 
               {(service_executant.effectif < 5) && <span> Moins de 5</span> }{(service_executant.effectif < 10 && service_executant.effectif >= 5) && <span> Entre 5 et 10</span> } {(service_executant.effectif < 50 && service_executant.effectif >= 10) && <span> Entre 10 et 50</span> }{(service_executant.effectif < 100 && service_executant.effectif >= 50) && <span> Entre 50 et 100</span> }{(service_executant.effectif >= 100) && <span> Plus de 100</span> }</div>
 
-              <div className="fr-text--sm fr-mb-3v">Performance globale du service : {this.state.performance}</div>
+              <div className="fr-text--sm fr-mb-3v">Performance globale du service : {(this.state.performance < 60) && <span className="fr-badge fr-badge--pink-tuile" > {this.state.performance}%</span>}{(this.state.performance >= 60 && this.state.performance < 80) && <span className="fr-badge fr-badge--yellow-tournesol" > {this.state.performance}%</span>}
+              {(this.state.performance >= 80) && <span className="fr-badge fr-badge--green-emeraude" > {this.state.performance}%</span>}</div>
             
               <div className="fr-text--sm fr-mb-3v"><b>Valeurs des indicateurs sur le mois ({Moment(this.state.startDate).format('MM/YYYY')}) </b></div>
              

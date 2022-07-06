@@ -14,7 +14,7 @@ class IndicateurExecution < ApplicationRecord
     date = data.cell(1,1).to_date-1.month
     date = date.change(day: 1)
     #colonne of indicateurs
-    array=[6,9,12,24,27,14,16,18,20,30,33,36,39,42,45,48,7,41,40,47,5,35]
+    array=[6,9,12,24,27,16,18,20,30,33,36,39,42,45,48,7,41,40,47,5,35]
   	data.each_with_index do |row, idx|
       next if idx == 0 # skip header
       next if idx == 1
@@ -35,14 +35,18 @@ class IndicateurExecution < ApplicationRecord
             end
                                   
             if indicateur.unite == "%"
-              @indicateur_execution.valeur = row[array[j]].to_f * 100 
+              if indicateur.name == 'IB4 - 1'
+                @indicateur_execution.valeur = row[array[j]].to_f * 100 + row[14].to_f * 100
+              else
+                @indicateur_execution.valeur = row[array[j]].to_f * 100 
+              end
             else 
               @indicateur_execution.valeur = row[array[j]].to_f
             end
             @indicateur_execution.save
 
             if !indicateur.seuil_1.nil?
-              if indicateur.name == 'IB4 - 2' || indicateur.name == 'IB4 - 3' || indicateur.name == 'IB4 - 4'
+              if indicateur.name == 'IB4 - 3'
                 if @indicateur_execution.valeur <= indicateur.seuil_1
                   @indicateur_execution.point = 1 
                 elsif @indicateur_execution.valeur <= indicateur.seuil_2
@@ -75,7 +79,11 @@ class IndicateurExecution < ApplicationRecord
       else 
         @performance = service.performances.new(date: date)
       end 
-      @performance.valeur = service.indicateur_executions.where(date: date).sum(:point)
+      if service.type_structure == "SFACT"
+        @performance.valeur = (service.indicateur_executions.where(date: date).sum(:point)*100.0/9).round
+      else
+        @performance.valeur = (service.indicateur_executions.where(date: date).sum(:point)*100.0/45).round
+      end
       @performance.save
     end 
 	end 
