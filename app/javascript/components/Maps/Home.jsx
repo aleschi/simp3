@@ -270,7 +270,7 @@ class Home extends React.Component {
 
 
   render() {
-   
+   console.log('ok');
     return (
       <div>
         <Header /> 

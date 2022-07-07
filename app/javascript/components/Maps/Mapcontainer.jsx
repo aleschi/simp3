@@ -28,9 +28,9 @@ export class Mapcontainer extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            autoCompleteResults: this.props.autoCompleteResults,
+
             service_executant: this.props.service_executant,
-            secolor: this.props.secolor,
+        
             indicateur_n: this.props.indicateur_n,
 
             indicateur_executions: this.props.indicateur_executions,
@@ -40,39 +40,19 @@ export class Mapcontainer extends React.Component {
             selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
             startDate: this.props.startDate,
             maxDate: this.props.maxDate,
-            csp: this.props.csp,
-            sfact: this.props.sfact,
-            cgf: this.props.cgf,
-            performance: this.props.performance,
-            zoom: this.props.zoom,
-            lat: this.props.lat,
-            lng: this.props.lng,
-            
+            performance: this.props.performance,        
         }
        
    
     }
     componentDidUpdate(prevProps) {
-      if (this.props.autoCompleteResults !== prevProps.autoCompleteResults) {
-        this.setState({autoCompleteResults: this.props.autoCompleteResults});
-      }
+
       if (this.props.service_executant !== prevProps.service_executant) {
         this.setState({service_executant: this.props.service_executant});
       }
-      if (this.props.secolor !== prevProps.secolor) {
-        this.setState({secolor: this.props.secolor});
-      }
+
       if (this.props.indicateur_n !== prevProps.indicateur_n) {
         this.setState({indicateur_n: this.props.indicateur_n});
-      }
-      if (this.props.cgf !== prevProps.cgf) {
-      this.setState({cgf: this.props.cgf});
-      }
-      if (this.props.sfact !== prevProps.sfact) {
-      this.setState({sfact: this.props.sfact});
-      }
-      if (this.props.csp !== prevProps.csp) {
-      this.setState({csp: this.props.csp});
       }
       if (this.props.startDate !== prevProps.startDate) {
       this.setState({startDate: this.props.startDate});
@@ -86,28 +66,10 @@ export class Mapcontainer extends React.Component {
       if (this.props.indicateur_executions !== prevProps.indicateur_executions) {
       this.setState({indicateur_executions: this.props.indicateur_executions});
       }
-      if (this.props.zoom !== prevProps.zoom) {
-      this.setState({zoom: this.props.zoom});
-      }
-      if (this.props.lng !== prevProps.lng) {
-      this.setState({lng: this.props.lng});
-      }
-      if (this.props.lat !== prevProps.lat) {
-      this.setState({lat: this.props.lat});
-      }
+    
  
     }
     
-
-    onClose = props => {
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null
-        });
-      }
-    };
-  
     _mapLoaded(mapProps, map) {
         map.setOptions({
           styles: mapStyle,
@@ -115,15 +77,15 @@ export class Mapcontainer extends React.Component {
     };
 
     displayMarkers = () => {
-      return this.state.autoCompleteResults.map((result, index) => {
-        if (this.state.secolor[result.id] == "vert"){
+      return this.props.autoCompleteResults.map((result, index) => {
+        if (this.props.secolor[result.id] == "vert"){
         return <Marker key={index} id={result.id} icon={iconV} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
        }}
        onClick={this.props.onMarkerClick2} />
        }
-       else if(this.state.secolor[result.id] == "jaune"){
+       else if(this.props.secolor[result.id] == "jaune"){
        return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
@@ -131,21 +93,21 @@ export class Mapcontainer extends React.Component {
        onClick={this.props.onMarkerClick2} />
 
        }
-       else if(this.state.secolor[result.id] == "rouge"){
+       else if(this.props.secolor[result.id] == "rouge"){
         return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
        }}
        onClick={this.props.onMarkerClick2} />
        }
-       else if (this.state.secolor[result.id] == "bleu"){
+       else if (this.props.secolor[result.id] == "bleu"){
         return <Marker key={index} id={result.id} icon={iconB} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
        }}
        onClick={this.props.onMarkerClick2} />
        }
-       else if (this.state.secolor[result.id] == "noir"){
+       else if (this.props.secolor[result.id] == "noir"){
         return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
@@ -215,61 +177,55 @@ export class Mapcontainer extends React.Component {
     
 
     render() {
-   
-    var defaultProps;
 
-    if (this.props.resetloc == true){
-      defaultProps = {lat: this.props.lat, lng: this.props.lng} ;     
-      
-    } else {
-       defaultProps = {} ;
-       
-    }
-    
-
+    console.log(this.props.resetloc);
+  
       return (
       <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
         <div className="fr-col-12 fr-hidden-sm">
           <div className="align_flex">
-            <div className="map_se"><span>{this.state.csp}</span><br/>CSP</div>
-            <div className="map_se"><span>{this.state.sfact}</span><br/>SFACT</div>
-            <div className="map_se"><span>{this.state.cgf}</span><br/>CGF</div>    
+            <div className="map_se"><span>{this.props.csp}</span><br/>CSP</div>
+            <div className="map_se"><span>{this.props.sfact}</span><br/>SFACT</div>
+            <div className="map_se"><span>{this.props.cgf}</span><br/>CGF</div>    
           </div>
         </div>
         <div className="fr-col-12 fr-col-lg-8">
           <div className="map_map">        
-            <div className="map_date_box">
-             
+            <div className="map_date_box">             
               <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={this.state.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
             </div>
             <div className="d12"></div>
-            
+            { this.props.resetloc ? 
             <div className="map">           
               <Map
                 google={this.props.google}
-                zoom={this.state.zoom}
+                zoom={this.props.zoom}
                 style={mapStyles}
                 streetViewControl={false}
                 mapTypeControl={false}
-                initialCenter={{ lat: this.state.lat, lng: this.state.lng}}
-                center={defaultProps}
-                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
-              
-              >
-           
-              {this.displayMarkers()}  
-              
-              <InfoWindow
-                marker={this.state.activeMarker}
-                visible={this.state.showingInfoWindow}
-                onClose={this.onClose}
-              >
-                <div><h4>{this.state.selectedPlace.name}</h4></div>
-              </InfoWindow>
+                initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
+                center={{lat: this.props.lat, lng: this.props.lng}}
+                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}              
+              >         
+              {this.displayMarkers()}                
               </Map>
             </div>
-            
-     
+            :
+            <div className="map">           
+              <Map
+                google={this.props.google}
+                zoom={this.props.zoom}
+                style={mapStyles}
+                streetViewControl={false}
+                mapTypeControl={false}
+                initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
+              
+                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}              
+              >         
+              {this.displayMarkers()}                
+              </Map>
+            </div>
+            }
             <div className="fr-my-3w">
             {this.displayLegend()} 
             </div>
@@ -279,9 +235,9 @@ export class Mapcontainer extends React.Component {
         <div className="fr-col-12 fr-col-lg-4">
           <div className="fr-hidden fr-unhidden-sm">
           <div className="align_flex">
-            <div className="map_se"><span>{this.state.csp}</span><br/>CSP</div>
-            <div className="map_se"><span>{this.state.sfact}</span><br/>SFACT</div>
-            <div className="map_se"><span>{this.state.cgf}</span><br/>CGF</div>    
+            <div className="map_se"><span>{this.props.csp}</span><br/>CSP</div>
+            <div className="map_se"><span>{this.props.sfact}</span><br/>SFACT</div>
+            <div className="map_se"><span>{this.props.cgf}</span><br/>CGF</div>    
           </div>
           </div>
          { this.state.showResults ? <Mapresult service_executant={this.state.service_executant} indicateur_executions={this.state.indicateur_executions} performance={this.state.performance} onCloseInfo={this.props.onCloseInfo} startDate={this.state.startDate} /> : null }
