@@ -19,7 +19,6 @@ import iconN from '../../../assets/images/icon_lieu_noir.svg';
 import iconG from '../../../assets/images/icon_lieu_gris.svg';
 
 
-
 const mapStyle = [ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#444444" } ] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry.fill", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.country", "elementType": "labels", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.province", "elementType": "all", "stylers": [ { "visibility": "on" }, { "saturation": "-22" }, { "lightness": "-17" }, { "gamma": "1.48" } ] }, { "featureType": "administrative.province", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.province", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "visibility": "on" }, { "hue": "#00b3ff" }, { "saturation": "66" }, { "lightness": "43" }, { "gamma": "5.99" }, { "weight": "4.75" } ] }, { "featureType": "landscape.man_made", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "landscape.natural.landcover", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "saturation": -100 }, { "lightness": 45 }, { "visibility": "off" } ] }, { "featureType": "road", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "color": "#efefef" }, { "visibility": "on" } ] } ]
 
 
@@ -27,47 +26,7 @@ export class Mapcontainer extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {
-
-            service_executant: this.props.service_executant,
-        
-            indicateur_n: this.props.indicateur_n,
-
-            indicateur_executions: this.props.indicateur_executions,
-            showResults: this.props.showResults,
-            showingInfoWindow: false,  // Hides or shows the InfoWindow
-            activeMarker: {},          // Shows the active marker upon click
-            selectedPlace: {},          // Shows the InfoWindow to the selected place upon a marker
-            startDate: this.props.startDate,
-            maxDate: this.props.maxDate,
-            performance: this.props.performance,        
-        }
-       
    
-    }
-    componentDidUpdate(prevProps) {
-
-      if (this.props.service_executant !== prevProps.service_executant) {
-        this.setState({service_executant: this.props.service_executant});
-      }
-
-      if (this.props.indicateur_n !== prevProps.indicateur_n) {
-        this.setState({indicateur_n: this.props.indicateur_n});
-      }
-      if (this.props.startDate !== prevProps.startDate) {
-      this.setState({startDate: this.props.startDate});
-      }
-      if (this.props.performance !== prevProps.performance) {
-      this.setState({performance: this.props.performance});
-      }
-      if (this.props.showResults !== prevProps.showResults) {
-      this.setState({showResults: this.props.showResults});
-      }
-      if (this.props.indicateur_executions !== prevProps.indicateur_executions) {
-      this.setState({indicateur_executions: this.props.indicateur_executions});
-      }
-    
- 
     }
     
     _mapLoaded(mapProps, map) {
@@ -82,54 +41,44 @@ export class Mapcontainer extends React.Component {
         return <Marker key={index} id={result.id} icon={iconV} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
-       }}
-       onClick={this.props.onMarkerClick2} />
-       }
-       else if(this.props.secolor[result.id] == "jaune"){
-       return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
+        }}
+        onClick={this.props.onMarkerClick2} />
+        }
+        else if(this.props.secolor[result.id] == "jaune"){
+        return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
-       }}
-       onClick={this.props.onMarkerClick2} />
-
-       }
-       else if(this.props.secolor[result.id] == "rouge"){
+        }}
+        onClick={this.props.onMarkerClick2} />
+        }
+        else if(this.props.secolor[result.id] == "rouge"){
         return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
-       }}
-       onClick={this.props.onMarkerClick2} />
-       }
-       else if (this.props.secolor[result.id] == "bleu"){
-        return <Marker key={index} id={result.id} icon={iconB} name={result.libelle} position={{
-         lat: result.latitude,
-         lng: result.longitude
-       }}
-       onClick={this.props.onMarkerClick2} />
-       }
-       else if (this.props.secolor[result.id] == "noir"){
+        }}
+        onClick={this.props.onMarkerClick2} />
+        }
+        else if (this.props.secolor[result.id] == "noir"){
         return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
-       }}
-       onClick={this.props.onMarkerClick2} />
-       }
-       else {
-       return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
+        }}
+        onClick={this.props.onMarkerClick2} />
+        }
+        else {
+        return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
          lat: result.latitude,
          lng: result.longitude
-       }}
-       onClick={this.props.onMarkerClick2} />
-       }
+        }}
+        onClick={this.props.onMarkerClick2} />
+        }
       })
 
     };
 
-   
-
     displayLegend = () => {
      
-      if (this.state.indicateur_n.length == 0){
+      if (this.props.indicateur_n.length == 0){
         return <div><div className="map_legende">
             <span className="mapicon"><img src={iconR} alt="icone map" /> Performance Globale {'\u003C'} 60% </span>
             <span className="mapicon"><img src={iconJ} alt="icone map" /> 60% {'\u003C'}  Performance Globale {'\u003C'} 80% </span>
@@ -137,48 +86,43 @@ export class Mapcontainer extends React.Component {
             <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
         </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
       }else{
-        return this.state.indicateur_n.map((result, index) => { 
+        return this.props.indicateur_n.map((result, index) => { 
         
           if (result.seuil_1 != null) {
-          if (result.name == 'IB4 - 2' || result.name == 'IB4 - 3' || result.name == 'IB4 - 4'){
+            if (result.name == 'IB4 - 2' || result.name == 'IB4 - 3' || result.name == 'IB4 - 4'){
+              return <div key={index}>
+              <div className="map_legende">
+                <span className="mapicon"><img src={iconR} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+                <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+                <span className="mapicon"><img src={iconV} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+                <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+              </div>
+              <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+              </div>
+            }
+            else{
+              return <div key={index}>
+              <div className="map_legende">
+                <span className="mapicon"><img src={iconV} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+                <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+                <span className="mapicon"><img src={iconR} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+                <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+              </div>
+              <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+              </div>
+            }
+          } else {
             return <div key={index}>
-
-           <div className="map_legende">
-            <span className="mapicon"><img src={iconR} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-            <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-            <span className="mapicon"><img src={iconV} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-            <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
-          </div>
-          <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
-          </div>
+              <div className="d12"></div><div className="map_legende"><span><span className="fr-icon-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> 1 marqueur = 1 service exécutant</span></div>
+            </div>
           }
-          else{
-           return <div key={index}>
-
-           <div className="map_legende">
-            <span className="mapicon"><img src={iconV} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-            <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-            <span className="mapicon"><img src={iconR} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-            <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
-          </div>
-          <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
-          </div>
-          }
-        } else {
-          return <div key={index}>
-
-            <div className="d12"></div><div className="map_legende"><span><span className="fr-icon-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> 1 marqueur = 1 service exécutant</span></div>
-          </div>
-        }
         })
       }
     
     }
     
-
+ 
     render() {
-
-    console.log(this.props.resetloc);
   
       return (
       <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
@@ -192,7 +136,7 @@ export class Mapcontainer extends React.Component {
         <div className="fr-col-12 fr-col-lg-8">
           <div className="map_map">        
             <div className="map_date_box">             
-              <div><DatePicker locale="fr" selected={this.state.startDate} maxDate={this.state.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
+              <div><DatePicker locale="fr" selected={this.props.startDate} maxDate={this.props.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
             </div>
             <div className="d12"></div>
             { this.props.resetloc ? 
@@ -205,7 +149,8 @@ export class Mapcontainer extends React.Component {
                 mapTypeControl={false}
                 initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
                 center={{lat: this.props.lat, lng: this.props.lng}}
-                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}              
+                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
+                          
               >         
               {this.displayMarkers()}                
               </Map>
@@ -220,10 +165,12 @@ export class Mapcontainer extends React.Component {
                 mapTypeControl={false}
                 initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
               
-                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}              
+                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
+
               >         
               {this.displayMarkers()}                
               </Map>
+
             </div>
             }
             <div className="fr-my-3w">
@@ -240,7 +187,7 @@ export class Mapcontainer extends React.Component {
             <div className="map_se"><span>{this.props.cgf}</span><br/>CGF</div>    
           </div>
           </div>
-         { this.state.showResults ? <Mapresult service_executant={this.state.service_executant} indicateur_executions={this.state.indicateur_executions} performance={this.state.performance} onCloseInfo={this.props.onCloseInfo} startDate={this.state.startDate} /> : null }
+         { this.props.showResults ? <Mapresult service_executant={this.props.service_executant} indicateur_executions={this.props.indicateur_executions} performance={this.props.performance} onCloseInfo={this.props.onCloseInfo} startDate={this.props.startDate} /> : null }
         </div>
       </div>
       );

@@ -45,7 +45,7 @@ class Home extends React.Component {
           zoom: 5,
           lat: 48.52, 
           lng: 2.19,
-          resetloc: false,
+          resetloc: true,
 
         };
     
@@ -74,7 +74,6 @@ class Home extends React.Component {
     handleSubmit(event, value) {
         event.preventDefault(); 
         
-
         const search_service_executants = new Array() 
         const search_ministeres = new Array()
         const search_blocs = new Array()
@@ -92,8 +91,7 @@ class Home extends React.Component {
         else if (this.state.showType){                   
           value.forEach(el => search_type_services.push(el.id))
         }
-        
-        
+                
         const url = "/api/v1/service_executants/search";
 
         const effectif = this.state.effectif;
@@ -238,7 +236,7 @@ class Home extends React.Component {
     }
 
     onMarkerClick2= (props, marker, e) => {    
-
+        
         const url = "/api/v1/service_executants/search_marker?q=" + props.id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
@@ -270,7 +268,7 @@ class Home extends React.Component {
 
 
   render() {
-   console.log('ok');
+
     return (
       <div>
         <Header /> 
