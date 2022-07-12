@@ -11,6 +11,8 @@ class Newservice_executant extends React.Component {
           se: [],
           se_empty: [],
           regions: [],
+          se_regions_vide: [],
+          se_lat_vide: [],
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fileInput = React.createRef();
@@ -26,7 +28,7 @@ class Newservice_executant extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ se_empty: response.se_empty, se: response.se, regions: response.regions  }))
+      .then(response => this.setState({ se_empty: response.se_empty, se: response.se, regions: response.regions, se_regions_vide: response.se_regions_vide, se_lat_vide: response.se_lat_vide  }))
       .catch(() => this.props.history.push("/"));
     }
 
@@ -58,7 +60,7 @@ class Newservice_executant extends React.Component {
     }
 
     render() {
-    console.log(this.state.file_csv);
+  
         return (
         <div>
         <Header />
@@ -69,11 +71,13 @@ class Newservice_executant extends React.Component {
             <div className="fr-mb-5w">
             <div>{this.state.se.length}</div>
             <div>{this.state.se_empty.length}</div>
-            <div>{this.state.regions}</div>
+            <div>Régions: {this.state.regions}</div>
             {this.state.se_empty.map((se, index) => (
             <div key={index}>{se.libelle}</div>
             ))}
             </div>
+            <div>SE régions empty :{this.state.se_regions_vide}</div>
+            <div>SE lat empty :{this.state.se_lat_vide}</div>
             <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}>
                   <label>

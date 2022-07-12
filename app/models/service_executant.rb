@@ -49,12 +49,12 @@ class ServiceExecutant < ApplicationRecord
       #@service.organisation_financiere_id = OrganisationFinanciere.where('name = ?',row_data['Organisation']).first.id
       #@service.ministere_id = Ministere.where('name = ?',row_data['Ministere']).first.id
       #@service.type_service_id = TypeService.where('name = ?',row_data['Type de service']).first.id
-      @service.address = row_data['CP'].to_s + ' ' + row_data['Ville'].to_s + ' ' + row_data['Pays'].to_s
-      @service.effectif = row_data['Effectif'].to_i
-      @service.type_structure = row_data['Type2']
-      if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? && !@service.type_service_id.nil? 
+      #@service.address = row_data['CP'].to_s + ' ' + row_data['Ville'].to_s + ' ' + row_data['Pays'].to_s
+      #@service.effectif = row_data['Effectif'].to_i
+      #@service.type_structure = row_data['Type2']
+      #if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? && !@service.type_service_id.nil? 
         @service.save
-      end
+      #end
 
       end #end if service
     end

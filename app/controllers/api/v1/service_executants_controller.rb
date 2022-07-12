@@ -225,33 +225,45 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     @se_empty = ServiceExecutant.where.not(id: @ids)
     @se_empty.destroy_all
     @se = ServiceExecutant.all
-
-    @se.each do |se|
-      #if se.region.nil?
-      @adress = Geocoder.search([se.latitude, se.longitude], params: {language: :fr})
-      if !@adress[0].nil?
-        @adress[0].address_components.each do |element|
-          if element["types"][0]=="administrative_area_level_1"
-            se.region = element["long_name"]
-            if element["long_name"] == "Windward Islands"
-              se.region = 'Îles du Vent'
-            elsif element["long_name"] == "Canton de Mamoudzou-3"
-              se.region = "Mayotte"
-            elsif element["long_name"] == "Saint-Denis"
-              se.region = "La Réunion"
+    @count = 0
+    while ServiceExecutant.where(region: nil).count > 0 && @count < 30
+      ServiceExecutant.where(region: nil).all.each do |se|
+        #if se.region.nil?
+        @adress = Geocoder.search([se.latitude, se.longitude], params: {language: :fr})
+        if !@adress[0].nil?
+          @adress[0].address_components.each do |element|
+            if element["types"][0]=="administrative_area_level_1"
+              se.region = element["long_name"]
+              if element["long_name"] == "Windward Islands"
+                se.region = 'Îles du Vent'
+              elsif element["long_name"] == "Canton de Mamoudzou-3"
+                se.region = "Mayotte"
+              elsif element["long_name"] == "Saint-Denis"
+                se.region = "La Réunion"
+              end
+              se.save 
             end
-            se.save 
           end
+        else
+          #ceux qui nont pas de region
+          if se.libelle == 'CSP Nouvelle-Calédonie CSPI'
+            se.region = "Province Sud"
+          else 
+            se.region = 'Îles du Vent'
+          end 
+          
+          se.save
         end
-      else
-        se.region = nil
-        se.save
+        #end
       end
-      #end
+      @count +=1
     end 
 
+    @se_regions_vide = ServiceExecutant.where(region: nil).pluck(:libelle)
+    @se_lat_vide = ServiceExecutant.where(latitude: nil).pluck(:libelle)
+
     @regions = ServiceExecutant.all.pluck(:region).uniq
-    response = {se_empty: @se_empty, se: @se, regions: @regions}
+    response = {se_empty: @se_empty, se: @se, regions: @regions, se_regions_vide: @se_regions_vide, se_lat_vide: @se_lat_vide}
     render json: response
   end 
 
