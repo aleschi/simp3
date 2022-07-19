@@ -27,7 +27,7 @@ class Execution extends React.Component {
           showSe: true,
           showMinistere: false,
        
-          loading: true,
+          loading: false,
        
           data_inter_ministerielle: [],
           term: '',
@@ -37,6 +37,7 @@ class Execution extends React.Component {
 
           regions: [],
           region: "ALL",
+          loading: true,
         };
 
        
@@ -56,20 +57,22 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, loading: false, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions  }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, loading: false, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false  }))
       .catch(() => this.props.history.push("/"));
     }
 
 
 
     handleChange(event) {
-        const url = "/api/v1/indicateur_executions/search_region";
+        const url = "/api/v1/indicateur_executions/search";
 
         const search_indicateur = event.target.value;
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
         const region = this.state.region;
         const showSe = this.state.showSe;
+
+        this.setState({ loading: true})
 
         const body = {
           search_indicateur, search_service_executants,search_ministeres, region,showSe
@@ -91,29 +94,30 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
-       data_inter_ministerielle: response.data_inter_ministerielle}))
+       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loading: false}))
       .catch(error => console.log(error.message));
     }
 
     handleChangeStructure(event){
       if (event.target.value == 'Ministere'){
-        this.setState({ showSe:  false, showMinistere: true,  search_service_executants: [], autoCompleteList: this.state.ministeres, indicateur_executions: []  }) 
+        this.setState({ showSe:  false, showMinistere: true,  search_service_executants: [], autoCompleteList: this.state.ministeres, indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
       } 
       else if (event.target.value == 'Service') {
-      this.setState({ showSe:  true, showMinistere: false, search_ministeres: [], autoCompleteList: this.state.service_executants,indicateur_executions: [] }) 
+      this.setState({ showSe:  true, showMinistere: false, search_ministeres: [], autoCompleteList: this.state.service_executants,indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
       }
     }
 
     handleChangeRegion(event){
-      const region = event.target.value;
+      
+      const url = "/api/v1/indicateur_executions/search";
 
-      const url = "/api/v1/indicateur_executions/search_region";
+      const region = event.target.value;
       const search_indicateur = this.state.indicateur_name;
       const search_service_executants = this.state.search_service_executants;
       const search_ministeres = this.state.search_ministeres;
       const showSe = this.state.showSe;
       const showMinistere = this.state.showMinistere;
-      this.setState({ showSe: null, showMinistere: null})
+      this.setState({ showSe: null, showMinistere: null, loading: true, indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: [],search_service_executants: [],search_ministeres: []  })
 
       const body = {
          search_indicateur, search_service_executants,search_ministeres, region, showSe
@@ -134,7 +138,7 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, service_executant_n: response.data8, search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, data_inter_ministerielle: response.data_inter_ministerielle, region: response.region, autoCompleteList: response.autoCompleteList, ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,showMinistere: showMinistere }))
+      .then(response => this.setState({ data_inter_ministerielle: response.data_inter_ministerielle, region: response.region, autoCompleteList: response.autoCompleteList, ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,showMinistere: showMinistere, loading: false }))
       .catch(error => console.log(error.message));
     }
 
@@ -150,10 +154,11 @@ class Execution extends React.Component {
           value.forEach(el => search_ministeres.push(el.id))
         } 
 
-        const url = "/api/v1/indicateur_executions/search_region";
+        const url = "/api/v1/indicateur_executions/search";
         const search_indicateur = this.state.search_indicateur;
         const region = this.state.region;
         const showSe = this.state.showSe;
+        this.setState({ loading: true})
         
 
         const body = {
@@ -176,12 +181,11 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
-       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty}))
+       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loading: false}))
       .catch(error => console.log(error.message));
     }
 
     
-
     render() {
 
     return (
@@ -189,18 +193,18 @@ class Execution extends React.Component {
     <div>
         <Header /> 
         <div className="fr-container pr">    
-        <div className="fr-grid-row fr-grid-row--gutters">
-          <div className="fr-col-12 fr-col-lg-12">
-            <h1 className="fr-my-5w">Suivi des indicateurs</h1>
+          <div className="fr-grid-row fr-grid-row--gutters">
+            <div className="fr-col-12 fr-col-lg-12">
+              <h1 className="fr-my-5w">Suivi des indicateurs</h1>
+            </div>
           </div>
-        </div>
         
-          <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
+            <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
             indicateurs={this.state.indicateurs}
             service_executants={this.state.service_executants}
             handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term} regions={this.state.regions} handleChangeRegion={this.handleChangeRegion}/>
 
-          { this.state.liste_se_empty_arr.length > 0 && 
+            { this.state.liste_se_empty_arr.length > 0 && 
             <div className="fr-alert fr-alert--error fr-mt-3w">
               <p className="fr-alert__title fr-hidden"></p>
               <p>Indicateur non suivi par certains services exécutants séléctionnés : {this.state.liste_se_empty.map((se, index) => ( 
@@ -230,8 +234,7 @@ class Execution extends React.Component {
             </div>
             </div>
           }
-            
-       
+                 
         </div>
         <Footer />    
     </div>

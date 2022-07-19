@@ -76,7 +76,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
 
     if params[:region] && params[:region].length > 0 && params[:region] != "ALL"
       autoCompleteResults = autoCompleteResults.where(region: params[:region])
-      zoom = 8
+      zoom = 7
       result = Geocoder.search(params[:region],params: {language: :fr})
       lat = result[0].geometry['location']['lat']
       lng = result[0].geometry['location']['lng']
@@ -253,6 +253,16 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       end
       @count +=1
     end 
+    @arr = ["Arrondissement de Cayenne","Fort-de-France","Basse Terre","Miquelon et Langlade","Wallis","Province Sud", "Îles du Vent"]
+    @arr2= ["Guyane","Martinique","Guadeloupe","Saint-Pierre-et-Miquelon","Wallis-Et-Futuna","Nouvelle-Calédonie","Polynésie Française"]
+    @arr.each_with_index do |arr,i|
+      if ServiceExecutant.where(region: arr).count > 0
+        ServiceExecutant.where(region: arr).each do |se|
+          se.region = @arr2[i]
+          se.save
+        end
+      end
+    end
 
     @se_regions_vide = ServiceExecutant.where(region: nil).pluck(:libelle)
     @se_lat_vide = ServiceExecutant.where(latitude: nil).pluck(:libelle)

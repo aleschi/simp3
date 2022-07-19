@@ -24,44 +24,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     render json: response
   end
 
-  def search #afficher le graphe suivi indicateur
-    indicateur_n = Indicateur.where('name = ?', params[:search_indicateur].to_s)
-    indicateur_name = params[:search_indicateur].to_s
-
-    if params[:search_service_executants].length != 0
-      search_service_executants = params[:search_service_executants]
-      service_executant_n = ServiceExecutant.where(id: search_service_executants)
-    elsif params[:search_ministeres].length != 0
-      ministeres_id = params[:search_ministeres]
-      service_executant_n = ServiceExecutant.where(ministere_id: ministeres_id)
-      search_service_executants = service_executant_n.pluck(:id).uniq
-    else 
-      service_executant_n = []
-      search_service_executants = []
-    end
-
-    if service_executant_n.count > 0
-      indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).order(date: :asc)
-      @liste_se = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).pluck(:service_executant_id)
-      @liste_se_empty_arr=search_service_executants - @liste_se
-      @liste_se_empty = ServiceExecutant.where(id: @liste_se_empty_arr)
-      service_executant_n = ServiceExecutant.where(id: @liste_se) #on met a jour la liste des services avec uniquement ceux qui présentent des valeurs
-    else
-      indicateur_execution = []
-      @liste_se_empty_arr=[]
-      @liste_se_empty = nil
-    end
-    dates = IndicateurExecution.order(date: :asc).pluck(:date).uniq
-    data_inter_ministerielle = []
-    dates.each do |date|
-      data_inter_ministerielle << [date,(indicateur_n.first.indicateur_executions.where('date = ?', date).sum('valeur')/indicateur_n.first.indicateur_executions.where('date = ?', date).count.to_f).round(2)]
-    end 
-
-    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres],data_inter_ministerielle: data_inter_ministerielle, liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty}
-    render json: response
-  end
-
-  def search_region
+  #afficher le graphe suivi indicateur
+  def search
     region = params[:region]
     indicateur_n = Indicateur.where('name = ?', params[:search_indicateur].to_s)
     indicateur_name = params[:search_indicateur].to_s
@@ -229,7 +193,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
 
     if params[:region] && params[:region].length > 0 && params[:region] != "ALL"
       service_executant_n = service_executant_n.where(region: params[:region])
-      zoom = 8
+      zoom = 7
       result = Geocoder.search(params[:region],params: {language: :fr})
       lat = result[0].geometry['location']['lat']
       lng = result[0].geometry['location']['lng']

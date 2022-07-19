@@ -42,7 +42,7 @@ class ServiceExecutant < ApplicationRecord
 
       #@service.code = row_data['Code']
       #if ServiceExecutant.where('libelle = ?',row_data['Libelle'].to_s).count > 1 #on evite les doublons de libelle
-        @service.libelle = row_data['Libelle'].to_s + '-' + row_data['Code'].to_s
+        @service.libelle = row_data['Libelle'].to_s + ' - ' + row_data['Code'].to_s
         @service.save
       #else
       #  @service.libelle = row_data['Libelle'].to_s
