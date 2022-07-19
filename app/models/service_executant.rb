@@ -41,11 +41,13 @@ class ServiceExecutant < ApplicationRecord
       #end
 
       #@service.code = row_data['Code']
-      if ServiceExecutant.where('libelle = ?',row_data['Libelle']).count > 1 #on evite les doublons de libelle
+      #if ServiceExecutant.where('libelle = ?',row_data['Libelle'].to_s).count > 1 #on evite les doublons de libelle
         @service.libelle = row_data['Libelle'].to_s + '-' + row_data['Code'].to_s
-      else
-        @service.libelle = row_data['Libelle']
-      end
+        @service.save
+      #else
+      #  @service.libelle = row_data['Libelle'].to_s
+
+     #end
       #@service.organisation_financiere_id = OrganisationFinanciere.where('name = ?',row_data['Organisation']).first.id
       #@service.ministere_id = Ministere.where('name = ?',row_data['Ministere']).first.id
       #@service.type_service_id = TypeService.where('name = ?',row_data['Type de service']).first.id
@@ -53,27 +55,27 @@ class ServiceExecutant < ApplicationRecord
       #@service.effectif = row_data['Effectif'].to_i
       #@service.type_structure = row_data['Type2']
       #if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? && !@service.type_service_id.nil? 
-        @service.save
+      #  @service.save
       #end
 
       end #end if service
     end
     #on relance si long ou lat nil 
-    while ServiceExecutant.where(longitude: nil).count > 0
-      ServiceExecutant.where(longitude: nil).each do |s|
-        s.address = s.address
-        s.save
-      end 
-    end
-    @liste_adresse = ServiceExecutant.all.pluck(:address).uniq
-    @liste_adresse.each do |adresse|
-      if ServiceExecutant.where('address = ?', adresse).count > 1 #plusieurs avec meme adresse on les décalle
-        ServiceExecutant.where('address = ?', adresse).each_with_index do |service,i|
-          service.address = Geocoder.search([service.latitude, service.longitude-0.005*i],params: {language: :fr}).first.address
-          service.save
-        end
-      end
-    end
+    #while ServiceExecutant.where(longitude: nil).count > 0
+    #  ServiceExecutant.where(longitude: nil).each do |s|
+    #    s.address = s.address
+    #    s.save
+    #   end 
+    #end
+    #@liste_adresse = ServiceExecutant.all.pluck(:address).uniq
+    #@liste_adresse.each do |adresse|
+    #  if ServiceExecutant.where('address = ?', adresse).count > 1 #plusieurs avec meme adresse on les décalle
+    #    ServiceExecutant.where('address = ?', adresse).each_with_index do |service,i|
+    #      service.address = Geocoder.search([service.latitude, service.longitude-0.005*i],params: {language: :fr}).first.address
+    #      service.save
+    #    end
+    #  end
+    #end
   end 
 
 end

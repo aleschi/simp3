@@ -46,7 +46,7 @@ class IndicateurExecution < ApplicationRecord
             @indicateur_execution.save
 
             if !indicateur.seuil_1.nil?
-              if indicateur.name == 'IB4 - 3'
+              if indicateur.name == 'IB4 - 3' || indicateur.name == 'IC1'
                 if @indicateur_execution.valeur <= indicateur.seuil_1
                   @indicateur_execution.point = 1 
                 elsif @indicateur_execution.valeur <= indicateur.seuil_2

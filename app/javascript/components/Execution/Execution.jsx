@@ -34,12 +34,16 @@ class Execution extends React.Component {
           autoCompleteList: [],
           liste_se_empty: [],
           liste_se_empty_arr: [],
+
+          regions: [],
+          region: "ALL",
         };
 
        
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangeStructure = this.handleChangeStructure.bind(this);   
+        this.handleChangeStructure = this.handleChangeStructure.bind(this);
+        this.handleChangeRegion = this.handleChangeRegion.bind(this);   
       
         
     }
@@ -52,22 +56,23 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, loading: false, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList  }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, loading: false, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions  }))
       .catch(() => this.props.history.push("/"));
     }
 
 
 
     handleChange(event) {
-      
+        const url = "/api/v1/indicateur_executions/search_region";
 
-        const url = "/api/v1/indicateur_executions/search";
         const search_indicateur = event.target.value;
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
+        const region = this.state.region;
+        const showSe = this.state.showSe;
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres
+          search_indicateur, search_service_executants,search_ministeres, region,showSe
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -92,12 +97,47 @@ class Execution extends React.Component {
 
     handleChangeStructure(event){
       if (event.target.value == 'Ministere'){
-        this.setState({ showSe:  false, showMinistere: true,  search_service_executants: [], autoCompleteList: this.state.ministeres  }) 
+        this.setState({ showSe:  false, showMinistere: true,  search_service_executants: [], autoCompleteList: this.state.ministeres, indicateur_executions: []  }) 
       } 
       else if (event.target.value == 'Service') {
-      this.setState({ showSe:  true, showMinistere: false, search_ministeres: [], autoCompleteList: this.state.service_executants }) 
+      this.setState({ showSe:  true, showMinistere: false, search_ministeres: [], autoCompleteList: this.state.service_executants,indicateur_executions: [] }) 
       }
     }
+
+    handleChangeRegion(event){
+      const region = event.target.value;
+
+      const url = "/api/v1/indicateur_executions/search_region";
+      const search_indicateur = this.state.indicateur_name;
+      const search_service_executants = this.state.search_service_executants;
+      const search_ministeres = this.state.search_ministeres;
+      const showSe = this.state.showSe;
+      const showMinistere = this.state.showMinistere;
+      this.setState({ showSe: null, showMinistere: null})
+
+      const body = {
+         search_indicateur, search_service_executants,search_ministeres, region, showSe
+      };
+
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ indicateur_executions: response.data6, service_executant_n: response.data8, search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, data_inter_ministerielle: response.data_inter_ministerielle, region: response.region, autoCompleteList: response.autoCompleteList, ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,showMinistere: showMinistere }))
+      .catch(error => console.log(error.message));
+    }
+
     handleSubmit(event, value) {
         event.preventDefault();
         const search_service_executants = new Array() 
@@ -110,11 +150,14 @@ class Execution extends React.Component {
           value.forEach(el => search_ministeres.push(el.id))
         } 
 
-        const url = "/api/v1/indicateur_executions/search";
+        const url = "/api/v1/indicateur_executions/search_region";
         const search_indicateur = this.state.search_indicateur;
+        const region = this.state.region;
+        const showSe = this.state.showSe;
+        
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres
+          search_indicateur, search_service_executants,search_ministeres, region, showSe
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -155,7 +198,7 @@ class Execution extends React.Component {
           <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
             indicateurs={this.state.indicateurs}
             service_executants={this.state.service_executants}
-            handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term}/>
+            handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term} regions={this.state.regions} handleChangeRegion={this.handleChangeRegion}/>
 
           { this.state.liste_se_empty_arr.length > 0 && 
             <div className="fr-alert fr-alert--error fr-mt-3w">

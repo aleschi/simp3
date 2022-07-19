@@ -246,12 +246,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
           end
         else
           #ceux qui nont pas de region
-          if se.libelle == 'CSP Nouvelle-Calédonie CSPI'
-            se.region = "Province Sud"
-          else 
-            se.region = 'Îles du Vent'
-          end 
-          
+          se.region = nil         
           se.save
         end
         #end

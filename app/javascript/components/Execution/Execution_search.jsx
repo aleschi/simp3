@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres, showSe, showMinistere,search_service_executants,search_ministeres,autoCompleteList,term }) => {
+export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres, showSe, showMinistere,search_service_executants,search_ministeres,autoCompleteList,term, regions,handleChangeRegion }) => {
 
 	    return (
 
@@ -30,7 +30,6 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 					</div>
 
 					<div className="fr-col-12 fr-col-lg-4">
-
 						<div className="fr-select-group">
 						<label htmlFor="choixservice" className="fr-label" >Concernant les </label>
 						<select className="fr-select" id="choixservice" name="type_structure" onChange={handleChangeStructure}>					
@@ -41,6 +40,19 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						</div>
 					</div>
 
+					<div className="fr-col-12 fr-col-lg-4">
+						<div className="fr-select-group">
+						<label htmlFor="regions" className="fr-label" >Sur la région </label>
+						<select className="fr-select" id="regions" name="regions" onChange={handleChangeRegion}>	<option value="ALL">Toutes les régions</option>  
+		                    { regions.map((region, index) => (
+		                      <option key={index} value={region}>{region}</option>   
+		                      ))            
+		                    }                
+						</select>
+						</div>
+					</div>
+				</div>
+				<div className="fr-grid-row fr-grid-row--gutters">
 					<div className="fr-col-12 fr-col-lg-4">
 
 						<div className="fr-select-group">
