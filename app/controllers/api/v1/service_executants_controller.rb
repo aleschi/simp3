@@ -253,7 +253,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       end
       @count +=1
     end 
-    @arr = ["Arrondissement de Cayenne","Fort-de-France","Basse Terre","Miquelon et Langlade","Wallis","Province Sud", "Îles du Vent"]
+    @arr = ["Arrondissement de Cayenne","Fort-de-France","Grande-Terre","Miquelon-Langlade","Wallis","Province Sud", "Îles du Vent"]
     @arr2= ["Guyane","Martinique","Guadeloupe","Saint-Pierre-et-Miquelon","Wallis-Et-Futuna","Nouvelle-Calédonie","Polynésie Française"]
     @arr.each_with_index do |arr,i|
       if ServiceExecutant.where(region: arr).count > 0
