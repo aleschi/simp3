@@ -321,13 +321,7 @@ text-align:center;
 .map_infos{
   width:33.3%;
 }
-.highcharts-button-symbol{
-  stroke:var(--text-inverted-grey)  !important;
-  fill:var(--text-inverted-grey)  !important;
-}
-.highcharts-button-box{
-  fill:var(--text-action-high-blue-france) !important;
-}
+
 .react-datepicker{
   border:none !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0,0.1), 0 8px 16px -16px rgba(0, 0, 0,0.32) !important;
@@ -373,10 +367,17 @@ text-align:center;
 .rotate90::before{
   transform: rotate(90deg) !important;
 }
+.highcharts-button-symbol{
+  stroke:var(--text-inverted-grey)  !important;
+  fill:var(--text-inverted-grey)  !important;
+}
+.highcharts-button-box{
+  fill:var(--text-action-high-blue-france) !important;
+}
 .highcharts-background{
   fill: var(--background-default-grey) !important;
 }
-.highcharts-title, .highcharts-subtitle, .highcharts-no-data, .btn-plus{
+.highcharts-title, .highcharts-subtitle, .highcharts-no-data, .btn-plus, .highcharts-legend-item{
   color:var(--text-title-grey) !important;
   fill:var(--text-title-grey) !important;
 }

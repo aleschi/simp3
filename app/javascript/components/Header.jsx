@@ -56,7 +56,9 @@ class Header extends React.Component {
 		                <div className="fr-header__tools">
 		                    <div className="fr-header__tools-links">
 		                        <ul className="fr-links-group">
-		                        	
+		                        	<li>
+		                                <button className="fr-link fr-fi-theme-fill fr-link--icon-left" aria-controls="fr-theme-modal" data-fr-opened="false">Paramètres d'affichage</button>
+		                            </li>
 		                          
 		                            <li className="fr-shortcuts__item">
 		                                <a className="fr-link fr-fi-logout-box-r-line" data-method="delete" href="/logout">Se déconnecter</a>

@@ -62,11 +62,9 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             },
         rangeSelector: {
 
-            buttons: [ {
-                type: 'month',
-                count: 3,
-                text: '3m'
-            },{
+            buttons: [ 
+            //{type: 'month',count: 3,text: '3m'},
+            {
                 type: 'month',
                 count: 6,
                 text: '6m'
@@ -83,16 +81,16 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             fill: '#F8F8F8',
             stroke: 'none',
             'stroke-width': 0,
-            r: 4,
+            r: 2,
             style: {
-                color: '#000',
+                color: 'var(--text-title-grey)',
                 fontWeight: 'bold'
             },
             states: {
                 hover: {
                 },
                 select: {
-                    fill: '#000091',
+                    fill: 'var(--text-action-high-blue-france)',
                     style: {
                         color: 'white'
                     }
@@ -101,11 +99,11 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             }
         },
         inputStyle: {
-                color: '#000',
+                color: 'var(--text-title-grey)',
               
             },
         labelStyle: {
-            color: '#000', 
+            color: 'var(--text-title-grey)', 
         },
         },
         navigator: {
@@ -114,13 +112,15 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         legend: {
             enabled: true,
             maxHeight: 80,
+            itemStyle: {"color": 'var(--text-title-grey)', "cursor": "pointer", "fontSize": "12px", "fontWeight": "bold", "textOverflow": "ellipsis"},
+            itemHoverStyle: {"color": 'var(--text-title-grey)'},
         },
         title: {
             text: title_i,
             style: {
             fontSize: '16px',
             fontWeight: "900",
-            color: '#1E1E1E',
+            color: 'var(--text-title-grey)',
             }
         },
         tooltip: {
@@ -139,12 +139,16 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             formatter: function() {
             return Highcharts.dateFormat('%b', this.value);
             },
+            style: {color: 'var(--text-title-grey)'},
             },
         },
         yAxis: { 
+        labels: {
+                    style: {color: 'var(--text-title-grey)'},
+                },
         title: {
             text: "Valeur de l'indicateur",
-            
+            style: {color: 'var(--text-title-grey)'},    
             }
         },
         series: series_i,
