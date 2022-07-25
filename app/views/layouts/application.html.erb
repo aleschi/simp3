@@ -20,7 +20,10 @@
   </head>
 
   <body>
+    <%= render 'layouts/header'%>
     <%= yield %>
-    <%= render 'layouts/dialog' %>
+    <div id="content_render"></div>
+    <%= render 'layouts/footer'%>
+   
   </body>
 </html>

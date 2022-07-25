@@ -1,0 +1,30 @@
+<div class="fr-container">    
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-lg-12">
+        <h1 class="fr-my-5w">Liste des indicateurs MP3</h1>
+
+        <div class="fr-table fr-my-2w fr-table--no-caption">
+          <table>
+             <caption>Liste des indicateurs MP3</caption>
+              <thead>
+                  <tr>
+                      <th scope="col">Indicateur</th>
+                      <th scope="col">Libellé</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Unité</th>
+                      <th scope="col">Seuil 1</th>
+                      <th scope="col">Seuil 2</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <% @indicateurs.each do |indicateur|%>
+                    <tr><td><%= indicateur.name%></td><td><%= indicateur.description%></td><td><%= indicateur.type_indicateur%></td><td><%= indicateur.unite%></td><td><%= indicateur.seuil_1%></td><td><%= indicateur.seuil_2%></td></tr>
+                  <% end %>
+              
+              </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>   

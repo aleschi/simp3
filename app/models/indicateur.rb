@@ -10,7 +10,7 @@ class Indicateur < ApplicationRecord
       #Indicateur.destroy_all
       data = Roo::Spreadsheet.open(file.path)
       headers = data.row(1) # get header row
-      Indicateur.where(name: "IB4 - 4").destroy_all
+      
       data.each_with_index do |row, idx|
         next if idx == 0 # skip header
         row_data = Hash[[headers, row].transpose]

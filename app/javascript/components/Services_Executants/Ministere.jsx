@@ -1,7 +1,6 @@
 import React from "react";
 
-import Header from "../Header";
-import Footer from "../Footer";
+
 
 class Newservice_executant extends React.Component {
     constructor(props) {
@@ -63,7 +62,7 @@ class Newservice_executant extends React.Component {
   
         return (
         <div>
-        <Header />
+
         <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-lg-8">
@@ -92,7 +91,7 @@ class Newservice_executant extends React.Component {
             </div>
           </div>
         </div>
-        <Footer />
+        
         </div>
         );
     }

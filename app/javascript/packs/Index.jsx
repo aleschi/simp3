@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 document.addEventListener("DOMContentLoaded", () => {
   render(
     <App />,
-    document.body.appendChild(document.createElement("div"))
+    document.getElementById('content_render')
+    
   );
 });

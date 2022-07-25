@@ -1,10 +1,7 @@
 import React from "react";
 
-import Header from "../Header";
-import Footer from "../Footer";
 import Dropzone from 'react-dropzone';
 import Moment from 'moment';
-
 
 class Newindicateur_execution extends React.Component {
         constructor() {
@@ -70,8 +67,8 @@ class Newindicateur_execution extends React.Component {
 
 
         return (
-        <div>
-        <Header />
+        
+
         <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-lg-8">
@@ -107,8 +104,8 @@ class Newindicateur_execution extends React.Component {
              </div>
             </div>
         </div>
-        <Footer />
-        </div>
+     
+        
         );
     }
 }

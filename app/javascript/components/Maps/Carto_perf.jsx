@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
+
+
 import Mapcontainer from "./Mapcontainer";
 import Mapsearch_perf from "./Mapsearch_perf";
 
@@ -285,7 +285,7 @@ class Carto_perf extends React.Component {
 
     return (
     <div>
-        <Header />
+
         
         <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
@@ -309,7 +309,7 @@ class Carto_perf extends React.Component {
     
         </div>
         
-        <Footer />    
+          
     </div>
     
     );

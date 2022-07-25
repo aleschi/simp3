@@ -1,7 +1,7 @@
 import React from "react";
+import {Link, Routes, Route, useHistory} from 'react-router-dom';
 
-import Header from "../Header";
-import Footer from "../Footer";
+
 
 class Newindicateur extends React.Component {
     constructor(props) {
@@ -19,8 +19,10 @@ class Newindicateur extends React.Component {
       this.setState({ file_csv: event.target.files[0] });
     };
 
+
+
     handleSubmit(event) {
-      event.preventDefault();
+        event.preventDefault();
         const url = "/api/v1/indicateurs/import";
         const formData = new FormData();
 
@@ -38,15 +40,15 @@ class Newindicateur extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => this.props.history.push(`/indicateurs`))
+          .then(response => this.props.history.push("/indicateurs"))
           .catch(error => console.log(error.message));
     }
 
     render() {
-    console.log(this.state.file_csv);
+  
         return (
-        <div>
-        <Header />
+        
+
         <div className="fr-container">    
           <div className="fr-grid-row fr-grid-row--gutters">
             <div className="fr-col-lg-12">
@@ -65,8 +67,8 @@ class Newindicateur extends React.Component {
             </div>
           </div>
         </div>
-        <Footer />
-        </div>
+   
+      
         );
     }
 }

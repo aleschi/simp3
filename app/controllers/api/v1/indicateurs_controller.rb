@@ -2,10 +2,7 @@ class Api::V1::IndicateursController < ApplicationController
   before_action :authenticate_user!
   protect_from_forgery with: :null_session
   def index
-  	indicateur = Indicateur.all.order(name: :asc)
-   
-    response = {data1: indicateur}
-    render json: response
+    @indicateurs = Indicateur.all.order(name: :asc) 
   end
 
   def new

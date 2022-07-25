@@ -2,6 +2,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   before_action :authenticate_user!
   protect_from_forgery with: :null_session
 
+  def index2
+  end 
   #page execution
   def index
   	indicateur_n = Indicateur.where('name = ?', Indicateur.first.name)

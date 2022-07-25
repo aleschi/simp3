@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
+
+
 import Mapcontainer from "./Mapcontainer";
 import Mapsearch from "./Mapsearch";
 
@@ -271,7 +271,7 @@ class Home extends React.Component {
 
     return (
       <div>
-        <Header /> 
+
         
         <div className="fr-container pr">    
           <div className="fr-grid-row fr-grid-row--gutters">
@@ -290,7 +290,7 @@ class Home extends React.Component {
         </div>
         
   
-        <Footer />    
+    
       </div>
     
     );

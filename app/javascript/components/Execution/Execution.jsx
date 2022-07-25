@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
+
+
 import Chart from "./Chart";
 import Execution_search from "./Execution_search";
 import Execution_table from "./Execution_table";
@@ -191,11 +191,11 @@ class Execution extends React.Component {
     return (
     
     <div>
-        <Header /> 
+ 
         <div className="fr-container pr">    
           <div className="fr-grid-row fr-grid-row--gutters">
             <div className="fr-col-12 fr-col-lg-12">
-              <h1 className="fr-my-5w">Suivi des indicateurs</h1>
+              <h1 className="fr-my-5w">Suivi temporel des indicateurs</h1>
             </div>
           </div>
         
@@ -236,7 +236,7 @@ class Execution extends React.Component {
           }
                  
         </div>
-        <Footer />    
+   
     </div>
     
     );
