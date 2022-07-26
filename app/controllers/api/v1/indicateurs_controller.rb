@@ -5,18 +5,6 @@ class Api::V1::IndicateursController < ApplicationController
     @indicateurs = Indicateur.all.order(name: :asc) 
   end
 
-  def new
-  end
-
-  def create
-  	indicateur = Indicateur.create!(indicateur_params)
-    if indicateur
-      render json: indicateur
-    else
-      render json: indicateur.errors
-    end
-  end
-
   def destroy
   	indicateur&.destroy #&. avoids nil errors when calling a method
     render json: { message: 'indicateur deleted!' }
@@ -26,6 +14,7 @@ class Api::V1::IndicateursController < ApplicationController
     Indicateur.import(params[:file])
     indicateur = Indicateur.all
     render json: indicateur
+
   end
 
   private

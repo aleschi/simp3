@@ -36,12 +36,12 @@ class Newservice_executant extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => this.props.history.push(`/indicateurs`))
+          .then(response => window.location.href = "/indicateurs")
           .catch(error => console.log(error.message));
     }
 
     render() {
-    console.log(this.state.file_csv);
+
         return (
         <div>
  

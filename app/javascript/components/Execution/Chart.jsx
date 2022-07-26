@@ -1,5 +1,5 @@
-import React,{ useState, useEffect }  from "react";
-//import Highcharts from 'highcharts';
+import React from "react";
+
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 require('highcharts/modules/exporting')(Highcharts);
@@ -17,7 +17,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
           });
     {data_inter_ministerielle.forEach(function (el) {
                 date = new Date(el[0]).getTime();
-                series_i[0].data.push([date, Math.round(el[1] * 100) / 100]);
+                series_i[0].data.push({x:date, y:Math.round(el[1] * 100) / 100});
             })};
 
     {service_executant_n.forEach(function (e,index) {
@@ -29,7 +29,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
               if (e.id == el.service_executant_id){
               date = new Date(el.date).getTime();
               
-              series_i[index+1].data.push([date, Math.round(el.valeur * 100) / 100]);
+              series_i[index+1].data.push({x:date, y:Math.round(el.valeur * 100) / 100});
               }
             });}
          
@@ -42,7 +42,9 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
 
             }, 
             height:600,
-            reflow: true,     
+            reflow: true,
+
+              
         },
         lang: {
                 downloadCSV:"Télécharger en format CSV",
@@ -60,10 +62,13 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
                 weekdays: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
                 shortMonths: ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aoû', 'sep', 'oct', 'nov', 'déc'],
             },
+        navigator: {
+            
+            maskFill: 'rgba(248,248,248,0.3)',
+        },
         rangeSelector: {
 
             buttons: [ 
-            //{type: 'month',count: 3,text: '3m'},
             {
                 type: 'month',
                 count: 6,
@@ -78,7 +83,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             }],
             selected: 3,
             buttonTheme: { // styles for the buttons
-            fill: '#F8F8F8',
+            fill: '#FFF',
             stroke: 'none',
             'stroke-width': 0,
             r: 2,
@@ -97,18 +102,15 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
                 }
                 // disabled: { ... }
             }
-        },
-        inputStyle: {
-                color: 'var(--text-title-grey)',
-              
             },
-        labelStyle: {
-            color: 'var(--text-title-grey)', 
+            inputStyle: {
+                    color: 'var(--text-title-grey)',            
+                },
+            labelStyle: {
+                color: 'var(--text-title-grey)', 
+            },
         },
-        },
-        navigator: {
-            enabled: false,
-        },
+        
         legend: {
             enabled: true,
             maxHeight: 80,
@@ -134,7 +136,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         },
         xAxis:{
             type: 'datetime',
-            //minTickInterval: 3*28*24*3600*1000,
+      
             labels: {
             formatter: function() {
             return Highcharts.dateFormat('%b', this.value);
@@ -154,12 +156,12 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         series: series_i,
     };
 
+
     return (
     <div>
    
 
-        <HighchartsReact highcharts={Highcharts} options={options} constructorType={'stockChart'} />
-        
+        <HighchartsReact highcharts={Highcharts} constructorType={'stockChart'} options={options}  />
     </div>
     );
 };

@@ -1,7 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
-
 import Mapcontainer from "./Mapcontainer";
 import Mapsearch from "./Mapsearch";
 
@@ -68,7 +65,7 @@ class Home extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, service_executant: response.service_executant, csp: response.csp, sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, type_services: response.type_services, se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date), regions: response.regions }))
-      .catch(() => this.props.history.push("/"));
+      .catch(error => console.log(error.message));
     }
 
     handleSubmit(event, value) {

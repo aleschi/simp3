@@ -1,7 +1,4 @@
 import React,{ useState } from "react";
-import { Link } from "react-router-dom";
-
-
 import Chart from "./Chart";
 import Execution_search from "./Execution_search";
 import Execution_table from "./Execution_table";
@@ -58,7 +55,7 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, loading: false, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false  }))
-      .catch(() => this.props.history.push("/"));
+      .catch(error => console.log(error.message));
     }
 
 

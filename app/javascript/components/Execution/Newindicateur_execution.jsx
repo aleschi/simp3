@@ -27,7 +27,7 @@ class Newindicateur_execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ date_fichier: response.date_fichier }))
-      .catch(() => this.props.history.push("/"));
+      .catch(error => console.log(error.message));
     }
 
     handleSubmit(event) {
@@ -53,7 +53,7 @@ class Newindicateur_execution extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => this.props.history.push(`/`))
+          .then(response => window.location.href = "/cartographie_performance")
           .catch(error => console.log(error.message));
     }
 

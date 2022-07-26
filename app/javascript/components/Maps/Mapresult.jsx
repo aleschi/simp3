@@ -52,7 +52,7 @@ render() {
         <div key={index}>
           <div className="fr-card fr-card--no-arrow fr-card-pointer">
             <div className="fr-card__body fr-pb-0">
-              <div><button className="fr-btn--close fr-btn fr-link" onClick={this.props.onCloseInfo}>Fermer</button></div>
+              <div className="tr"><button className="fr-btn--close fr-btn fr-link" onClick={this.props.onCloseInfo}>Fermer</button></div>
               <div className="fr-card__content">
               <h3 className="fr-card__title card_title">{service_executant.libelle}</h3>
               

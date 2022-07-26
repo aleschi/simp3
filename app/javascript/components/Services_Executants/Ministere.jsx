@@ -1,8 +1,6 @@
 import React from "react";
 
-
-
-class Newservice_executant extends React.Component {
+class Ministere extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +26,7 @@ class Newservice_executant extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ se_empty: response.se_empty, se: response.se, regions: response.regions, se_regions_vide: response.se_regions_vide, se_lat_vide: response.se_lat_vide  }))
-      .catch(() => this.props.history.push("/"));
+      .catch(error => console.log(error.message));
     }
 
     changeHandler(event){
@@ -54,7 +52,7 @@ class Newservice_executant extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => this.props.history.push(`/indicateurs`))
+          .then(response => window.location.href = "/indicateurs")
           .catch(error => console.log(error.message));
     }
 
@@ -96,4 +94,4 @@ class Newservice_executant extends React.Component {
         );
     }
 }
-export default Newservice_executant;
+export default Ministere;

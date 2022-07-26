@@ -27,8 +27,7 @@ Rails.application.routes.draw do
       post 'indicateur_executions/import'
       post 'indicateur_executions/sort_table'
 
-      get 'indicateurs/new'
-      post 'indicateurs/create'
+
       delete 'indicateurs/destroy/:id', to: 'indicateurs#destroy'
       post 'indicateurs/import'
     

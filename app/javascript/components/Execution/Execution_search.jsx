@@ -81,7 +81,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						      )}
 						      style={{ width: 500 }}
 						      renderInput={(params) => (
-						        <TextField {...params} label="" placeholder="Ajoutez un service" />
+						        <TextField {...params} label="" label="Recherchez un service exécutant" placeholder="Ajoutez un service" />
 						      )}
 						    />
 				        </div>

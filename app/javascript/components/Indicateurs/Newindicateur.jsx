@@ -1,9 +1,7 @@
 import React from "react";
-import {Link, Routes, Route, useHistory} from 'react-router-dom';
-
-
 
 class Newindicateur extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -40,7 +38,7 @@ class Newindicateur extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => this.props.history.push("/indicateurs"))
+          .then(response => window.location.href = "/indicateurs")
           .catch(error => console.log(error.message));
     }
 
