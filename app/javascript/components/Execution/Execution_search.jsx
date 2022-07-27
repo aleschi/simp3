@@ -61,6 +61,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						<div className="form_checkbox">
 				            <Autocomplete
 						      multiple
+						      limitTags={2}
 						      id="se"
 						      className="search_checkbox" 
 						      options={autoCompleteList}
@@ -92,6 +93,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						<div className="form_checkbox">	
 				            <Autocomplete
 						      multiple
+						      limitTags={2}
 						      id="checkboxes-tags-demo"
 						      className="search_checkbox" 
 						      options={autoCompleteList}

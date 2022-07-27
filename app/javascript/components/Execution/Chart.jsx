@@ -4,6 +4,8 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
+require('highcharts/modules/data')(Highcharts);
+require('highcharts/modules/accessibility')(Highcharts);
 export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name,data_inter_ministerielle,liste_se_empty}) => {
 
     const series_i = [];
@@ -27,8 +29,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
           });
             {indicateur_executions.forEach(function (el) {
               if (e.id == el.service_executant_id){
-              date = new Date(el.date).getTime();
-              
+              date = new Date(el.date).getTime();             
               series_i[index+1].data.push({x:date, y:Math.round(el.valeur * 100) / 100});
               }
             });}
@@ -43,8 +44,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             }, 
             height:600,
             reflow: true,
-
-              
+            zoomType: 'x',
         },
         lang: {
                 downloadCSV:"Télécharger en format CSV",
@@ -60,11 +60,15 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
                 loading: 'Chargement...',
                 months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
                 weekdays: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
-                shortMonths: ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aoû', 'sep', 'oct', 'nov', 'déc'],
+                shortMonths: ['jan', 'fev', 'mar', 'avr', 'mai', 'juin', 'juil', 'aou', 'sep', 'oct', 'nov', 'dec'],
             },
         navigator: {
             
             maskFill: 'rgba(248,248,248,0.3)',
+
+        },
+        scrollbar: {
+            enabled: false,
         },
         rangeSelector: {
 
@@ -154,6 +158,20 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             }
         },
         series: series_i,
+        responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 800
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+        }
     };
 
 

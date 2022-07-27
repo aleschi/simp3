@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 
 import Home from "../components/Maps/Home";
 import Carto_perf from "../components/Maps/Carto_perf";
@@ -14,7 +14,7 @@ export default (
   <Router>
 
     <Routes>
-     
+      <Route path="/" element={<Navigate to="/cartographie_performance" replace />} />
       <Route path="/cartographie_performance" element={<Home/>} />
       <Route path="/cartographie_indicateur" element={<Carto_perf/>} /> 
       <Route path="/indicateurs/new" element={<Newindicateur/>} />
