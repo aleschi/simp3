@@ -53,7 +53,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 					</div>
 				</div>
 				<div className="fr-grid-row fr-grid-row--gutters">
-					<div className="fr-col-12 fr-col-lg-4">
+					<div className="fr-col-12 fr-col-lg-4"> 
 
 						<div className="fr-select-group">
 						<label htmlFor="choix" className="fr-label" >Ma recherche concerne </label>
@@ -66,7 +66,6 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						      className="search_checkbox" 
 						      options={autoCompleteList}
 						      disableCloseOnSelect
-
 						      onChange={(event, value) => handleSubmit(event, value)}
 						      getOptionLabel={(option) => option.libelle}
 						      renderOption={(props, option, { selected }) => (
