@@ -9,13 +9,10 @@ body div{
   color: var(--text-title-grey);
 }
 a{
-
   text-decoration:none !important;
   &:hover{
   cursor:pointer;
   text-decoration:none;
-
-
   }
 }
 
@@ -174,6 +171,10 @@ h1, h2{
   
   }
 }
+.form_checkbox input::placeholder{
+  font-size:0.8125rem;
+  color: var(--text-label-grey);
+}
 .css-p0rm37{
   transform: translate(14px, 8px) scale(1) !important;
 }
@@ -182,6 +183,12 @@ h1, h2{
 }
 .css-16awh2u-MuiAutocomplete-root .MuiOutlinedInput-root, .css-1l6di18 .MuiOutlinedInput-root{
   padding:1.4px !important;
+}
+.css-9e5uuu-MuiPaper-root-MuiAutocomplete-paper, .css-t4hinj{
+  background-color: var(--text-inverted-grey)  !important;
+}
+.css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator, .css-iqd1hh-MuiButtonBase-root-MuiChip-root, .css-uge3vf, .css-5vxoam, .css-zun73v, .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root, .css-i4bv87-MuiSvgIcon-root, .css-vubbuv, .css-1k33q06{
+  color: var(--text-title-grey) !important;
 }
 .checkbox_li{
   color:var(--text-label-grey) !important;
@@ -217,10 +224,6 @@ border-color:transparent;
   padding:12px;
 }
 
-.highcharts-credits{
-  color:var(--text-inverted-grey)  !important;
-  fill: var(--text-inverted-grey)  !important;
-}
 .map_se{
   width:33.3%;
   color:var(--text-title-grey) !important;
@@ -230,8 +233,6 @@ border-color:transparent;
   color:var(--text-action-high-blue-france) !important;
   }
 }
-
-
 .map_legende{
 text-align:center;
   color: var(--text-title-grey);
@@ -362,6 +363,10 @@ text-align:center;
 .rotate90::before{
   transform: rotate(90deg) !important;
 }
+.highcharts-credits{
+  color:var(--text-inverted-grey)  !important;
+  fill: var(--text-inverted-grey)  !important;
+}
 .highcharts-button-symbol{
   stroke:var(--text-inverted-grey)  !important;
   fill:var(--text-inverted-grey)  !important;
@@ -376,12 +381,7 @@ text-align:center;
   color:var(--text-title-grey) !important;
   fill:var(--text-title-grey) !important;
 }
-.css-9e5uuu-MuiPaper-root-MuiAutocomplete-paper, .css-t4hinj{
-  background-color: var(--text-inverted-grey)  !important;
-}
-.css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator, .css-iqd1hh-MuiButtonBase-root-MuiChip-root, .css-uge3vf, .css-5vxoam, .css-zun73v, .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root, .css-i4bv87-MuiSvgIcon-root, .css-vubbuv, .css-1k33q06{
-  color: var(--text-title-grey) !important;
-}
+
 .mapicon img{
   height:18px;
 }

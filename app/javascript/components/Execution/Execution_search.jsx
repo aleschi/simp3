@@ -1,7 +1,7 @@
 import React from "react";
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -61,7 +61,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						<div className="form_checkbox">
 				            <Autocomplete
 						      multiple
-						      limitTags={2}
+						      limitTags={1}
 						      id="se"
 						      className="search_checkbox" 
 						      options={autoCompleteList}
@@ -93,7 +93,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						<div className="form_checkbox">	
 				            <Autocomplete
 						      multiple
-						      limitTags={2}
+						      limitTags={1}
 						      id="checkboxes-tags-demo"
 						      className="search_checkbox" 
 						      options={autoCompleteList}
@@ -122,6 +122,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						
 						</div>
 					</div>
+					
 				</div>
  
 	    </div>

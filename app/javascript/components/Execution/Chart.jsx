@@ -6,8 +6,13 @@ require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
 require('highcharts/modules/data')(Highcharts);
 require('highcharts/modules/accessibility')(Highcharts);
+Highcharts.setOptions({
+  lang: {
+    shortMonths: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+  },
+});
 export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name,data_inter_ministerielle,liste_se_empty}) => {
-
+    
     const series_i = [];
     let date;
     const title_i = "Suivi temporel de l'indicateur "+indicateur_name;
@@ -58,21 +63,28 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
                 viewData: "Voir la table des données",
                 noData: "Les courbes s'afficheront lorsque vous aurez <br>renseigné et validé les informations du formulaire.",
                 loading: 'Chargement...',
-                months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+                months: ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre'],
                 weekdays: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
                 shortMonths: ['jan', 'fev', 'mar', 'avr', 'mai', 'juin', 'juil', 'aou', 'sep', 'oct', 'nov', 'dec'],
             },
-        navigator: {
-            
+        navigator: {           
             maskFill: 'rgba(248,248,248,0.3)',
+            _xAxis: {
+            type: 'datetime',
+            }
 
         },
         scrollbar: {
             enabled: false,
         },
         rangeSelector: {
-
-            buttons: [ 
+            inputEnabled: false,
+            buttons: [
+            {
+                type: 'month',
+                count: 3,
+                text: '3m'
+            }, 
             {
                 type: 'month',
                 count: 6,
@@ -92,7 +104,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             'stroke-width': 0,
             r: 2,
             style: {
-                color: 'var(--text-title-grey)',
+                color: '#FFF',
                 fontWeight: 'bold'
             },
             states: {
@@ -140,7 +152,8 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         },
         xAxis:{
             type: 'datetime',
-      
+            minRange: 30 * 24 * 3600 * 1000,
+            ordinal: false,
             labels: {
             formatter: function() {
             return Highcharts.dateFormat('%b', this.value);
@@ -149,10 +162,10 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             },
         },
         yAxis: { 
-        labels: {
+            labels: {
                     style: {color: 'var(--text-title-grey)'},
                 },
-        title: {
+            title: {
             text: "Valeur de l'indicateur",
             style: {color: 'var(--text-title-grey)'},    
             }

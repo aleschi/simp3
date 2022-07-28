@@ -22,6 +22,10 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq
 
+    #services = {id: "all", libelle: 'Tout sélectionner'}
+    #autoCompleteList = ServiceExecutant.all.order(libelle: :asc).select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} } 
+    #autoCompleteList = autoCompleteList.prepend(services)
+
     response = {data1: indicateur, data2: ministere, data3: service_executant, data7: indicateur_n.as_json, indicateur_name: indicateur_name, data_inter_ministerielle: data_inter_ministerielle, autoCompleteList: autoCompleteList, regions: regions }
     render json: response
   end
