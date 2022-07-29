@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
@@ -6,9 +6,10 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
+import MultiSelect from "./MultiSelect";
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres, showSe, showMinistere,search_service_executants,search_ministeres,autoCompleteList,term, regions,handleChangeRegion }) => {
-
+export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres, showSe, showMinistere,search_service_executants,search_ministeres,autoCompleteList,term, regions,handleChangeRegion,selectAllProps }) => {
+const [value, setValue] = useState([]);
 	    return (
 
 			<div>
@@ -58,33 +59,15 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						<div className="fr-select-group">
 						<label htmlFor="choix" className="fr-label" >Ma recherche concerne </label>
 						{ showSe ? 
-						<div className="form_checkbox">
-				            <Autocomplete
-						      multiple
-						      limitTags={1}
-						      id="se"
-						      className="search_checkbox" 
-						      options={autoCompleteList}
-						      disableCloseOnSelect
-						      onChange={(event, value) => handleSubmit(event, value)}
-						      getOptionLabel={(option) => option.libelle}
-						      renderOption={(props, option, { selected }) => (
-						        <li {...props} className="checkbox_li" id={option.id}>
-						          <Checkbox
-						            icon={icon}
-						            checkedIcon={checkedIcon}
-						            style={{ marginRight: 8 }}
-						            checked={selected}
-						          />
-						          {option.libelle}
-						        </li>
-						      )}
-						      style={{ width: 500 }}
-						      renderInput={(params) => (
-						        <TextField {...params} label="" label="Recherchez un service exécutant" placeholder="Ajoutez un service" />
-						      )}
-						    />
-				        </div>
+							<div className="form_checkbox">
+								<MultiSelect
+							      items={autoCompleteList}
+							      label="Recherchez un service exécutant"
+							      placeholder="Ajoutez un service"
+							      onChange={setValue}
+							      handleSubmit={handleSubmit}
+							    />
+							</div>
 						
 						: null}
 
@@ -97,6 +80,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						      className="search_checkbox" 
 						      options={autoCompleteList}
 						      disableCloseOnSelect
+						      
 						      onChange={(event, value) => handleSubmit(event, value)}
 						      getOptionLabel={(option) => option.name}
 						      renderOption={(props, option, { selected }) => (

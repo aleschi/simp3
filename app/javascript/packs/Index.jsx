@@ -1,14 +1,12 @@
 import React from "react";
-import { render } from "react-dom";
 
 import App from "../components/App";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { createRoot } from 'react-dom/client';
 
 document.addEventListener("DOMContentLoaded", () => {
-  render(
-    <App />,
-    document.getElementById('content_render')
-    
+  createRoot(document.getElementById('content_render')).render(
+    <App /> 
   );
 });

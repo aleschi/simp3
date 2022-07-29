@@ -35,6 +35,7 @@ class Execution extends React.Component {
           regions: [],
           region: "ALL",
           loading: true,
+          selectAllProps: {},
         };
 
        
@@ -43,7 +44,7 @@ class Execution extends React.Component {
         this.handleChangeStructure = this.handleChangeStructure.bind(this);
         this.handleChangeRegion = this.handleChangeRegion.bind(this);   
       
-        
+        this.getOptionSelected = this.getOptionSelected.bind(this);
     }
     componentDidMount() {
     const url = "/api/v1/indicateur_executions/index";
@@ -139,13 +140,18 @@ class Execution extends React.Component {
       .catch(error => console.log(error.message));
     }
 
+    getOptionSelected(option, value) {
+      
+      option.id === value.id;
+    }
+
     handleSubmit(event, value) {
         event.preventDefault();
         const search_service_executants = new Array() 
         const search_ministeres = new Array()
 
-        if (this.state.showSe){                
-          value.forEach(el => search_service_executants.push(el.id))     
+        if (this.state.showSe){
+          value.filter(el => el.id != "all").forEach(el => search_service_executants.push(el.id));  
         }
         else{                   
           value.forEach(el => search_ministeres.push(el.id))
@@ -199,7 +205,7 @@ class Execution extends React.Component {
             <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
             indicateurs={this.state.indicateurs}
             service_executants={this.state.service_executants}
-            handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term} regions={this.state.regions} handleChangeRegion={this.handleChangeRegion}/>
+            handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term} regions={this.state.regions} handleChangeRegion={this.handleChangeRegion} getOptionSelected={this.getOptionSelected} selectAllProps={this.state.selectAllProps}/>
 
             { this.state.liste_se_empty_arr.length > 0 && 
             <div className="fr-alert fr-alert--error fr-mt-3w">

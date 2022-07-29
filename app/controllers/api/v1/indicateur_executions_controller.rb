@@ -19,11 +19,11 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       data_inter_ministerielle << [date,(indicateur_n.first.indicateur_executions.where('date = ?', date).sum('valeur')/indicateur_n.first.indicateur_executions.where('date = ?', date).count.to_f).round(2)]
     end 
 
-    autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
+    
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq
-
+    #autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
     #services = {id: "all", libelle: 'Tout sélectionner'}
-    #autoCompleteList = ServiceExecutant.all.order(libelle: :asc).select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} } 
+    autoCompleteList = ServiceExecutant.all.order(libelle: :asc).select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} } 
     #autoCompleteList = autoCompleteList.prepend(services)
 
     response = {data1: indicateur, data2: ministere, data3: service_executant, data7: indicateur_n.as_json, indicateur_name: indicateur_name, data_inter_ministerielle: data_inter_ministerielle, autoCompleteList: autoCompleteList, regions: regions }
@@ -45,18 +45,20 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       service_executants = ServiceExecutant.all.order(libelle: :asc)
     end
 
+    #services = {id: "all", libelle: 'Tout sélectionner'}
     if params[:showSe] == true 
-      autoCompleteList = service_executants
+      autoCompleteList = service_executants.select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} }
+      #autoCompleteList = autoCompleteList.prepend(services)
     else 
-      autoCompleteList = ministeres
+      autoCompleteList = ministeres.select([:id, :name]).map {|e| {id: e.id, name: e.name} }
     end 
 
     if params[:search_service_executants].length != 0
-      service_executant_n = autoCompleteList.where(id: params[:search_service_executants])
+      service_executant_n = service_executants.where(id: params[:search_service_executants])
       search_service_executants = service_executant_n.pluck(:id).uniq
       search_ministeres = []
     elsif params[:search_ministeres].length != 0
-      min = autoCompleteList.where(id: params[:search_ministeres]) #on prend ceux selectionnés + dans la région 
+      min = ministeres.where(id: params[:search_ministeres]) #on prend ceux selectionnés + dans la région 
       search_ministeres = min.pluck(:id).uniq
       service_executant_n = service_executants.where(ministere_id: search_ministeres)
       search_service_executants = []
