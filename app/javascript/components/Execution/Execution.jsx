@@ -24,8 +24,6 @@ class Execution extends React.Component {
           showSe: true,
           showMinistere: false,
        
-          loading: false,
-       
           data_inter_ministerielle: [],
           term: '',
           autoCompleteList: [],
@@ -35,7 +33,8 @@ class Execution extends React.Component {
           regions: [],
           region: "ALL",
           loading: true,
-          selectAllProps: {},
+          loader: false,
+      
         };
 
        
@@ -44,22 +43,20 @@ class Execution extends React.Component {
         this.handleChangeStructure = this.handleChangeStructure.bind(this);
         this.handleChangeRegion = this.handleChangeRegion.bind(this);   
       
-        this.getOptionSelected = this.getOptionSelected.bind(this);
+      
     }
     componentDidMount() {
-    const url = "/api/v1/indicateur_executions/index";
-    fetch(url)
+      const url = "/api/v1/indicateur_executions/index";
+      fetch(url)
       .then(response => {
         if (response.ok) {
           return response.json();
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, loading: false, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false  }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false  }))
       .catch(error => console.log(error.message));
     }
-
-
 
     handleChange(event) {
         const url = "/api/v1/indicateur_executions/search";
@@ -70,7 +67,7 @@ class Execution extends React.Component {
         const region = this.state.region;
         const showSe = this.state.showSe;
 
-        this.setState({ loading: true})
+        this.setState({ loader: true})
 
         const body = {
           search_indicateur, search_service_executants,search_ministeres, region,showSe
@@ -92,7 +89,7 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
-       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loading: false}))
+       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loader: false}))
       .catch(error => console.log(error.message));
     }
 
@@ -115,7 +112,7 @@ class Execution extends React.Component {
       const search_ministeres = this.state.search_ministeres;
       const showSe = this.state.showSe;
       const showMinistere = this.state.showMinistere;
-      this.setState({ showSe: null, showMinistere: null, loading: true, indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: [],search_service_executants: [],search_ministeres: []  })
+      this.setState({ showSe: null, showMinistere: null, loader: true, indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: [],search_service_executants: [],search_ministeres: []  })
 
       const body = {
          search_indicateur, search_service_executants,search_ministeres, region, showSe
@@ -136,14 +133,11 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ data_inter_ministerielle: response.data_inter_ministerielle, region: response.region, autoCompleteList: response.autoCompleteList, ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,showMinistere: showMinistere, loading: false }))
+      .then(response => this.setState({ data_inter_ministerielle: response.data_inter_ministerielle, region: response.region, autoCompleteList: response.autoCompleteList, ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,showMinistere: showMinistere, loader: false }))
       .catch(error => console.log(error.message));
     }
 
-    getOptionSelected(option, value) {
-      
-      option.id === value.id;
-    }
+
 
     handleSubmit(event, value) {
         event.preventDefault();
@@ -161,7 +155,7 @@ class Execution extends React.Component {
         const search_indicateur = this.state.search_indicateur;
         const region = this.state.region;
         const showSe = this.state.showSe;
-        this.setState({ loading: true})
+        this.setState({ loader: true})
         
 
         const body = {
@@ -184,7 +178,7 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
-       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loading: false}))
+       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loader: false}))
       .catch(error => console.log(error.message));
     }
 
@@ -205,7 +199,7 @@ class Execution extends React.Component {
             <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
             indicateurs={this.state.indicateurs}
             service_executants={this.state.service_executants}
-            handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term} regions={this.state.regions} handleChangeRegion={this.handleChangeRegion} getOptionSelected={this.getOptionSelected} selectAllProps={this.state.selectAllProps}/>
+            handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList} term={this.state.term} regions={this.state.regions} handleChangeRegion={this.handleChangeRegion}/>
 
             { this.state.liste_se_empty_arr.length > 0 && 
             <div className="fr-alert fr-alert--error fr-mt-3w">
@@ -215,9 +209,9 @@ class Execution extends React.Component {
               ))}</p>
             </div>
           }
-          
+          { this.state.loader && <div className="loader_box"><div className ="loader"></div></div> }
 
-          { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :
+          { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> : 
             <div>
             <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
                 
