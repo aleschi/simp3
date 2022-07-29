@@ -39,12 +39,12 @@
  
     <div class="fr-header__menu fr-modal" id="fr-menu-modal" aria-labelledby="fr-btn-menu-mobile">
         <div class="fr-container">
-            <button class="fr-link--close fr-link" aria-controls="fr-menu-modal">Fermer</button>
+            <button class="fr-btn--close fr-btn" aria-controls="fr-menu-modal">Fermer</button>
             <div class="fr-header__menu-links"></div>
             <nav class="fr-nav" id="navigation-832" role="navigation" aria-label="Menu principal">
                         <ul class="fr-nav__list">
                             <li class="fr-nav__item">
-                                <%= active_link_to "/cartographie_performance", class: "fr-nav__link", target: "_self" do%>Cartographie de la performance globale<%end%>
+                                <%= active_link_to cartographie_performance_path, class: "fr-nav__link", target: "_self" do%>Cartographie de la performance globale<%end%>
                             </li>
                             <li class="fr-nav__item">
                                 <%= active_link_to "/cartographie_indicateur", class:"fr-nav__link", target:"_self" do%>Cartographie par indicateur<%end%>
@@ -53,7 +53,7 @@
                                 <%= active_link_to "/indicateur_executions", class:"fr-nav__link", target:"_self" do %>Suivi temporel des indicateurs<%end%>
                             </li>
                             <li class="fr-nav__item">
-                                <%= active_link_to "/indicateurs", class:"fr-nav__link", target:"_self" do%>Liste des indicateurs<%end%>
+                                <%= active_link_to indicateurs_path, class:"fr-nav__link", target:"_self" do%>Liste des indicateurs<%end%>
                             </li>
                         </ul>
             </nav>

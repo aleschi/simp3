@@ -37,6 +37,7 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
               <div className="form_checkbox">
                   <Autocomplete
                     multiple
+                    limitTags={1}
                     id="se"
                     className="search_checkbox" 
                     options={autoCompleteList}
@@ -68,6 +69,7 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
                 <div className="form_checkbox"> 
                   <Autocomplete
                     multiple
+                    limitTags={1}
                     id="checkboxes-tags-demo"
                     className="search_checkbox" 
                     options={autoCompleteList}
@@ -97,6 +99,7 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
                 <div className="form_checkbox"> 
                   <Autocomplete
                     multiple
+                    limitTags={1}
                     id="checkboxes-tags-demo"
                     className="search_checkbox" 
                     options={autoCompleteList}
@@ -126,6 +129,7 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
                 <div className="form_checkbox"> 
                   <Autocomplete
                     multiple
+                    limitTags={1}
                     id="checkboxes-tags-demo"
                     className="search_checkbox" 
                     options={autoCompleteList}

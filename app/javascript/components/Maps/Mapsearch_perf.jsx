@@ -49,6 +49,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 					<div className="form_checkbox">
 			            <Autocomplete
 					      multiple
+					      limitTags={1}
 					      id="se"
 					      className="search_checkbox" 
 					      options={autoCompleteList}
@@ -80,6 +81,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 					<div className="form_checkbox">	
 			            <Autocomplete
 					      multiple
+					      limitTags={1}
 					      id="checkboxes-tags-demo"
 					      className="search_checkbox" 
 					      options={autoCompleteList}
@@ -109,6 +111,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 					<div className="form_checkbox">	
 			            <Autocomplete
 					      multiple
+					      limitTags={1}
 					      id="checkboxes-tags-demo"
 					      className="search_checkbox" 
 					      options={autoCompleteList}
@@ -139,6 +142,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 			            <Autocomplete
 					      multiple
 					      id="checkboxes-tags-demo"
+					      limitTags={1}
 					      className="search_checkbox" 
 					      options={autoCompleteList}
 					      disableCloseOnSelect

@@ -47,7 +47,7 @@ class Newservice_executant extends React.Component {
  
         <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
-          <div className="fr-col-lg-8">
+          <div className="fr-col-12 fr-col-lg-8">
             <h1 className="fr-my-5w">Ajouter un fichier </h1>
 
             <div className="fr-mb-5w">

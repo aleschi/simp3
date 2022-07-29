@@ -49,7 +49,7 @@ class Newindicateur extends React.Component {
 
         <div className="fr-container">    
           <div className="fr-grid-row fr-grid-row--gutters">
-            <div className="fr-col-lg-12">
+            <div className="fr-col-12 fr-col-lg-12">
               <h1 className="fr-my-5w">Ajouter un fichier </h1>
               <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}>

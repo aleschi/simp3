@@ -64,14 +64,16 @@ class Newindicateur_execution extends React.Component {
         {file.name}
       </li>
     ));
-
+    const acceptedfiles = {
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+  }
 
         return (
         
 
         <div className="fr-container pr">    
         <div className="fr-grid-row fr-grid-row--gutters">
-          <div className="fr-col-lg-8">
+          <div className="fr-col-12 fr-col-lg-8">
             <h1 className="fr-my-5w">Ajouter un fichier </h1>
             { this.state.date_fichier ? 
                 <p className="fr-mb-5w">Dernier mois importé : {Moment(this.state.date_fichier).format('MM/YYYY')}</p>          
@@ -81,7 +83,7 @@ class Newindicateur_execution extends React.Component {
               { this.state.loading ? <div><p className="fr-my-5w text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </p> <div className="loader_box"><div className ="loader"></div></div></div> : 
                 <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}> 
-                 <Dropzone accept='.xlsx' onDrop={this.onDrop}>
+                 <Dropzone maxFiles={1} accept={acceptedfiles} onDrop={this.onDrop}>
                   {({getRootProps, getInputProps}) => (
                     <div className="document-file-input" {...getRootProps()}>
                       <input {...getInputProps()} />

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { CSVLink } from "react-csv";
+import Moment from 'moment';
 
 export class Execution_table extends React.Component {
 
@@ -61,15 +62,15 @@ export class Execution_table extends React.Component {
             ))
 
     return (
-    <div className="fr-my-3w">
-      <h2 className="fr-my-2w">Tableau des valeurs</h2>
+    <div className="fr-mb-3w">
+      <h2 className="fr-mb-2w">Tableau des valeurs</h2>
 
       <div className="fr-download"><p><CSVLink data={data_to_download} headers={headers} filename={"table_indicateurs.csv"} className="fr-download__link"> Télécharger le tableau
       <span className="fr-download__detail">CSV</span></CSVLink></p></div>
 
       <div className="fr-table fr-my-2w fr-table--no-caption">
         <table>
-           <caption>Tableau des valeurs</caption>
+           <caption>Tableau des valeurs </caption>
             <thead>
                 <tr>
                   <th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date"><span className="fr-icon-code-view fr-fi--xs rotate90 cnoir" aria-hidden="true"></span></button></th>
@@ -83,7 +84,7 @@ export class Execution_table extends React.Component {
             </thead>
             <tbody>
                 {this.state.indicateur_executions.map((indicateur_execution, index) => (
-                  <tr key={index}><td>{indicateur_execution.date}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{indicateur_execution.service_executant.type_service.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }{indicateur_execution.indicateur.unite}</td></tr>
+                  <tr key={index}><td>{Moment(indicateur_execution.date).format('DD/MM/YYYY')}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{indicateur_execution.service_executant.type_service.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }{indicateur_execution.indicateur.unite}</td></tr>
                 ))}
             
             </tbody>
