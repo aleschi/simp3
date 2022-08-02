@@ -113,7 +113,7 @@ export class Mapcontainer extends React.Component {
             }
           } else {
             return <div key={index}>
-              <div className="d12"></div><div className="map_legende"><span><span className="fr-icon-map-pin-2-fill cgris fr-fi--sm" aria-hidden="true"></span> 1 marqueur = 1 service exécutant</span></div>
+              <div className="d12"></div><div className="map_legende"><span className="mapicon"><img src={iconG} alt="icone map" />  1 marqueur = 1 service exécutant</span></div>
             </div>
           }
         })
