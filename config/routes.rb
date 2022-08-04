@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     :path_names =>  {:sign_in => "connexion", :sign_out => "logout"}
   namespace :api do
     namespace :v1 do
-
+      get 'service_executants/show'
       get 'service_executants/index'
       get 'service_executants/new'
       get 'service_executants/create'
@@ -12,7 +12,9 @@ Rails.application.routes.draw do
       post 'service_executants/search_date'
       post 'service_executants/import'
       post 'service_executants/import_ministere'
+      post 'service_executants/liste_se'
       get 'service_executants/se_empty'
+      
 
     end
   end
@@ -43,6 +45,7 @@ Rails.application.routes.draw do
       get 'indicateurs/new' => 'indicateur_executions#index2'
       get 'service_executants/new' => 'indicateur_executions#index2'
       get 'ministeres' => 'indicateur_executions#index2'
+      get 'service_executants' => 'indicateur_executions#index2'
     end
   end
   

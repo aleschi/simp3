@@ -38,35 +38,35 @@ export class Mapcontainer extends React.Component {
     displayMarkers = () => {
       return this.props.autoCompleteResults.map((result, index) => {
         if (this.props.secolor[result.id] == "vert"){
-        return <Marker key={index} id={result.id} icon={iconV} name={result.libelle} position={{
+        return <Marker key={index} id={result.id} icon={iconV} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
         onClick={this.props.onMarkerClick2} />
         }
         else if(this.props.secolor[result.id] == "jaune"){
-        return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} position={{
+        return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
         onClick={this.props.onMarkerClick2} />
         }
         else if(this.props.secolor[result.id] == "rouge"){
-        return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} position={{
+        return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
         onClick={this.props.onMarkerClick2} />
         }
         else if (this.props.secolor[result.id] == "noir"){
-        return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
+        return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
         onClick={this.props.onMarkerClick2} />
         }
         else {
-        return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} position={{
+        return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
@@ -80,10 +80,10 @@ export class Mapcontainer extends React.Component {
      
       if (this.props.indicateur_n.length == 0){
         return <div><div className="map_legende">
-            <span className="mapicon"><img src={iconR} alt="icone map" /> Performance Globale {'\u003C'} 60% </span>
-            <span className="mapicon"><img src={iconJ} alt="icone map" /> 60% {'\u003C'}  Performance Globale {'\u003C'} 80% </span>
-            <span className="mapicon"><img src={iconV} alt="icone map" /> 80% {'\u003C'} Performance Globale </span> 
-            <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+            <span className="mapicon"><img src={iconR} alt="icone map vert" /> Performance Globale {'\u003C'} 60% </span>
+            <span className="mapicon"><img src={iconJ} alt="icone map orange" /> 60% {'\u003C'}  Performance Globale {'\u003C'} 80% </span>
+            <span className="mapicon"><img src={iconV} alt="icone map rouge" /> 80% {'\u003C'} Performance Globale </span> 
+            <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span>
         </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
       }else{
         return this.props.indicateur_n.map((result, index) => { 
@@ -92,10 +92,10 @@ export class Mapcontainer extends React.Component {
             if (result.name == 'IB4 - 2' || result.name == 'IB4 - 3' || result.name == 'IB4 - 4'){
               return <div key={index}>
               <div className="map_legende">
-                <span className="mapicon"><img src={iconR} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-                <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-                <span className="mapicon"><img src={iconV} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-                <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+                <span className="mapicon"><img src={iconR} alt="icone map rouge" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+                <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+                <span className="mapicon"><img src={iconV} alt="icone map vert" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+                <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span>
               </div>
               <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
               </div>
@@ -103,17 +103,17 @@ export class Mapcontainer extends React.Component {
             else{
               return <div key={index}>
               <div className="map_legende">
-                <span className="mapicon"><img src={iconV} alt="icone map" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-                <span className="mapicon"><img src={iconJ} alt="icone map" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-                <span className="mapicon"><img src={iconR} alt="icone map" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-                <span className="mapicon"><img src={iconG} alt="icone map" /> Pas de valeur </span>
+                <span className="mapicon"><img src={iconV} alt="icone map vert" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
+                <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
+                <span className="mapicon"><img src={iconR} alt="icone map rouge" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
+                <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span>
               </div>
               <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
               </div>
             }
           } else {
             return <div key={index}>
-              <div className="d12"></div><div className="map_legende"><span className="mapicon"><img src={iconG} alt="icone map" />  1 marqueur = 1 service exécutant</span></div>
+              <div className="d12"></div><div className="map_legende"><span className="mapicon"><img src={iconG} alt="icone map legende" />  1 marqueur = 1 service exécutant</span></div>
             </div>
           }
         })
@@ -135,10 +135,11 @@ export class Mapcontainer extends React.Component {
         </div>
         <div className="fr-col-12 fr-col-lg-8">
           <div className="map_map">        
-            <div className="map_date_box">             
-              <div><DatePicker locale="fr" selected={this.props.startDate} maxDate={this.props.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker /></div>
+            <div className="map_date_box fr-select-group">    
+              <label htmlFor="datep" className="fr-label" >Afficher le mois de </label>        
+              <DatePicker className="fr-select" id="datep" locale="fr" selected={this.props.startDate} maxDate={this.props.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker />
             </div>
-            <div className="d12"></div>
+
             { this.props.resetloc ? 
             <div className="map">           
               <Map

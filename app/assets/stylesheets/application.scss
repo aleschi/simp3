@@ -246,18 +246,13 @@ text-align:center;
   }
 }
 .react-datepicker__input-container input{
-  border:none;
-  border-bottom: 1px solid var(--text-title-grey);
-  padding:4px 0px;
-  font-size:1rem;
   font-family: Marianne !important;
-  color: var(--text-title-grey);
+
   &:hover{
   cursor:pointer;
   }
   &:focus{
-  border:none;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
+
   outline:none;
   appearance:none;
   }
@@ -273,10 +268,9 @@ text-align:center;
 
 
 .map_date_box{
-  width:150px;
-
+  width:200px;
   input{
-  max-width:150px !important;
+  max-width:200px !important;
   }
 }
 

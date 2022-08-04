@@ -15,7 +15,7 @@ const [value, setValue] = useState([]);
 			<div>
 				<div className="fr-grid-row fr-grid-row--gutters">
 		          <div className="fr-col-12 fr-col-lg-12">      
-		            <h3 className="fr-mb-3w">Ma recherche </h3>
+		            <h2 className="fr-mb-3w">Ma recherche </h2>
 		          </div>
 		        </div>
 		        <div className="fr-grid-row fr-grid-row--gutters">
@@ -57,7 +57,7 @@ const [value, setValue] = useState([]);
 					<div className="fr-col-12 fr-col-lg-4"> 
 
 						<div className="fr-select-group">
-						<label htmlFor="choix" className="fr-label" >Ma recherche concerne </label>
+						<div lassName="fr-label" >Ma recherche concerne </div>
 						{ showSe ? 
 							<div className="form_checkbox">
 								<MultiSelect
@@ -76,7 +76,6 @@ const [value, setValue] = useState([]);
 				            <Autocomplete
 						      multiple
 						      limitTags={1}
-						      id="checkboxes-tags-demo"
 						      className="search_checkbox" 
 						      options={autoCompleteList}
 						      disableCloseOnSelect

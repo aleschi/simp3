@@ -1,6 +1,23 @@
 class Api::V1::ServiceExecutantsController < ApplicationController
   before_action :authenticate_user!
   protect_from_forgery with: :null_session
+
+  def show 
+    service_executants = ServiceExecutant.all.order(code: :asc)
+    response = {service_executants: service_executants.as_json(:include => [:ministere]),}
+    render json: response
+  end 
+
+  def liste_se
+    if !params[:service_executants].nil? && !params[:service_executants].blank?
+      service_executants = ServiceExecutant.where("lower(libelle) like ?", "%#{params[:service_executants].downcase}%" ).order(code: :asc)
+    else 
+      service_executants = ServiceExecutant.all.order(code: :asc)
+    end 
+    response = {service_executants: service_executants.as_json(:include => [:ministere])}
+    render json: response
+  end 
+
   def index
     autoCompleteResults = ServiceExecutant.all.order(libelle: :asc)
     service_executant = ServiceExecutant.where(id: ServiceExecutant.first.id)

@@ -14,7 +14,7 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
         <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-12 fr-col-lg-12">      
        
-            <h3 className="fr-mb-3w">Ma recherche </h3>
+            <h2 className="fr-mb-3w ">Ma recherche </h2>
           </div>
         </div>
         <div className="fr-grid-row fr-grid-row--gutters">
@@ -31,14 +31,15 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
           </div> 
 
           <div className="fr-col-12 fr-col-lg-4">  
+                        
+            { showSe ? 
             <div className="fr-select-group">
-              <label htmlFor="choix" className="fr-label" >Ma recherche concerne </label>
-              { showSe ? 
-              <div className="form_checkbox">
+              <div className="fr-label" >Ma recherche concerne </div>
+              <div className="form_checkbox" >
                   <Autocomplete
                     multiple
                     limitTags={1}
-                    id="se"
+                    
                     className="search_checkbox" 
                     options={autoCompleteList}
                     disableCloseOnSelect
@@ -62,15 +63,18 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
                     )}
                   />
               </div>
+            </div>
               
-              : null}
+            : null}
 
-              { showMinistere ? 
+            { showMinistere ? 
+            <div className="fr-select-group">
+                <div className="fr-label" >Ma recherche concerne </div>
                 <div className="form_checkbox"> 
                   <Autocomplete
                     multiple
                     limitTags={1}
-                    id="checkboxes-tags-demo"
+         
                     className="search_checkbox" 
                     options={autoCompleteList}
                     disableCloseOnSelect
@@ -92,15 +96,18 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
                       <TextField {...params} label="Recherchez un ministère" placeholder="Ajoutez un ministère" />
                     )}
                   />
-                  </div>
-              : null}
+                </div>
+            </div>
+            : null}
 
-              { showBloc ? 
+            { showBloc ? 
+            <div className="fr-select-group">
+                <div className="fr-label" >Ma recherche concerne </div>
                 <div className="form_checkbox"> 
                   <Autocomplete
                     multiple
                     limitTags={1}
-                    id="checkboxes-tags-demo"
+  
                     className="search_checkbox" 
                     options={autoCompleteList}
                     disableCloseOnSelect
@@ -122,15 +129,18 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
                       <TextField {...params} label="Recherchez une Organisation" placeholder="Ajoutez un Organisation" />
                     )}
                   />
-                  </div>
-              : null}
+                </div>
+            </div>
+            : null}
 
-              { showType ? 
+            { showType ? 
+            <div className="fr-select-group">
+                <div className="fr-label" >Ma recherche concerne </div>
                 <div className="form_checkbox"> 
                   <Autocomplete
                     multiple
                     limitTags={1}
-                    id="checkboxes-tags-demo"
+       
                     className="search_checkbox" 
                     options={autoCompleteList}
                     disableCloseOnSelect
@@ -152,9 +162,10 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
                       <TextField {...params} label="Recherchez un type de service" placeholder="Ajoutez un type" />
                     )}
                   />
-                  </div>
-              : null}
+                </div>
             </div>
+            : null}
+            
           </div>
 
           <div className="fr-col-12 fr-col-lg-4">
@@ -172,8 +183,7 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
           
         </div>
 
-        <div className="fr-grid-row fr-grid-row--gutters">
-          
+        <div className="fr-grid-row fr-grid-row--gutters">         
 
           <div className="fr-col-12 fr-col-lg-4">
             <div className="fr-select-group">
@@ -200,10 +210,8 @@ export default ({autoCompleteResults,autoCompleteList,handleSubmit, handleChange
               </select>
             </div>
           </div>
-
-          
-        </div>        
-    
+   
+        </div>          
     </div>
     );
 

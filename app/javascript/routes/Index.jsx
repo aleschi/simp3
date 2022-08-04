@@ -8,13 +8,14 @@ import Execution from "../components/Execution/Execution";
 import Newservice_executant from "../components/Services_Executants/Newservice_executant";
 import Ministere from "../components/Services_Executants/Ministere";
 import Newindicateur_execution from "../components/Execution/Newindicateur_execution";
+import Show from "../components/Services_Executants/Show";
 
 
 export default (
   <BrowserRouter>
 
     <Routes>
-      <Route path="/" element={<Navigate to="/cartographie_performance" replace />} />
+      
       <Route path="/cartographie_performance" element={<Home/>} />
       <Route path="/cartographie_indicateur" element={<Carto_perf/>} /> 
       <Route path="/indicateurs/new" element={<Newindicateur/>} />
@@ -22,6 +23,7 @@ export default (
       <Route path="/ministeres" element={<Ministere/>} />
       <Route path="/indicateur_executions/new" element={<Newindicateur_execution/>} />
       <Route path="/indicateur_executions" element={<Execution/>} />
+      <Route path="/service_executants" element={<Show/>} />
       
     </Routes>
 
