@@ -73,7 +73,7 @@ class Show extends React.Component {
                    Recherche
                 </label>
                 <input className="fr-input" placeholder="Entrer le nom d'un service exécutant" type="search" id="search-784-input" name="search-784-input" onChange={this.handleChange} />
-                <button className="fr-btn" title="Rechercher">
+                <button className="fr-btn" title="Rechercher un service exécutant">
                     Entrer le nom d'un service exécutant
                 </button>
               </div>

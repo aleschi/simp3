@@ -1,30 +1,101 @@
 <% content_for :title do %>Accueil - SIMP3 <% end %>
-<main role="main" class="containtAll">
-    <div class="fr-container fr-my-5w">    
-        <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12">
-                <h1>SIMP3</h1>
+
+<main id="main" role="main" class="layout" tabindex="-1">
+    
+    <div class="pr texte_img ">      
+        <%= image_tag "bandeau.png", class: "fr-responsive-img", alt: "" %>
+        <div class="fr-container ">   
+            <div class="fr-grid-row">
+                <div class="fr-col-12 fr-col-lg-12 fr-my-9w ">
+                    <h1 class="fr-my-0 tc">Valoriser les indicateurs de l'exécution de la dépense </h1>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <div class="fr-container fr-my-6w">   
+        <div class="fr-grid-row ">
+            <div class="fr-col-12 fr-col-lg-12  ">
+                <h2 class="fr-mb-4w">SIMP3, un outil de suivi de la performance des services exécutants</h2>
+                <div class="fr-text--lg">Développé par la Direction du Budget, cet outil répond à 2 objectifs majeurs :</div> 
+                <div class="fr-text--lg fr-mb-0"><ul class="fr-mb-0"><li>Permettre une meilleure analyse de la performance des services exécutants grâce à une mise en forme des données produites par l’AIFE ;</li>
+                <li>Générer des leviers d’amélioration de la prise en compte de la dépense, au niveau des ministères, des régions et/ou des services exécutants.</li></ul>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="fr-container fr-mb-5w">    
-        <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-container fr-mb-6w"> 
+        <div class="fr-grid-row">
             <div class="fr-col-12 fr-col-lg-12">
-                <h2 class="fr-my-5w">Questions fréquentes</h2>
+                <h2 class="fr-mb-4w">Un pilotage géographique et temporel  </h2>
+            </div>
+        </div>
+
+        <!-- Tuiles verticales placées dans la grille -->
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-6 fr-col-md-4 fr-col-lg-4">
+                <div class="fr-tile fr-enlarge-link">
+                    <div class="fr-tile__body">
+                        <h4 class="fr-tile__title">
+                            <%= active_link_to cartographie_performance_path, target:"_self", class:"fr-tile__link" do%>Cartographier la performance globale<%end%>
+                        </h4>
+                        <p class="fr-tile__desc">Grâce à une carte interactive qui visualise l’ensemble des services exécutants.</p>
+                    </div>
+                    <div class="fr-tile__img">
+                        <%= image_tag "france-localization.svg", class: "fr-responsive-img", alt: "" %>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="fr-col-6 fr-col-md-4 fr-col-lg-4">
+                <div class="fr-tile fr-enlarge-link">
+                    <div class="fr-tile__body">
+                        <h4 class="fr-tile__title">
+                            <%= active_link_to cartographie_indicateur_path,target:"_self", class:"fr-tile__link" do%>Visualiser la performance d’un indicateur<%end%>
+                        </h4>
+                        <p class="fr-tile__desc">En ciblant la recherche géographique sur un indicateur particulier. </p>
+                    </div>
+                    <div class="fr-tile__img">
+                        <%= image_tag "search.svg", class: "fr-responsive-img", alt: "" %>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="fr-col-6 fr-col-md-4 fr-col-lg-4">
+                <div class="fr-tile fr-enlarge-link">
+                    <div class="fr-tile__body">
+                        <h4 class="fr-tile__title">
+                            <%= active_link_to indicateur_executions_path,target:"_self", class:"fr-tile__link" do%>Suivre l’évolution de la performance <%end%>
+                        </h4>
+                        <p class="fr-tile__desc">En sélectionnant un indicateur et une période temporelle donnée.</p>
+                    </div>
+                    <div class="fr-tile__img">
+                        <%= image_tag "data-visualization.svg", class: "fr-responsive-img", alt: "" %>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fr-container fr-mb-6w">    
+        <div class="fr-grid-row ">
+            <div class="fr-col-12 fr-col-lg-12">
+                <h2 class="fr-mb-4w">Questions fréquentes</h2>
                 <div class="fr-accordions-group">
                     <section class="fr-accordion">
                         <h3 class="fr-accordion__title">
-                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-114">Quels sont les indicateurs MP3 ?</button>
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-114">Qu'est-ce que les indicateurs MP3 ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-114">
 
-                            <p>Les indicateurs MP3 sont des indicateurs de suivi de la performance d'un service exécutants. Les indicateurs MP3 suivis sur SIMP3 sont accessibles depuis la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%></p>
+                            <p>Les indicateurs MP3 sont les indicateurs du macro-processus 3. Ce dernier porte sur les dépenses autres que les dépenses de personnel. La mise en oeuvre du MP3 vise à fluidifier la chaîne d’exécution de la dépense de l’État tout en garantissant la traçabilité des opérations, afin d’optimiser le traitement de la dépense publique et réduire ses délais de paiement, en tirant profit des avancées réglementaires et outil, telles que la dématérialisation des actes de gestion et des circuits de transmission entre les acteurs. Elle permet en outre d'améliorer la prévision des dépenses et de maîtriser l'exécution budgétaire, par un suivi de l'exécution des crédits budgétaires mis à disposition des services. Les indicateurs MP3 suivis sur SIMP3 sont accessibles depuis la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%></p>
                         </div>
                     </section>
                     <section class="fr-accordion">
                         <h3 class="fr-accordion__title">
-                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-115">Comment ont été défini les seuils de performance pour les indicateurs ?</button>
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-115">Comment sont définis les seuils de performance pour les indicateurs ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-115">
 
@@ -33,7 +104,7 @@
                     </section>
                     <section class="fr-accordion">
                         <h3 class="fr-accordion__title">
-                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-116">Qu’est ce que la performance globale et comment est-elle calculée ? </button>
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-116">Qu’est-ce que la performance globale et comment est-elle calculée ? </button>
                         </h3>
                         <div class="fr-collapse" id="accordion-116">
                             <p>A compléter</p>
@@ -83,11 +154,11 @@
             <div class="fr-col-12">
                 <div class="fr-follow__newsletter">
                     <div>
-                        <h5 class="fr-h5 fr-follow__title">Une question concernant SIMP3?</h5>
+                        <h5 class="fr-h5 fr-follow__title">Une question concernant SIMP3 ?</h5>
                         <p class="fr-text--sm fr-follow__desc">Si vous rencontrez un problème dans l'utilisation de l'outil, vous pouvez nous envoyer un mail en cliquant sur le bouton ci-contre.</p>
                     </div>
                     <div>
-                       <a href="#" class="fr-btn" rel="noopener" target="_blank" title="Nous contacter - nouvelle fenêtre">Nous contacter</a>
+                       <a href="mailto:budget.lab@finances.gouv.fr?subject=Contact-SIMP3" class="fr-btn" rel="noopener" target="_blank" title="Nous contacter - nouvelle fenêtre">Nous contacter</a>
                     </div>
                 </div>
             </div>

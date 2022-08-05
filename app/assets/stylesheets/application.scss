@@ -382,4 +382,19 @@ text-align:center;
 .mapicon img{
   height:18px;
 }
+.texte_img {
+  min-height:200px;
+  img{
+  //color:  var(--text-title-grey)!important;
+  min-height:200px;
+  position:absolute;
+  width:100%;
+  z-index:-1;
+  //top: 25%;
+  //margin-left:5%;
+  //margin-right:5%;
+  //padding-left:2%;
+  }
+  
+}
 //.fr-badge remove z-index dans dsfr
