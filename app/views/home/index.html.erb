@@ -7,26 +7,50 @@
         <div class="fr-container ">   
             <div class="fr-grid-row">
                 <div class="fr-col-12 fr-col-lg-12 fr-my-9w ">
-                    <h1 class="fr-my-0 tc">Valoriser les indicateurs de l'exécution de la dépense </h1>
+                    <div class="dg-cover__container">
+                    <h1 class="fr-display--sm tc fr-mb-0">Valorisons les indicateurs de l'exécution de la dépense </h1>
+                    </div>
                 </div>
             </div>
         </div>        
     </div>
 
-    <div class="fr-container fr-my-6w">   
-        <div class="fr-grid-row ">
+    <div class="fr-container fr-mt-6w">  
+        <div class="fr-grid-row fr-grid-row--gutters ">
             <div class="fr-col-12 fr-col-lg-12  ">
-                <h2 class="fr-mb-4w">SIMP3, un outil de suivi de la performance des services exécutants</h2>
-                <div class="fr-text--lg">Développé par la Direction du Budget, cet outil répond à 2 objectifs majeurs :</div> 
-                <div class="fr-text--lg fr-mb-0"><ul class="fr-mb-0"><li>Permettre une meilleure analyse de la performance des services exécutants grâce à une mise en forme des données produites par l’AIFE ;</li>
-                <li>Générer des leviers d’amélioration de la prise en compte de la dépense, au niveau des ministères, des régions et/ou des services exécutants.</li></ul>
+                <h2 class="fr-mb-4w">SIMP3, un outil qui répond à 2 objectifs majeurs</h2>
+                 
+            </div>
+        </div>
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-12 fr-col-lg-6">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-xs-12 fr-col-lg-1 fr-col-xl-1">
+                        <span class="fr-icon-line-chart-fill fr-fi--lg cbleu" aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-col-xs-12 fr-col-lg-11 fr-col-xl-11">
+                        <h3 class="fr-text--lg fr-mb-2v">Permettre une meilleure analyse de la performance des services qui exécutent les dépenses de l’État </h3>
+                        <p class="fr-text--sm fr-mb-3w">Par la mise en forme des données produites par l’agence pour l’informatique financière de l’État (AIFE).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fr-col-12 fr-col-lg-6">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-xs-12 fr-col-lg-1 fr-col-xl-1">
+                        <span class="fr-icon-survey-line fr-fi--lg cbleu" aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-col-xs-12 fr-col-lg-11 fr-col-xl-11">
+                        <h3 class="fr-text--lg fr-mb-2v">Identifier des leviers d’amélioration de l’exécution de la dépense</h3>
+                        <p class="fr-text--sm fr-mb-3w">À chaque niveau : à l’échelle des ministères, des régions et/ou des services exécutants. </p>
+                    </div>
                 </div>
             </div>
         </div>
+        <hr class="fr-grid-row--end fr-col-offset-xs-12 fr-col-offset-12 fr-mb-3w">
     </div>
 
-    <div class="fr-container fr-mb-6w"> 
-        <div class="fr-grid-row">
+    <div class="fr-container"> 
+        <div class="fr-grid-row fr-grid-row--gutters">
             <div class="fr-col-12 fr-col-lg-12">
                 <h2 class="fr-mb-4w">Un pilotage géographique et temporel  </h2>
             </div>
@@ -42,7 +66,7 @@
                         </h4>
                         <p class="fr-tile__desc">Grâce à une carte interactive qui visualise l’ensemble des services exécutants.</p>
                     </div>
-                    <div class="fr-tile__img">
+                    <div class="fr-tile__img" data-fr-inject-svg>
                         <%= image_tag "france-localization.svg", class: "fr-responsive-img", alt: "" %>
                         
                     </div>
@@ -56,7 +80,7 @@
                         </h4>
                         <p class="fr-tile__desc">En ciblant la recherche géographique sur un indicateur particulier. </p>
                     </div>
-                    <div class="fr-tile__img">
+                    <div class="fr-tile__img" data-fr-inject-svg>
                         <%= image_tag "search.svg", class: "fr-responsive-img", alt: "" %>
                         
                     </div>
@@ -70,44 +94,55 @@
                         </h4>
                         <p class="fr-tile__desc">En sélectionnant un indicateur et une période temporelle donnée.</p>
                     </div>
-                    <div class="fr-tile__img">
+                    <div class="fr-tile__img" data-fr-inject-svg>
                         <%= image_tag "data-visualization.svg", class: "fr-responsive-img", alt: "" %>
                         
                     </div>
                 </div>
             </div>
         </div>
+        <hr class="fr-grid-row--end fr-col-offset-xs-12 fr-col-offset-12 fr-mb-6w">
     </div>
 
-    <div class="fr-container fr-mb-6w">    
-        <div class="fr-grid-row ">
+    <div class="fr-container ">    
+        <div class="fr-grid-row fr-grid-row--gutters">
             <div class="fr-col-12 fr-col-lg-12">
                 <h2 class="fr-mb-4w">Questions fréquentes</h2>
                 <div class="fr-accordions-group">
                     <section class="fr-accordion">
                         <h3 class="fr-accordion__title">
-                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-114">Qu'est-ce que les indicateurs MP3 ?</button>
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-114">Que sont les indicateurs MP3 ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-114">
 
-                            <p>Les indicateurs MP3 sont les indicateurs du macro-processus 3. Ce dernier porte sur les dépenses autres que les dépenses de personnel. La mise en oeuvre du MP3 vise à fluidifier la chaîne d’exécution de la dépense de l’État tout en garantissant la traçabilité des opérations, afin d’optimiser le traitement de la dépense publique et réduire ses délais de paiement, en tirant profit des avancées réglementaires et outil, telles que la dématérialisation des actes de gestion et des circuits de transmission entre les acteurs. Elle permet en outre d'améliorer la prévision des dépenses et de maîtriser l'exécution budgétaire, par un suivi de l'exécution des crédits budgétaires mis à disposition des services. Les indicateurs MP3 suivis sur SIMP3 sont accessibles depuis la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%></p>
+                            <p>Ces indicateurs permettent de mesurer le respect des différentes étapes et la qualité de leur mise en œuvre du <a href="https://www.budget.gouv.fr/reperes/gestion-publique/articles/les-macro-processus-budgetaires-et-comptables" target="_blank">macro-processus n°3 – Exécution de la dépense</a>. Ce macro-processus décrit la chaîne de la dépense et vise à permettre aux responsables de procéder dans les meilleures conditions (délais, qualité, efficience…) aux acquisitions et dépenses nécessaires à leurs activités. Il porte sur les dépenses autres que les dépenses de personnel. La mise en œuvre du MP3 vise à fluidifier la chaîne d’exécution de la dépense de l’État tout en garantissant la traçabilité des opérations, afin d’optimiser le traitement de la dépense publique et réduire ses délais de paiement, en tirant profit des avancées réglementaires et outil, telles que la dématérialisation des actes de gestion et des circuits de transmission entre les acteurs. Elle permet en outre d'améliorer la prévision des dépenses et de maîtriser l'exécution budgétaire, par un suivi de l'exécution des crédits budgétaires mis à disposition des services. <br>
+                            Les différents indicateurs MP3 suivis sur SIMP3 mesurent la qualité et les délais dans le traitement des actes de la dépense : demande d’achat (DA), engagement juridique (EJ), constation et certification du service fait (SF), demande de paiement (DP). Ils sont accessibles depuis la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%></p>
                         </div>
                     </section>
                     <section class="fr-accordion">
                         <h3 class="fr-accordion__title">
-                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-115">Comment sont définis les seuils de performance pour les indicateurs ?</button>
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-115">Pourquoi des couleurs sont-elles associées aux indicateurs et aux services exécutants ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-115">
 
-                            <p>A compléter</p>
+                            <p>En fonction des résultats obtenus par indicateur, une couleur est associée pour indiquer la performance du service exécutant.<br>
+                            Les seuils de performance retenus pour chaque indicateur sont indiqués dans la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%>.</p>
                         </div>
                     </section>
                     <section class="fr-accordion">
                         <h3 class="fr-accordion__title">
-                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-116">Qu’est-ce que la performance globale et comment est-elle calculée ? </button>
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-116">Qu’est-ce que la performance globale ? </button>
                         </h3>
                         <div class="fr-collapse" id="accordion-116">
-                            <p>A compléter</p>
+                            <p>La performance globale correspond à la synthèse des résultats obtenus par un service exécutant sur les indicateurs.<br>
+                            Certains services exécutants sont spécialisés sur le traitement d’une partie des actes. Exemples :<br>
+                            <ul><li>  Le centre de services partagés (CSP) traite généralement des demandes d’achat, des engagements et des services faits.</li>
+                            <li>Le service facturier (SFACT) traite uniquement les demandes de paiement.</li>
+                            <li>Le centre de gestion financière (CGF) traite tous les actes.</li>
+                            <li>Les services exécutants du ministère des armées traitent tous les actes.</li>
+                            <li>Les centres de services partagés interministériels en Corse et en outremer traitent tous les actes.</li></ul>
+                            Le niveau de performance globale tient compte de ces périmètres variables qui impliquent que les services exécutants n’ont pas de résultats pour les indicateurs qui concernent des actes en dehors de leur périmètre d’activité.
+                            </p>
                         </div>
                     </section>
                     <section class="fr-accordion">
@@ -115,7 +150,10 @@
                             <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-117">Je cherche un service exécutant mais il n'est pas dans la liste. Quelles en sont les raisons ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-117">
-                            <p>A compléter</p>
+                            <p>Seuls les services exécutants qui disposent d’une activité en 2021 ou 2022 sont présentés dans SIMP3. Certains services exécutants ont été regroupés, fusionnés dans le cadre du passage en mode facturier ou de la mise en place des centres de gestion financière.<br>
+                            Par ailleurs, à ce stade SIMP3 ne présente que les structures spécialisées dans le traitement des actes de dépense. Il ne présente pas le traitement des structures en charge des recettes non fiscales ou des dépenses de personnel. Il ne présente pas les services à l’origine de la dépense, prescripteurs de la dépense ou bénéficiaires de la dépenses (centres financiers ou centres de coûts dans Chorus).
+                             
+                            </p>
                         </div>
                     </section>
                     <section class="fr-accordion">
@@ -123,7 +161,10 @@
                             <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-118">D'où proviennent les données liées aux indicateurs ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-118">
-                            <p>A compléter</p>
+                            <p>Les indicateurs de qualité de la dépense ont été définis par les ministères en 2011 lors de la mise en place de Chorus, le système d’information financière de l’Etat.<br> 
+
+                            Ils ont été adaptés en 2018 pour tenir compte des réorganisations dans la chaîne de la dépense, notamment les démarches de simplification des processus.<br>
+                            Les données des indicateurs sont issues du traitement des actes dans Chorus. Elles sont établies chaque mois par l’agence pour l’informatique financière de l’État (AIFE) et publiée sur le site Chorus Diapason.</p>
                         </div>
                     </section>
                     <section class="fr-accordion">
@@ -131,7 +172,9 @@
                             <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-119">À qui les contenus sont-ils accessibles ? </button>
                         </h3>
                         <div class="fr-collapse" id="accordion-119">
-                            <p>A compléter</p>
+                            <p>Les données des indicateurs MP3 publiées par l’agence pour l’informatique financière de l’État (AIFE) sur le site Chorus Diapason sont accessibles à tous les agents de l’État.<br>
+                            L’outil SIMP3 est ouvert de la même manière à tous les agents de l’État. Les identifiants d’accès ont été diffusés aux directions des affaires financières des ministères pour permettre leur diffusion au sein de la communauté financière de l’État.
+                            </p>
                         </div>
                     </section>
                     <section class="fr-accordion">
@@ -139,13 +182,31 @@
                             <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-120">Le marqueur d'un service exécutant est gris. Qu'est-ce que cela signifie ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-120">
-                            <p>A compléter</p>
+                            <p>Cela signifie que ce service exécutant ne dispose pas de données renseignées sur la période sélectionnée.</p>
+                        </div>
+                    </section>
+                    <section class="fr-accordion">
+                        <h3 class="fr-accordion__title">
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-121">Pourquoi tous les indicateurs n’apparaissent pas pour certains services exécutants ?</button>
+                        </h3>
+                        <div class="fr-collapse" id="accordion-121">
+                            <p>Certains services exécutants sont spécialisés sur le traitement d’une partie des actes. <br>
+                            Exemples :<br>
+                            <ul><li>  Le centre de services partagés (CSP) traite généralement des demandes d’achat, des engagements et des services faits.</li>
+                            <li>Le service facturier (SFACT) traite uniquement les demandes de paiement.</li>
+                            <li>Le centre de gestion financière (CGF) traite tous les actes.</li>
+                            <li>Les services exécutants du ministère des armées traitent tous les actes.</li>
+                            <li>Les centres de services partagés interministériels en Corse et en outremer traitent tous les actes.</li></ul>
+                            Certains indicateurs ne sont donc pas disponibles en fonction du périmètre fonctionnel du service exécutant. 
+
+                            </p>
                         </div>
                     </section>
                 </div>
 
             </div>
         </div>
+        <hr class="fr-grid-row--end fr-col-offset-xs-12 fr-col-offset-12 fr-mb-6w">
     </div>
 
     <div class="fr-follow">

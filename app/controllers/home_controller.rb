@@ -31,6 +31,9 @@ class HomeController < ApplicationController
   def donnees_personnelles
   end
 
+  def plan 
+  end 
+
   def error_404
     if params[:path] && params[:path] == "500"
       render 'error_500'

@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get '/mentions-legales', to: 'home#mentions_legales'
   get '/donnees-personnelles', to: 'home#donnees_personnelles'
   get '/accessibilite', to: 'home#accessibilite'
+  get '/plan-du-site', to: 'home#plan'
   #redirige toutes les pages sans url vers la page d'accueil
 
   get '/*path', to: 'home#error_404'

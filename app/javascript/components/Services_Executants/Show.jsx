@@ -73,7 +73,7 @@ class Show extends React.Component {
                    Recherche
                 </label>
                 <input className="fr-input" placeholder="Entrer le nom d'un service exécutant" type="search" id="search-784-input" name="search-784-input" onChange={this.handleChange} />
-                <button className="fr-btn" title="Rechercher un service exécutant">
+                <button className="fr-btn" title="Rechercher">
                     Entrer le nom d'un service exécutant
                 </button>
               </div>
@@ -99,7 +99,7 @@ class Show extends React.Component {
                   </thead>
                   <tbody>
                     {this.state.service_executants.map((service, index) => (
-                        <tr key={index}><td>{service.code}</td><td>{service.libelle}</td><td>{ service.ministere.name}</td><td>{service.type_structure}</td><td>{service.effectif}</td><td>{service.region}</td></tr>
+                        <tr key={index}><td>{service.code}</td><td>{service.libelle}</td><td>{ service.ministere.name}</td><td>{service.type_structure}</td><td>{(service.effectif < 5) && <span> Moins de 5</span> }{(service.effectif < 10 && service.effectif >= 5) && <span> Entre 5 et 10</span> } {(service.effectif < 50 && service.effectif >= 10) && <span> Entre 10 et 50</span> }{(service.effectif < 100 && service.effectif >= 50) && <span> Entre 50 et 100</span> }{(service.effectif >= 100) && <span> Plus de 100</span> }</td><td>{service.region}</td></tr>
                     ))}
                   
                   </tbody>

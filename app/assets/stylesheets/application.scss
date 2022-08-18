@@ -36,6 +36,9 @@ h1, h2{
   display: -moz-inline-flex;
   width:100%;
 }
+.cbleu{
+  color: var(--text-action-high-blue-france) !important;
+}
 .d32{
   height:32px;
 }
@@ -386,7 +389,7 @@ text-align:center;
   min-height:200px;
   img{
   //color:  var(--text-title-grey)!important;
-  min-height:200px;
+  height:100%;
   position:absolute;
   width:100%;
   z-index:-1;
@@ -397,4 +400,9 @@ text-align:center;
   }
   
 }
+.dg-cover__container {
+    margin: 0 auto;
+    padding: 0.1rem 1rem 1rem;
+    max-width: 992px;
+    }
 //.fr-badge remove z-index dans dsfr

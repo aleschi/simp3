@@ -10,6 +10,7 @@
                   <tr>
                       <th scope="col">Indicateur</th>
                       <th scope="col">Libellé</th>
+                      <th scope="col">Méthode de calcul</th>
                       <th scope="col">Type</th>
                       <th scope="col">Unité</th>
                       <th scope="col">Seuil 1</th>
@@ -18,7 +19,7 @@
               </thead>
               <tbody>
                   <% @indicateurs.each do |indicateur|%>
-                    <tr><td><%= indicateur.name%></td><td><%= indicateur.description%></td><td><%= indicateur.type_indicateur%></td><td><%= indicateur.unite%></td><td><%= indicateur.seuil_1%></td><td><%= indicateur.seuil_2%></td></tr>
+                    <tr><td><%= indicateur.name%></td><td><%= indicateur.description%></td><td><%= indicateur.calcul%></td><td><%= indicateur.type_indicateur%></td><td><%= indicateur.unite%></td><td><%= indicateur.seuil_1%></td><td><%= indicateur.seuil_2%></td></tr>
                   <% end %>
               
               </tbody>

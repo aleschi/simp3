@@ -1,0 +1,31 @@
+<% content_for :title do %>Données personnelles - SIMP3 <% end %>
+<main role="main" class="fr-container fr-py-16v">
+<div class="fr-grid-row">
+	<div class="fr-col-12 fr-col-md-8">
+		  	<h1>Plan du site </h1>
+		  	
+			<section class="fr-py-6v">
+				<ul>
+					<li><%= active_link_to cartographie_performance_path, target: "_self" do %>Cartographie de la performance globale<%end%></li>
+					<li><%= active_link_to "/cartographie_indicateur", target: "_self" do %>Cartographie par indicateur<%end%></li>
+					<li><%= active_link_to "/indicateur_executions", target: "_self" do %>Suivi temporel des indicateurs<%end%></li>
+					
+					<li>Informations
+					<ul>
+					<li><%= active_link_to indicateurs_path, target: "_self" do %>Liste des indicateurs<%end%></li>
+					<li><%= active_link_to service_executants_path, target: "_self" do %>Liste des services exécutants<%end%></li>
+					</ul>
+					</li>
+
+					<li><%= active_link_to plan_du_site_path, target: "_self" do %>Plan du site<%end%></li>
+					<li><%= active_link_to accessibilite_path, target: "_self" do %>Accessibilité<%end%></li>
+					<li><%= active_link_to mentions_legales_path, target: "_self" do %>Mentions légales<%end%></li>
+					<li><%= active_link_to donnees_personnelles_path, target: "_self" do %>Données personnelles & Gestion des cookies<%end%></li>	
+						
+				</ul>
+			</section>
+		</div>
+	</div>
+</main>
+				
+				
