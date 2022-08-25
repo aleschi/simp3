@@ -52,7 +52,7 @@
     <div class="fr-container"> 
         <div class="fr-grid-row fr-grid-row--gutters">
             <div class="fr-col-12 fr-col-lg-12">
-                <h2 class="fr-mb-4w">Un pilotage géographique et temporel  </h2>
+                <h2 class="fr-mb-4w">Un pilotage de la performance organique, géographique et temporel  </h2>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
                         <h4 class="fr-tile__title">
                             <%= active_link_to cartographie_performance_path, target:"_self", class:"fr-tile__link" do%>Cartographier la performance globale<%end%>
                         </h4>
-                        <p class="fr-tile__desc">Grâce à une carte interactive qui visualise l’ensemble des services exécutants.</p>
+                        <p class="fr-tile__desc">En visualisant l’ensemble des services exécutants grâce à une carte interactive.</p>
                     </div>
                     <div class="fr-tile__img" data-fr-inject-svg>
                         <%= image_tag "france-localization.svg", class: "fr-responsive-img", alt: "" %>
@@ -115,8 +115,9 @@
                         </h3>
                         <div class="fr-collapse" id="accordion-114">
 
-                            <p>Ces indicateurs permettent de mesurer le respect des différentes étapes et la qualité de leur mise en œuvre du <a href="https://www.budget.gouv.fr/reperes/gestion-publique/articles/les-macro-processus-budgetaires-et-comptables" target="_blank">macro-processus n°3 – Exécution de la dépense</a>. Ce macro-processus décrit la chaîne de la dépense et vise à permettre aux responsables de procéder dans les meilleures conditions (délais, qualité, efficience…) aux acquisitions et dépenses nécessaires à leurs activités. Il porte sur les dépenses autres que les dépenses de personnel. La mise en œuvre du MP3 vise à fluidifier la chaîne d’exécution de la dépense de l’État tout en garantissant la traçabilité des opérations, afin d’optimiser le traitement de la dépense publique et réduire ses délais de paiement, en tirant profit des avancées réglementaires et outil, telles que la dématérialisation des actes de gestion et des circuits de transmission entre les acteurs. Elle permet en outre d'améliorer la prévision des dépenses et de maîtriser l'exécution budgétaire, par un suivi de l'exécution des crédits budgétaires mis à disposition des services. <br>
-                            Les différents indicateurs MP3 suivis sur SIMP3 mesurent la qualité et les délais dans le traitement des actes de la dépense : demande d’achat (DA), engagement juridique (EJ), constation et certification du service fait (SF), demande de paiement (DP). Ils sont accessibles depuis la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%></p>
+                            <p>Ces indicateurs permettent de mesurer le respect des différentes étapes <a href="https://www.budget.gouv.fr/reperes/gestion-publique/articles/les-macro-processus-budgetaires-et-comptables" target="_blank">du macro-processus n°3 – Exécution de la dépense</a>– et la qualité de leur mise en œuvre.Ce macro-processus décrit la chaîne de la dépense de la commande publique initiale à l’extinction de la dette par le comptable public et vise à permettre aux responsables de procéder dans les meilleures conditions (délais, qualité, efficience…) aux acquisitions et dépenses nécessaires à leurs activités. Il porte sur les dépenses autres que les dépenses de personnel (HT2). La mise en œuvre du MP3 vise à fluidifier la chaîne d’exécution de la dépense de l’État tout en garantissant la traçabilité des opérations, afin d’optimiser le traitement de la dépense publique et réduire ses délais de paiement, en tirant profit des outils et des avancées réglementaires, telles que la dématérialisation des actes de gestion et des circuits de transmission entre les acteurs. Elle permet en outre d'améliorer la prévision des dépenses et de maîtriser l'exécution budgétaire, par un suivi de l'exécution des crédits budgétaires mis à disposition des services. <br>
+
+                            Les différents indicateurs MP3 suivis sur SIMP3 mesurent la qualité (respect des processus d’exécution de la dépense décrits dans le MP3) et les délais dans le traitement des actes de la dépense : demande d’achat (DA), engagement juridique (EJ), constatation et certification du service fait (SF), demande de paiement (DP). Ils sont accessibles depuis la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%></p>
                         </div>
                     </section>
                     <section class="fr-accordion">
@@ -125,7 +126,7 @@
                         </h3>
                         <div class="fr-collapse" id="accordion-115">
 
-                            <p>En fonction des résultats obtenus par indicateur, une couleur est associée pour indiquer la performance du service exécutant.<br>
+                            <p>Les résultats de chaque indicateur sont appréciés au regard de leur position dans une grille de valeurs permettant ainsi d’en apprécier la performance. En fonction des résultats obtenus, une couleur est donc associée pour indiquer la performance du service exécutant sur cet indicateur.<br>
                             Les seuils de performance retenus pour chaque indicateur sont indiqués dans la page <%= active_link_to indicateurs_path do %>Liste des indicateurs MP3<%end%>.</p>
                         </div>
                     </section>
@@ -134,7 +135,7 @@
                             <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-116">Qu’est-ce que la performance globale ? </button>
                         </h3>
                         <div class="fr-collapse" id="accordion-116">
-                            <p>La performance globale correspond à la synthèse des résultats obtenus par un service exécutant sur les indicateurs.<br>
+                            <p>La performance globale correspond à la synthèse des résultats obtenus par un service exécutant sur l’ensemble des indicateurs.<br>
                             Certains services exécutants sont spécialisés sur le traitement d’une partie des actes. Exemples :<br>
                             <ul><li>  Le centre de services partagés (CSP) traite généralement des demandes d’achat, des engagements et des services faits.</li>
                             <li>Le service facturier (SFACT) traite uniquement les demandes de paiement.</li>
@@ -151,7 +152,7 @@
                         </h3>
                         <div class="fr-collapse" id="accordion-117">
                             <p>Seuls les services exécutants qui disposent d’une activité en 2021 ou 2022 sont présentés dans SIMP3. Certains services exécutants ont été regroupés, fusionnés dans le cadre du passage en mode facturier ou de la mise en place des centres de gestion financière.<br>
-                            Par ailleurs, à ce stade SIMP3 ne présente que les structures spécialisées dans le traitement des actes de dépense. Il ne présente pas le traitement des structures en charge des recettes non fiscales ou des dépenses de personnel. Il ne présente pas les services à l’origine de la dépense, prescripteurs de la dépense ou bénéficiaires de la dépenses (centres financiers ou centres de coûts dans Chorus).
+                            Par ailleurs, à ce stade SIMP3 ne présente que les structures spécialisées dans le traitement des actes de dépense. Il ne présente pas le traitement des structures en charge des recettes non fiscales ou des dépenses de personnel. Il ne présente pas les services à l’origine de la dépense, prescripteurs de la dépense ou bénéficiaires de la dépense (centres financiers ou centres de coûts dans Chorus).
                              
                             </p>
                         </div>
@@ -161,7 +162,7 @@
                             <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-118">D'où proviennent les données liées aux indicateurs ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-118">
-                            <p>Les indicateurs de qualité de la dépense ont été définis par les ministères en 2011 lors de la mise en place de Chorus, le système d’information financière de l’Etat.<br> 
+                            <p>Les indicateurs de qualité de la dépense ont été définis par les ministères en 2011 lors de la mise en place de Chorus, le système d’information financière de l’État.<br> 
 
                             Ils ont été adaptés en 2018 pour tenir compte des réorganisations dans la chaîne de la dépense, notamment les démarches de simplification des processus.<br>
                             Les données des indicateurs sont issues du traitement des actes dans Chorus. Elles sont établies chaque mois par l’agence pour l’informatique financière de l’État (AIFE) et publiée sur le site Chorus Diapason.</p>
@@ -169,7 +170,7 @@
                     </section>
                     <section class="fr-accordion">
                         <h3 class="fr-accordion__title">
-                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-119">À qui les contenus sont-ils accessibles ? </button>
+                            <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-119">Qui peut accéder à ces contenus ? </button>
                         </h3>
                         <div class="fr-collapse" id="accordion-119">
                             <p>Les données des indicateurs MP3 publiées par l’agence pour l’informatique financière de l’État (AIFE) sur le site Chorus Diapason sont accessibles à tous les agents de l’État.<br>
@@ -182,7 +183,7 @@
                             <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-120">Le marqueur d'un service exécutant est gris. Qu'est-ce que cela signifie ?</button>
                         </h3>
                         <div class="fr-collapse" id="accordion-120">
-                            <p>Cela signifie que ce service exécutant ne dispose pas de données renseignées sur la période sélectionnée.</p>
+                            <p>Rassurez-vous ce n’est pas dû à la météo locale ou à l’ambiance morose dans le service mais simplement à l’absence de données exploitables pour ce service dans les états mensuels fournis par l’AIFE. Les résultats des indicateurs n’étant pas disponibles, il n’y a pas d’appréciation de la performance globale et la balise qui le localise apparaît en gris.</p>
                         </div>
                     </section>
                     <section class="fr-accordion">
