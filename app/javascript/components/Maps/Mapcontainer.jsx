@@ -5,7 +5,9 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.min.css';
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import fr from 'date-fns/locale/fr';
 registerLocale('fr', fr)
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+//import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {GoogleMap,InfoWindow, Marker} from '@react-google-maps/api';
+
 import Mapresult from "./Mapresult";
 const mapStyles = {
 	  width: '100%',
@@ -20,7 +22,6 @@ import iconG from '../../../assets/images/icon_lieu_gris.svg';
 
 
 const mapStyle = [ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#444444" } ] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry.fill", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.country", "elementType": "labels", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.province", "elementType": "all", "stylers": [ { "visibility": "on" }, { "saturation": "-22" }, { "lightness": "-17" }, { "gamma": "1.48" } ] }, { "featureType": "administrative.province", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.province", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "visibility": "on" }, { "hue": "#00b3ff" }, { "saturation": "66" }, { "lightness": "43" }, { "gamma": "5.99" }, { "weight": "4.75" } ] }, { "featureType": "landscape.man_made", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "landscape.natural.landcover", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "saturation": -100 }, { "lightness": 45 }, { "visibility": "off" } ] }, { "featureType": "road", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "color": "#efefef" }, { "visibility": "on" } ] } ]
-
 
 export class Mapcontainer extends React.Component {
 
@@ -42,35 +43,35 @@ export class Mapcontainer extends React.Component {
          lat: result.latitude,
          lng: result.longitude
         }}
-        onClick={this.props.onMarkerClick2} />
+        onClick={() => {this.props.onMarkerClick2(result.id);} }/>
         }
         else if(this.props.secolor[result.id] == "jaune"){
         return <Marker key={index} id={result.id} icon={iconJ} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
-        onClick={this.props.onMarkerClick2} />
+        onClick={() => {this.props.onMarkerClick2(result.id);} } />
         }
         else if(this.props.secolor[result.id] == "rouge"){
         return <Marker key={index} id={result.id} icon={iconR} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
-        onClick={this.props.onMarkerClick2} />
+        onClick={() => {this.props.onMarkerClick2(result.id);} }/>
         }
         else if (this.props.secolor[result.id] == "noir"){
         return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
-        onClick={this.props.onMarkerClick2} />
+        onClick={() => {this.props.onMarkerClick2(result.id);} } />
         }
         else {
         return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
-        onClick={this.props.onMarkerClick2} />
+        onClick={() => {this.props.onMarkerClick2(result.id);} } />
         }
       })
 
@@ -123,7 +124,7 @@ export class Mapcontainer extends React.Component {
     
  
     render() {
-  
+    
       return (
       <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
         <div className="fr-col-12 fr-hidden-sm">
@@ -140,40 +141,20 @@ export class Mapcontainer extends React.Component {
               <DatePicker className="fr-select" id="datep" locale="fr" selected={this.props.startDate} maxDate={this.props.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker />
             </div>
 
-            { this.props.resetloc ? 
-            <div className="map">           
-              <Map
-                google={this.props.google}
-                zoom={this.props.zoom}
-                style={mapStyles}
-                streetViewControl={false}
-                mapTypeControl={false}
-                initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
-                center={{lat: this.props.lat, lng: this.props.lng}}
-                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
-                          
-              >         
-              {this.displayMarkers()}                
-              </Map>
-            </div>
-            :
-            <div className="map">           
-              <Map
-                google={this.props.google}
-                zoom={this.props.zoom}
-                style={mapStyles}
-                streetViewControl={false}
-                mapTypeControl={false}
-                initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
-              
-                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
+           
+            <div className="map"> 
+              <GoogleMap
+      mapContainerStyle={mapStyles}
+      
+      center={{lat: this.props.lat, lng: this.props.lng}}
+      zoom={this.props.zoom}
+     options={{streetViewControl: false,styles: mapStyle, mapTypeControl: false}}
 
-              >         
-              {this.displayMarkers()}                
-              </Map>
-
+    > 
+    {this.displayMarkers()}       
+    </GoogleMap>
             </div>
-            }
+            
             <div className="fr-my-3w">
             {this.displayLegend()} 
             </div>
@@ -192,12 +173,9 @@ export class Mapcontainer extends React.Component {
         </div>
       </div>
       );
-   }
+    }
 }
-export default GoogleApiWrapper({
-       apiKey: ('AIzaSyCBEVHq2EbsHz4m37nb6nG-Fh-5PxK5o98'),
-       language: 'fr',
-     
-})(Mapcontainer)
+
+export default React.memo(Mapcontainer);
 
 

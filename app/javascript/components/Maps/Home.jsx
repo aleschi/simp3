@@ -232,9 +232,9 @@ class Home extends React.Component {
       .catch(error => console.log(error.message));
     }
 
-    onMarkerClick2= (props, marker, e) => {    
-        
-        const url = "/api/v1/service_executants/search_marker?q=" + props.id;
+    onMarkerClick2= (id) => {    
+       
+        const url = "/api/v1/service_executants/search_marker?q=" + id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
         const body = {
