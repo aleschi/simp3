@@ -34,6 +34,9 @@ class Execution extends React.Component {
           region: "ALL",
           loading: true,
           loader: false,
+
+          min:0,
+          max:null,
       
         };
 
@@ -54,7 +57,8 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false  }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, indicateur_n: response.data7, indicateur_name: response.indicateur_name, 
+        data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false, min: response.min, max: response.max  }))
       .catch(error => console.log(error.message));
     }
 
@@ -89,7 +93,7 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
-       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loader: false}))
+       data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loader: false, min: response.min, max: response.max }))
       .catch(error => console.log(error.message));
     }
 
@@ -216,7 +220,8 @@ class Execution extends React.Component {
             <div className="fr-grid-row fr-grid-row--gutters fr-mt-4w">
                 
                 <div className="fr-col-12 fr-col-lg-8">
-                <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name} data_inter_ministerielle={this.state.data_inter_ministerielle} liste_se_empty={this.state.liste_se_empty}/>
+                <Chart indicateur_executions={this.state.indicateur_executions} indicateur_n={this.state.indicateur_n} service_executant_n={this.state.service_executant_n} search_indicateur={this.state.search_indicateur} indicateur_name= {this.state.indicateur_name} data_inter_ministerielle={this.state.data_inter_ministerielle} liste_se_empty={this.state.liste_se_empty}
+                min={this.state.min} max={this.state.max}/>
 
                 
                 </div>

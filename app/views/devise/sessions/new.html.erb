@@ -16,11 +16,14 @@
           <label class="fr-label" for="form-field2">Mot de passe*</label>
           <%= f.password_field :password,required: true, autocomplete: "current-password",class:"fr-input", id: "form-field2" %>
         </div>
+        <div>
+          <a class="fr-link fr-link--sm" href="mailto:budget.lab@finances.gouv.fr?subject=Mot de passe oublié -SIMP3" target="_blank" rel="noopener" title="Mot de passe oublié">Mot de passe oublié ? Contactez-nous </a>
+       </div>
 
         <div id='error-message'></div>
-        <div class="d24"></div>
+        
      
-        <div class="tc">
+        <div class="tc fr-mt-4w">
           <%= f.submit "Connexion", class:"fr-btn" %>
         </div>
 

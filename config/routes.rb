@@ -38,12 +38,12 @@ Rails.application.routes.draw do
   scope module: 'api' do
     scope module: 'v1' do
       get 'indicateurs' => 'indicateurs#index' #fonctions appelees par url direct 
-      get 'indicateur_executions' => 'indicateur_executions#index2' #index2 avec rien sinon appelle error404
+      get 'indicateur_executions' => 'indicateur_executions#show' #show avec rien sinon appelle error404
       get 'cartographie_indicateur' => 'indicateur_executions#index2'
       get 'cartographie_performance' => 'indicateur_executions#index2'
-      get 'indicateur_executions/new' => 'indicateur_executions#index2'
-      get 'indicateurs/new' => 'indicateur_executions#index2'
-      get 'service_executants/new' => 'indicateur_executions#index2'
+      get 'indicateur_executions/new' => 'indicateur_executions#new2'
+      get 'indicateurs/new' => 'indicateur_executions#new2'
+      get 'service_executants/new' => 'indicateur_executions#new2'
       get 'ministeres' => 'indicateur_executions#index2'
       get 'service_executants' => 'indicateur_executions#index2'
     end

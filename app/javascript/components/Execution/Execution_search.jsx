@@ -57,7 +57,7 @@ const [value, setValue] = useState([]);
 					<div className="fr-col-12 fr-col-lg-4"> 
 
 						<div className="fr-select-group">
-						<div lassName="fr-label" >Ma recherche concerne </div>
+						<div className="fr-label" >Ma recherche concerne </div>
 						{ showSe ? 
 							<div className="form_checkbox">
 								<MultiSelect

@@ -14,11 +14,12 @@ const mapStyles = {
 	  height: '500px',
 
 	};
-import iconR from '../../../assets/images/icon_lieu_rouge.svg';
-import iconJ from '../../../assets/images/icon_lieu_jaune.svg';
+import iconR from '../../../assets/images/icon_lieu_rouge2.svg';
+import iconJ from '../../../assets/images/icon_lieu_orange.svg';
 import iconV from '../../../assets/images/icon_lieu_vert.svg';
 import iconN from '../../../assets/images/icon_lieu_noir.svg';
 import iconG from '../../../assets/images/icon_lieu_gris.svg';
+import iconB from '../../../assets/images/icon_lieu_bleue.svg';
 
 
 const mapStyle = [ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#444444" } ] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.country", "elementType": "geometry.fill", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.country", "elementType": "labels", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.province", "elementType": "all", "stylers": [ { "visibility": "on" }, { "saturation": "-22" }, { "lightness": "-17" }, { "gamma": "1.48" } ] }, { "featureType": "administrative.province", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.province", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [ { "visibility": "on" } ] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "visibility": "on" }, { "hue": "#00b3ff" }, { "saturation": "66" }, { "lightness": "43" }, { "gamma": "5.99" }, { "weight": "4.75" } ] }, { "featureType": "landscape.man_made", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural", "elementType": "all", "stylers": [ { "visibility": "on" } ] }, { "featureType": "landscape.natural.landcover", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "saturation": -100 }, { "lightness": 45 }, { "visibility": "off" } ] }, { "featureType": "road", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.local", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "color": "#efefef" }, { "visibility": "on" } ] } ]
@@ -61,6 +62,13 @@ export class Mapcontainer extends React.Component {
         }
         else if (this.props.secolor[result.id] == "noir"){
         return <Marker key={index} id={result.id} icon={iconG} name={result.libelle} optimized={false} position={{
+         lat: result.latitude,
+         lng: result.longitude
+        }}
+        onClick={() => {this.props.onMarkerClick2(result.id);} } />
+        }
+        else if (this.props.secolor[result.id] == "bleu"){
+        return <Marker key={index} id={result.id} icon={iconB} name={result.libelle} optimized={false} position={{
          lat: result.latitude,
          lng: result.longitude
         }}
@@ -114,7 +122,7 @@ export class Mapcontainer extends React.Component {
             }
           } else {
             return <div key={index}>
-              <div className="d12"></div><div className="map_legende"><span className="mapicon"><img src={iconG} alt="icone map legende" />  1 marqueur = 1 service exécutant</span></div>
+              <div className="d12"></div><div className="map_legende"><span className="mapicon"><img src={iconB} alt="icone map legende" />  1 marqueur = 1 service exécutant</span> <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span></div>
             </div>
           }
         })
@@ -141,19 +149,28 @@ export class Mapcontainer extends React.Component {
               <DatePicker className="fr-select" id="datep" locale="fr" selected={this.props.startDate} maxDate={this.props.maxDate} minDate={new Date(2022,0,1)} onChange= {this.props.handleSubmitDate} dateFormat="MMMM yyyy" showMonthYearPicker />
             </div>
 
-           
+           { this.props.resetloc ?  
             <div className="map"> 
               <GoogleMap
-      mapContainerStyle={mapStyles}
-      
-      center={{lat: this.props.lat, lng: this.props.lng}}
-      zoom={this.props.zoom}
-     options={{streetViewControl: false,styles: mapStyle, mapTypeControl: false}}
-
-    > 
-    {this.displayMarkers()}       
-    </GoogleMap>
+                mapContainerStyle={mapStyles}     
+                center={{lat: this.props.lat, lng: this.props.lng}}
+                zoom={this.props.zoom}
+                options={{streetViewControl: false,styles: mapStyle, mapTypeControl: false}}
+              > 
+              {this.displayMarkers()}       
+              </GoogleMap>
             </div>
+            :
+            <div className="map"> 
+              <GoogleMap
+                mapContainerStyle={mapStyles}     
+                zoom={this.props.zoom}
+                options={{streetViewControl: false,styles: mapStyle, mapTypeControl: false}}
+              > 
+              {this.displayMarkers()}       
+              </GoogleMap>
+            </div>
+          }
             
             <div className="fr-my-3w">
             {this.displayLegend()} 
@@ -169,7 +186,7 @@ export class Mapcontainer extends React.Component {
             <div className="map_se"><span>{this.props.cgf}</span><br/>CGF</div>    
           </div>
           </div>
-         { this.props.showResults ? <Mapresult service_executant={this.props.service_executant} indicateur_executions={this.props.indicateur_executions} performance={this.props.performance} onCloseInfo={this.props.onCloseInfo} startDate={this.props.startDate} /> : null }
+         { this.props.showResults ? <Mapresult indicateur_n={this.props.indicateur_n} service_executant={this.props.service_executant} indicateur_executions={this.props.indicateur_executions} performance={this.props.performance} onCloseInfo={this.props.onCloseInfo} startDate={this.props.startDate} /> : null }
         </div>
       </div>
       );

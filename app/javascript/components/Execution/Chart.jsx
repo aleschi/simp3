@@ -11,15 +11,28 @@ Highcharts.setOptions({
     shortMonths: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
   },
 });
-export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name,data_inter_ministerielle,liste_se_empty}) => {
+export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name,data_inter_ministerielle,liste_se_empty, min, max}) => {
     
     const series_i = [];
     let date;
     const title_i = "Suivi temporel de l'indicateur "+indicateur_name;
     const unite = indicateur_n[0].unite;
+    if (indicateur_name == "IC1" || indicateur_name =="IB4 - 3"){
+        var objectif = indicateur_n[0].seuil_2;
+    }else{
+        var objectif = indicateur_n[0].seuil_1;
+    }
+
+    if (max < objectif){
+        var max = objectif;
+    } else {
+        var max = max; 
+    }
+
 
     series_i.push({
-            name: "Moyenne interministérielle",
+            name: "Moyenne sur l'ensemble des services",
+            color: "var(--background-action-high-blue-france)",
             data:[]
           });
     {data_inter_ministerielle.forEach(function (el) {
@@ -168,8 +181,23 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             title: {
             text: "Valeur de l'indicateur",
             style: {color: 'var(--text-title-grey)'},    
-            }
+            },
+            min: min,
+            max: max,
+            plotLines: [{
+                zIndex:5,
+                color: 'var(--background-action-high-pink-tuile)',
+                label: {
+                    text: "Objectif : "+objectif+unite,
+                    style: {
+                        color: 'var(--text-action-high-pink-tuile)',
+                    },
+                },
+                value: objectif,
+                width: 3,
+            }],
         },
+
         series: series_i,
         responsive: {
         rules: [{

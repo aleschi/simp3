@@ -11,9 +11,9 @@ export default ({indicateur_n}) => {
           <p className="fr-text--sm fr-mb-1w">
           {indicateur.description}</p>
           <p className="fr-text--sm fr-mb-1w">Unité : {indicateur.type_indicateur} en {indicateur.unite}</p>
+          {(indicateur.seuil_1 != null) && <p className="fr-text--sm fr-mb-1w">Objectif à atteindre : {(indicateur.name == "IC1" || indicateur.name == "IB4 - 3") ? <span>Plus de {indicateur.seuil_2}{indicateur.unite}</span> : <span>Moins de {indicateur.seuil_1}{indicateur.unite}</span>}</p>}
           <p className="fr-text--sm">Méthode de calcul : {indicateur.calcul}</p>
-          <p className="fr-text--sm fr-hidden">Remarques principales : {indicateur.remarque}</p>
-          <button className="fr-btn fr-hidden">Accéder à la liste des indicateurs</button>
+          
         </div>
        
         </div>

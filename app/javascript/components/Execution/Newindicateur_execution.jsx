@@ -76,8 +76,10 @@ class Newindicateur_execution extends React.Component {
           <div className="fr-col-12 fr-col-lg-8">
             <h1 className="fr-my-5w">Ajouter un fichier </h1>
             { this.state.date_fichier ? 
-                <p className="fr-mb-5w">Dernier mois importé : {Moment(this.state.date_fichier).format('MM/YYYY')}</p>          
-                : null }
+                <p className="fr-mb-5w">Mois importés : {this.state.date_fichier.map((date,index) => (
+                  <span key={index}>{Moment(date).locale("fr").format('MMMM YYYY')} ; </span>
+                ))}</p>          
+            : null }
 
 
               { this.state.loading ? <div><p className="fr-my-5w text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </p> <div className="loader_box"><div className ="loader"></div></div></div> : 

@@ -23,20 +23,26 @@
                         <p class="fr-header__service-tagline">Suivi des indicateurs MP3</p>
                     </div>
                 </div>
+                <% if user_signed_in?%>
                 <div class="fr-header__tools">
                     <div class="fr-header__tools-links ">
                         <ul class="fr-btns-group">
-                            
+                            <% if current_user.email == "admin-simp3@finances.gouv.fr"%>
+                            <li class="fr-shortcuts__item">
+                                <%= active_link_to indicateur_executions_new_path, class:"fr-btn fr-fi-add-circle-line", target: "_self" do%>Ajouter un document<%end%>
+                            </li>  
+                            <% end %>
                             <li class="fr-shortcuts__item">
                                 <a class="fr-btn fr-fi-logout-box-r-line" data-method="delete" href="/logout">Se déconnecter</a>
                             </li>  
                         </ul>
                     </div>
                 </div>
+                <% end%>
             </div>
         </div>
     </div>
- 
+    <% if user_signed_in?%>
     <div class="fr-header__menu fr-modal" id="fr-menu-modal" aria-labelledby="fr-btn-menu-mobile">
         <div class="fr-container">
             <button class="fr-btn--close fr-btn" aria-controls="fr-menu-modal">Fermer</button>
@@ -50,10 +56,10 @@
                         <%= active_link_to cartographie_performance_path, class: "fr-nav__link", target: "_self" do%>Cartographie de la performance globale<%end%>
                     </li>
                     <li class="fr-nav__item">
-                        <%= active_link_to "/cartographie_indicateur", class:"fr-nav__link", target:"_self" do%>Cartographie par indicateur<%end%>
+                        <%= active_link_to cartographie_indicateur_path, class:"fr-nav__link", target:"_self" do%>Cartographie par indicateur<%end%>
                     </li>
                     <li class="fr-nav__item">
-                        <%= active_link_to "/indicateur_executions", class:"fr-nav__link", target:"_self" do %>Suivi temporel des indicateurs<%end%>
+                        <%= active_link_to indicateur_executions_path, class:"fr-nav__link", target:"_self",:active => [['api/v1/indicateur_executions'], ['show']] do %>Suivi temporel des indicateurs<%end%>
                     </li>
                     <li class="fr-nav__item">
                         <button class="fr-nav__btn" aria-expanded="false" aria-controls="menu-776">Informations</button>
@@ -72,6 +78,7 @@
             </nav>
         </div>
     </div>
+    <% end %>
 </header>
 
 

@@ -1,10 +1,10 @@
 
 <div class="fr-container">    
   <div class="fr-grid-row fr-grid-row--gutters">
-    <div class="fr-col-lg-12 fr-col-lg-6 fr-col-offset-lg-3">
+    <div class="fr-col-12 fr-col-lg-6 fr-col-offset-lg-3">
        
-      
-      <div class="fr-hidden">
+      <% if user_signed_in?%>
+      <div class="">
         <h1 class="fr-my-5w">Inscription</h1>
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <%= render "devise/shared/error_messages", resource: resource %>
@@ -25,11 +25,13 @@
 
             <%= f.password_field :password_confirmation, autocomplete: "new-password" ,class:"fr-input", id: "form-field3" %>
           </div>
-          <div class="">
+          <div class="fr-mb-5w">
             <%= f.submit "Inscription", class:"fr-btn" %>
           </div>
         <% end %>
       </div>
+
+      <% end %>
     </div>
   </div>
 </div>

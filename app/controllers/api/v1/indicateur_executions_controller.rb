@@ -19,14 +19,15 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       data_inter_ministerielle << [date,(indicateur_n.first.indicateur_executions.where('date = ?', date).sum('valeur')/indicateur_n.first.indicateur_executions.where('date = ?', date).count.to_f).round(2)]
     end 
 
-    
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq
-    #autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
-    #services = {id: "all", libelle: 'Tout sélectionner'}
     autoCompleteList = ServiceExecutant.all.order(libelle: :asc).select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} } 
-    #autoCompleteList = autoCompleteList.prepend(services)
 
-    response = {data1: indicateur, data2: ministere, data3: service_executant, data7: indicateur_n.as_json, indicateur_name: indicateur_name, data_inter_ministerielle: data_inter_ministerielle, autoCompleteList: autoCompleteList, regions: regions }
+    #min and max pour graphe
+    max = indicateur_n.first.indicateur_executions.pluck(:valeur).max()
+    min = indicateur_n.first.indicateur_executions.pluck(:valeur).min()
+
+    response = {data1: indicateur, data2: ministere, data3: service_executant, data7: indicateur_n.as_json, indicateur_name: indicateur_name, data_inter_ministerielle: data_inter_ministerielle, autoCompleteList: autoCompleteList, regions: regions,
+    min: min, max: max }
     render json: response
   end
 
@@ -86,8 +87,12 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       data_inter_ministerielle << [date,(indicateur_n.first.indicateur_executions.where('date = ?', date).sum('valeur')/indicateur_n.first.indicateur_executions.where('date = ?', date).count.to_f).round(2)]
     end 
 
+    #min and max pour graphe
+    max = indicateur_n.first.indicateur_executions.pluck(:valeur).max()
+    min = indicateur_n.first.indicateur_executions.pluck(:valeur).min()
+
     response = {autoCompleteList: autoCompleteList, region: region, data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json,search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name,data8: service_executant_n, search_service_executants: search_service_executants, search_ministeres: search_ministeres,
-    data_inter_ministerielle: data_inter_ministerielle, liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, ministeres: ministeres, service_executants: service_executants}
+    data_inter_ministerielle: data_inter_ministerielle, liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, ministeres: ministeres, service_executants: service_executants, min: min, max: max }
     
     render json: response
     
@@ -161,6 +166,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
         else
           se_color[ex.service_executant_id] = "noir"
         end
+      elsif !ex.valeur.nil?
+        se_color[ex.service_executant_id] = "bleu"
       else
         se_color[ex.service_executant_id] = "noir"
       end
@@ -250,6 +257,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
         else 
           se_color[ex.service_executant_id] = "noir"
         end
+      elsif !ex.valeur.nil?
+        se_color[ex.service_executant_id] = "bleu"
       else
         se_color[ex.service_executant_id] = "noir"
       end
@@ -265,15 +274,22 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     render json: response
   end
 
-  def new
-    if IndicateurExecution.count > 0
-      date_fichier = IndicateurExecution.order(date: :desc).first.date
-    else
-      date_fichier = false
-    end
-    response = {date_fichier: date_fichier}
-    render json: response
+  def new   
+      if IndicateurExecution.count > 0
+        #date_fichier = IndicateurExecution.order(date: :desc).first.date
+        date_fichier = IndicateurExecution.pluck(:date).uniq.sort
+      else
+        date_fichier = false
+      end
+      response = {date_fichier: date_fichier}
+      render json: response
   end
+
+  def new2 
+    if current_user.email != "admin-simp3@finances.gouv.fr"
+      redirect_to root_path
+    end 
+  end 
 
   def create
   end
