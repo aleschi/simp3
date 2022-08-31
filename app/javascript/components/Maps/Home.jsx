@@ -35,6 +35,7 @@ class Home extends React.Component {
           maxDate: new Date(),
 
           showResults: false,
+          showHover: false,
           indicateur_executions: [],
           performance: null,
           regions: [],
@@ -43,6 +44,8 @@ class Home extends React.Component {
           lat: 48.52, 
           lng: 2.19,
           resetloc: true,
+          hoverId: null,
+          clickId: null,
 
         };
     
@@ -52,6 +55,8 @@ class Home extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onMarkerClick2 = this.onMarkerClick2.bind(this);
         this.onCloseInfo = this.onCloseInfo.bind(this); 
+        this.MouseOver = this.MouseOver.bind(this); 
+        this.MouseOut = this.MouseOut.bind(this); 
       
     }
 
@@ -233,7 +238,7 @@ class Home extends React.Component {
     }
 
     onMarkerClick2= (id) => {    
-       
+        this.setState({clickId: id});
         const url = "/api/v1/service_executants/search_marker?q=" + id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
@@ -260,7 +265,38 @@ class Home extends React.Component {
     };
 
     onCloseInfo(event) {
-    this.setState({ showResults: false });
+      this.setState({ showResults: false, clickId: null, showHover: false, hoverId: null  });
+    }
+
+    MouseOver = (id) => {    
+        this.setState({clickId:null, hoverId: id, showResults: false});
+        const url = "/api/v1/service_executants/search_marker?q=" + id;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const startDate = this.state.startDate;
+        const body = {
+          startDate
+        };
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+        body: JSON.stringify(body)
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ service_executant: response.service_executant, showHover: true, indicateur_executions: response.indicateur_executions, performance: response.performance, resetloc: false}))
+      .catch(error => console.log(error.message));
+       
+    };
+
+    MouseOut(event){
+      this.setState({ showHover: false, hoverId: null });
     }
 
 
@@ -281,7 +317,11 @@ class Home extends React.Component {
         
           
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
-            <Mapcontainer handleSubmitDate={this.handleSubmitDate} onMarkerClick2={this.onMarkerClick2}  maxDate={this.state.maxDate} startDate={this.state.startDate} service_executant={this.state.service_executant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} showResults={this.state.showResults} performance={this.state.performance} indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} zoom={this.state.zoom} lat={this.state.lat} lng={this.state.lng} resetloc={this.state.resetloc}/> 
+            <Mapcontainer handleSubmitDate={this.handleSubmitDate} onMarkerClick2={this.onMarkerClick2}  maxDate={this.state.maxDate} startDate={this.state.startDate} 
+            service_executant={this.state.service_executant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} 
+            csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} showResults={this.state.showResults} performance={this.state.performance} 
+            indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} zoom={this.state.zoom} lat={this.state.lat} lng={this.state.lng} resetloc={this.state.resetloc} 
+            hoverId={this.state.hoverId} clickId={this.state.clickId} showHover={this.state.showHover} MouseOver={this.MouseOver} MouseOut={this.MouseOut}/> 
           }
 
         </div>
