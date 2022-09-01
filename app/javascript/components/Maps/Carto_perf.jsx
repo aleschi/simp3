@@ -12,7 +12,7 @@ class Carto_perf extends React.Component {
           service_executants: [],
           service_executant: [],
           blocs:[],
-          type_services: [],
+         
           indicateur_executions: [],
           indicateur_n: [],
           service_executant_n: [],
@@ -21,7 +21,7 @@ class Carto_perf extends React.Component {
           search_service_executants: [],
           search_ministeres: [],
           search_blocs: [],
-          search_type_services: [],
+         
           showSe: true,
           showMinistere: false,
           showBloc: false,
@@ -71,7 +71,7 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, service_executant: response.service_executant, blocs: response.data4, type_services: response.data5, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, se_color: response.se_color, loading: false, autoCompleteList: response.autoCompleteList , startDate: new Date(response.date) , maxDate: new Date(response.date), regions: response.regions   }))
+      .then(response => this.setState({ indicateurs: response.data1, ministeres: response.data2, service_executants: response.data3, service_executant: response.service_executant, blocs: response.data4, indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, indicateur_name: response.indicateur_name, csp: response.csp, sfact: response.sfact, cgf: response.cgf, se_color: response.se_color, loading: false, autoCompleteList: response.autoCompleteList , startDate: new Date(response.date) , maxDate: new Date(response.date), regions: response.regions   }))
       .catch(error => console.log(error.message));
     }
     
@@ -79,16 +79,13 @@ class Carto_perf extends React.Component {
     handleChangeStructure(event){
       this.setState({ resetloc: false})
       if (event.target.value == 'Ministere'){
-        this.setState({ showSe:  false, showMinistere: true, showBloc:  false, showType:  false, search_blocs: [], search_type_services:[], search_service_executants: [],autoCompleteList: this.state.ministeres,showResults: false }) 
+        this.setState({ showSe:  false, showMinistere: true, showBloc:  false, showType:  false, search_blocs: [],  search_service_executants: [],autoCompleteList: this.state.ministeres,showResults: false }) 
       } 
       else if (event.target.value == 'Bloc'){
-      this.setState({ showSe:  false, showMinistere: false, showBloc:  true, showType:  false, search_ministeres: [], search_type_services:[], search_service_executants: [],autoCompleteList: this.state.blocs,showResults: false}) 
-      }
-      else if (event.target.value == 'Type'){
-      this.setState({ showSe:  false, showMinistere: false, showBloc:  false, showType:  true, search_ministeres: [], search_blocs:[], search_service_executants: [],autoCompleteList: this.state.type_services,showResults: false}) 
+      this.setState({ showSe:  false, showMinistere: false, showBloc:  true, showType:  false, search_ministeres: [], search_service_executants: [],autoCompleteList: this.state.blocs,showResults: false}) 
       }
       else if (event.target.value == 'Service') {
-      this.setState({ showSe:  true, showMinistere: false, showBloc:  false, showType:  false, search_ministeres: [], search_type_services:[], search_blocs: [],autoCompleteList: this.state.service_executants,showResults: false}) 
+      this.setState({ showSe:  true, showMinistere: false, showBloc:  false, showType:  false, search_ministeres: [],  search_blocs: [],autoCompleteList: this.state.service_executants,showResults: false}) 
       }
     }
 
@@ -98,7 +95,6 @@ class Carto_perf extends React.Component {
       const search_service_executants = this.state.search_service_executants
       const search_ministeres = this.state.search_ministeres
       const search_blocs = this.state.search_blocs
-      const search_type_services = this.state.search_type_services
       const url = "/api/v1/indicateur_executions/search_carto";
       
       if (event.target.name == "search_indicateur"){
@@ -136,7 +132,7 @@ class Carto_perf extends React.Component {
       const service_executant = this.state.service_executant;
 
       const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate,service_executant,region
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant,region
       };
 
       const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -154,7 +150,7 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false,showResults: false,region: response.region, zoom: response.zoom, lat: response.lat, lng: response.lng}))
+      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false,showResults: false,region: response.region, zoom: response.zoom, lat: response.lat, lng: response.lng}))
       .catch(error => console.log(error.message));
     }
 
@@ -163,7 +159,7 @@ class Carto_perf extends React.Component {
         const search_service_executants = new Array() 
         const search_ministeres = new Array()
         const search_blocs = new Array()
-        const search_type_services = new Array()
+        
 
         if (this.state.showSe){                
           value.forEach(el => search_service_executants.push(el.id))     
@@ -173,9 +169,6 @@ class Carto_perf extends React.Component {
         }
         else if (this.state.showBloc){                   
           value.forEach(el => search_blocs.push(el.id))
-        }
-        else if (this.state.showType){                   
-          value.forEach(el => search_type_services.push(el.id))
         }
 
        
@@ -190,7 +183,7 @@ class Carto_perf extends React.Component {
         const region = this.state.region;
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate,service_executant, region
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -208,7 +201,7 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, showResults: false}))
+      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, showResults: false}))
       .catch(error => console.log(error.message));
     }
 
@@ -221,7 +214,7 @@ class Carto_perf extends React.Component {
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
         const search_blocs = this.state.search_blocs;
-        const search_type_services = this.state.search_type_services;
+
         const effectif = this.state.effectif;
         const type_structure = this.state.type_structure;
         const se_color = this.state.se_color;
@@ -230,7 +223,7 @@ class Carto_perf extends React.Component {
         const region = this.state.region;
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,search_type_services,effectif,type_structure, se_color,startDate,service_executant, region
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -248,7 +241,7 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, search_type_services: response.search_type_services, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance,resetloc: false}))
+      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance,resetloc: false}))
       .catch(error => console.log(error.message));
     }
 
@@ -330,7 +323,7 @@ class Carto_perf extends React.Component {
           <Mapsearch_perf handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure}
           indicateurs={this.state.indicateurs}
           service_executants={this.state.service_executants}
-          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs} type_services={this.state.type_services}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} showType={this.state.showType}autoCompleteList={this.state.autoCompleteList} regions={this.state.regions}/>
+          handleSubmit={this.handleSubmit} ministeres={this.state.ministeres} blocs={this.state.blocs}  showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} autoCompleteList={this.state.autoCompleteList} regions={this.state.regions}/>
         
       
         

@@ -408,4 +408,28 @@ text-align:center;
 .gm-control-active{
   border: 3px solid var(--background-action-high-blue-france) !important;
 }
+.fr-callout-legend{
+  padding : 1rem !important;
+  box-shadow: none !important; 
+}
+.fr-callout--error {
+  
+  background-color: var(--background-contrast-error) !important;
+
+  --idle: transparent;
+  --hover: var(--background-contrast-error-hover);
+  --active: var(--background-contrast-error-active);
+}
+.fr-callout-text--error{
+  color: var(--text-default-error) !important;
+}
+.fr-callout-text--green-emeraude{
+  color: var(--text-label-green-emeraude) !important;
+}
+.fr-callout-text--yellow-tournesol{
+  color: var(--text-label-yellow-tournesol) !important;
+}
+.fr-callout-text--blue-ecume{
+  color: var(--text-label-blue-ecume) !important;
+}
 //.fr-badge remove z-index dans dsfr

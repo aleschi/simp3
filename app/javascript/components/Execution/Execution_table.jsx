@@ -58,7 +58,7 @@ export class Execution_table extends React.Component {
     var data_to_download = [];
     this.state.indicateur_executions.map((indicateur_execution, index) => (
    
-      data_to_download.push([indicateur_execution.date,indicateur_execution.service_executant.libelle,indicateur_execution.service_executant.code,indicateur_execution.service_executant.ministere.name,indicateur_execution.service_executant.organisation_financiere.name,indicateur_execution.service_executant.type_service.name,Math.round(indicateur_execution.valeur * 100 ) / 100 ])
+      data_to_download.push([indicateur_execution.date,indicateur_execution.service_executant.libelle,indicateur_execution.service_executant.code,indicateur_execution.service_executant.ministere.name,indicateur_execution.service_executant.organisation_financiere.name,Math.round(indicateur_execution.valeur * 100 ) / 100 ])
             ))
 
     return (
@@ -75,16 +75,16 @@ export class Execution_table extends React.Component {
                 <tr>
                   <th scope="col">Date <button onClick={() => {this.sortTable('date')}} id="date" title="filtre date"><span className="fr-icon-code-view fr-fi--xs rotate90 cnoir" aria-hidden="true"></span></button></th>
                   <th scope="col">Service Exécutant</th>
-                  <th scope="col">Code Service Exécutant</th>
+                  <th scope="col">Code Service</th>
                   <th scope="col">Ministère</th>
                   <th scope="col">Organisation Financière</th>
-                  <th scope="col">Type Service</th>
-                    <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur" title="filtre valeur"><span className="fr-icon-code-view fr-fi--xs rotate90 cnoir" aria-hidden="true"></span></button></th>
+                 
+                  <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur" title="filtre valeur"><span className="fr-icon-code-view fr-fi--xs rotate90 cnoir" aria-hidden="true"></span></button></th>
                 </tr>
             </thead>
             <tbody>
                 {this.state.indicateur_executions.map((indicateur_execution, index) => (
-                  <tr key={index}><td>{Moment(indicateur_execution.date).format('DD/MM/YYYY')}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{indicateur_execution.service_executant.type_service.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }{indicateur_execution.indicateur.unite}</td></tr>
+                  <tr key={index}><td>{Moment(indicateur_execution.date).format('DD/MM/YYYY')}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }{indicateur_execution.indicateur.unite}</td></tr>
                 ))}
             
             </tbody>

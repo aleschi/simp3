@@ -84,8 +84,6 @@ render() {
               
               <div className="fr-text--sm fr-mb-3v">Ministère : {service_executant.ministere.name}</div>
              
-              <div className="fr-text--sm fr-mb-3v">Type de service : {service_executant.type_service.name}</div>
-             
               <div className="fr-text--sm fr-mb-3v">Organisation Financière : {service_executant.organisation_financiere.name}</div>
       
               <div className="fr-text--sm fr-mb-3v">Type de structure : {service_executant.type_structure}</div>
@@ -93,7 +91,7 @@ render() {
               <div className="fr-text--sm fr-mb-3v">Utilisateurs Chorus : 
               {(service_executant.effectif < 5) && <span> Moins de 5</span> }{(service_executant.effectif < 10 && service_executant.effectif >= 5) && <span> Entre 5 et 10</span> } {(service_executant.effectif < 50 && service_executant.effectif >= 10) && <span> Entre 10 et 50</span> }{(service_executant.effectif < 100 && service_executant.effectif >= 50) && <span> Entre 50 et 100</span> }{(service_executant.effectif >= 100) && <span> Plus de 100</span> }</div>
 
-              <div className="fr-text--sm fr-mb-3v">Performance globale du service : {(this.props.performance < 60) && <span className="fr-badge fr-badge--error fr-badge--no-icon" > {this.props.performance}%</span>}{(this.props.performance >= 60 && this.props.performance < 80) && <span className="fr-badge fr-badge--warning fr-badge--no-icon" > {this.props.performance}%</span>}
+              <div className="fr-text--sm fr-mb-3v">Performance globale du service : {(this.props.performance < 60) && <span className="fr-badge fr-badge--error fr-badge--no-icon" > {this.props.performance}%</span>}{(this.props.performance >= 60 && this.props.performance < 80) && <span className="fr-badge fr-badge--yellow-tournesol" > {this.props.performance}%</span>}
               {(this.props.performance >= 80) && <span className="fr-badge fr-badge--green-emeraude" > {this.props.performance}%</span>}</div>
             
               <div className="fr-text--sm fr-mb-3v"><b>{(this.props.indicateur_n.length == 0) ? <span>Valeurs des indicateurs</span> : <span>Valeur de l'indicateur</span>} sur le mois ({Moment(this.props.startDate).format('MM/YYYY')}) </b></div>

@@ -41,6 +41,7 @@ export class Mapcontainer extends React.Component {
     };
 
     displayMarkers = () => {
+      
       return this.props.autoCompleteResults.map((result, index) => {
         if (this.props.secolor[result.id] == "vert"){
           var icon=iconV;
@@ -60,12 +61,6 @@ export class Mapcontainer extends React.Component {
           var zindex = 2; 
           var label = ""; 
         }
-        else if (this.props.secolor[result.id] == "noir"){
-          var icon=iconG; 
-          var iconl=iconGB;   
-          var zindex = 1;  
-          var label = ""; 
-        }
         else if (this.props.secolor[result.id] == "bleu"){
           var icon=iconBl; 
           var iconl=iconBB;    
@@ -76,7 +71,7 @@ export class Mapcontainer extends React.Component {
           var icon=iconG; 
           var iconl=iconGB; 
           var zindex = 1;  
-          var label = "";   
+          var label = "";  
         }
         return <Marker key={index} id={result.id} label={label} zIndex={zindex} icon={(result.id == this.props.hoverId || result.id == this.props.clickId) ? iconl : icon} optimized={false} position={{
          lat: result.latitude,
@@ -94,43 +89,137 @@ export class Mapcontainer extends React.Component {
 
 
     displayLegend = () => {
-     
       if (this.props.indicateur_n.length == 0){
-        return <div><div className="map_legende">
-            <span className="mapicon"><img src={iconR} alt="icone map vert" /> Performance Globale {'\u003C'} 60% </span>
-            <span className="mapicon"><img src={iconJ} alt="icone map orange" /> 60% {'\u003C'}  Performance Globale {'\u003C'} 80% </span>
-            <span className="mapicon"><img src={iconV} alt="icone map rouge" /> 80% {'\u003C'} Performance Globale </span> 
-            <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span>
-        </div><div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div></div>
+        var count_noir = this.props.csp + this.props.sfact + this.props.cgf - this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length - this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length - this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length ;
+      
+        return <div>
+        <div className="fr-grid-row fr-grid-row--gutters ">
+          <div className="fr-col-3">
+            <div className="fr-callout fr-callout--error fr-callout-legend">
+              <p className="fr-callout__title fr-callout-text--error">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+              <p className="fr-callout__text fr-text--sm fr-callout-text--error">
+                <span className="mapicon"><img src={iconR} alt="icone map rouge" /> Performance Globale {'\u003C'} 60% </span></p>
+            </div>
+          </div>
+          <div className="fr-col-3">
+            <div className="fr-callout fr-callout--yellow-tournesol fr-callout-legend">
+              <p className="fr-callout__title fr-callout-text--yellow-tournesol">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+              <p className="fr-callout__text fr-text--sm fr-callout-text--yellow-tournesol">
+                 <span className="mapicon"><img src={iconJ} alt="icone map orange" /> 60% {'\u003C'}  Performance Globale {'\u003C'} 80% </span></p>
+            </div>
+          </div>
+          <div className="fr-col-3">
+            <div className="fr-callout fr-callout--green-emeraude fr-callout-legend">
+              <p className="fr-callout__title fr-callout-text--green-emeraude">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+              <p className="fr-callout__text fr-text--sm fr-callout-text--green-emeraude">
+                <span className="mapicon"><img src={iconV} alt="icone map vert" /> 80% {'\u003C'} Performance Globale </span> </p>
+            </div>
+          </div>
+          <div className="fr-col-3">
+            <div className="fr-callout fr-callout-legend">
+              <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+              <p className="fr-callout__text fr-text--sm">
+                <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur les indicateurs</span></p>
+            </div>
+          </div>
+        </div>
+        </div>
       }else{
         return this.props.indicateur_n.map((result, index) => { 
         
           if (result.seuil_1 != null) {
-            if (result.name == 'IB4 - 2' || result.name == 'IB4 - 3' || result.name == 'IB4 - 4'){
+            var count_noir = this.props.csp + this.props.sfact + this.props.cgf - this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length - this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length - this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length ;
+            if (result.name == 'IB4 - 3' || result.name == 'IC1'){
               return <div key={index}>
-              <div className="map_legende">
-                <span className="mapicon"><img src={iconR} alt="icone map rouge" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-                <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-                <span className="mapicon"><img src={iconV} alt="icone map vert" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-                <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span>
+              <div className="fr-grid-row fr-grid-row--gutters ">
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout--error fr-callout-legend">
+                    <p className="fr-callout__title fr-callout-text--error">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm fr-callout-text--error">
+                      <span className="mapicon"><img src={iconR} alt="icone map rouge" /> Valeur indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span></p>
+                  </div>
+                </div>
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout--yellow-tournesol fr-callout-legend">
+                    <p className="fr-callout__title fr-callout-text--yellow-tournesol">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm fr-callout-text--yellow-tournesol">
+                       <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Valeur indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span></p>
+                  </div>
+                </div>
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout--green-emeraude fr-callout-legend">
+                    <p className="fr-callout__title fr-callout-text--green-emeraude">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm fr-callout-text--green-emeraude">
+                      <span className="mapicon"><img src={iconV} alt="icone map vert" /> {result.seuil_2}{result.unite} {'\u003C'} Valeur indicateur {result.name}  </span> </p>
+                  </div>
+                </div>
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout-legend">
+                    <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm">
+                      <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur l'indicateur</span></p>
+                  </div>
+                </div>
               </div>
-              <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+
               </div>
             }
             else{
               return <div key={index}>
-              <div className="map_legende">
-                <span className="mapicon"><img src={iconV} alt="icone map vert" /> Indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span>
-                <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span>
-                <span className="mapicon"><img src={iconR} alt="icone map rouge" /> {result.seuil_2}{result.unite} {'\u003C'} Indicateur {result.name} </span>
-                <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span>
+              <div className="fr-grid-row fr-grid-row--gutters ">
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout--error fr-callout-legend">
+                    <p className="fr-callout__title fr-callout-text--error">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm fr-callout-text--error">
+                      <span className="mapicon"><img src={iconR} alt="icone map rouge" /> {result.seuil_2}{result.unite} {'\u003C'} Valeur indicateur {result.name} </span></p>
+                  </div>
+                </div>
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout--yellow-tournesol fr-callout-legend">
+                    <p className="fr-callout__title fr-callout-text--yellow-tournesol">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm fr-callout-text--yellow-tournesol">
+                       <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Valeur indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span></p>
+                  </div>
+                </div>
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout--green-emeraude fr-callout-legend">
+                    <p className="fr-callout__title fr-callout-text--green-emeraude">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm fr-callout-text--green-emeraude">
+                      <span className="mapicon"><img src={iconV} alt="icone map vert" /> Valeur indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}  </span> </p>
+                  </div>
+                </div>
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout-legend">
+                    <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm">
+                      <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur l'indicateur</span></p>
+                  </div>
+                </div>
               </div>
-              <div className="d12"></div><div className="map_legende"><span>1 marqueur = 1 service exécutant</span></div>
+            
+
               </div>
             }
           } else {
+            var count_noir = this.props.csp + this.props.sfact + this.props.cgf - this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "bleu")).length ;
             return <div key={index}>
-              <div className="d12"></div><div className="map_legende"><span className="mapicon"><img src={iconBl} alt="icone map legende" />  1 marqueur = 1 service exécutant</span> <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur </span></div>
+              <div className="fr-grid-row fr-grid-row--gutters ">              
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout--blue-ecume fr-callout-legend">
+                    <p className="fr-callout__title fr-callout-text--blue-ecume ">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "bleu")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm fr-callout-text--blue-ecume ">
+                      <span className="mapicon"><img src={iconBl} alt="icone map bleu" /> Services avec valeur sur l'indicateur </span> </p>
+                  </div>
+                </div>
+                <div className="fr-col-3">
+                  <div className="fr-callout fr-callout-legend">
+                    <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
+                    <p className="fr-callout__text fr-text--sm">
+                      <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur l'indicateur</span></p>
+                  </div>
+                </div>
+              </div>
+             
             </div>
           }
         })

@@ -134,7 +134,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     ministere = Ministere.all.order(name: :asc)
     service_executants = ServiceExecutant.all.order(libelle: :asc)
     bloc = OrganisationFinanciere.all.order(name: :asc)
-    type_service = TypeService.all.order(name: :asc)
+
     service_executant = ServiceExecutant.where(id: ServiceExecutant.first.id)
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq
 
@@ -163,21 +163,18 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
           se_color[ex.service_executant_id] = "jaune"
         elsif ex.point == 1
           se_color[ex.service_executant_id] = "rouge"
-        else
-          se_color[ex.service_executant_id] = "noir"
         end
       elsif !ex.valeur.nil?
         se_color[ex.service_executant_id] = "bleu"
-      else
-        se_color[ex.service_executant_id] = "noir"
       end
     end 
+
 
     autoCompleteList = ServiceExecutant.all.order(libelle: :asc)
 
     
 
-    response = {data1: indicateur, data2: ministere, data3: service_executants,service_executant: service_executant, data4: bloc, data5: type_service, data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants, se_color: se_color, autoCompleteList: autoCompleteList, date: date, regions: regions }
+    response = {data1: indicateur, data2: ministere, data3: service_executants,service_executant: service_executant, data4: bloc, data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, indicateur_name: indicateur_name, csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants, se_color: se_color, autoCompleteList: autoCompleteList, date: date, regions: regions }
     render json: response
   end
 
@@ -197,10 +194,6 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       blocs_id = params[:search_blocs]
       service_executant_n = ServiceExecutant.where(organisation_financiere_id: blocs_id)
       search_service_executants = service_executant_n.pluck(:id).uniq
-    elsif params[:search_type_services].length != 0
-      types_id = params[:search_type_services]
-      service_executant_n = ServiceExecutant.where(type_service_id: types_id)
-      search_service_executants = service_executant_n.pluck(:id).uniq 
     else 
       search_service_executants = ServiceExecutant.all.pluck(:id)
       service_executant_n = ServiceExecutant.all
@@ -254,22 +247,20 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
           se_color[ex.service_executant_id] = "jaune"
         elsif ex.point == 1
           se_color[ex.service_executant_id] = "rouge"
-        else 
-          se_color[ex.service_executant_id] = "noir"
         end
       elsif !ex.valeur.nil?
         se_color[ex.service_executant_id] = "bleu"
-      else
-        se_color[ex.service_executant_id] = "noir"
       end
     end 
+
+
 
     #si se deja affiché 
     service_executant = ServiceExecutant.where(id: params[:service_executant][0]['id'])
     indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
     performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
 
-    response = { data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], search_type_services: params[:search_type_services], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf, se_color: se_color,
+    response = { data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf, se_color: se_color,
     service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng}
     render json: response
   end

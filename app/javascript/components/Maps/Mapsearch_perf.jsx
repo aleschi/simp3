@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs,type_services, showSe, showMinistere, showType, showBloc, autoCompleteList,regions}) => {
+export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs, showSe, showMinistere, showBloc, autoCompleteList,regions}) => {
 	
 	    return (
 
@@ -37,7 +37,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 				            <option value="Service">Services Exécutants</option>
 				            <option value="Ministere">Ministères</option>
 				            <option value="Bloc">Organisation financière</option>
-				            <option value="Type">Type de service</option>		            
+				            
 						</select>
 					</div>
 				</div>
@@ -140,39 +140,6 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 						      style={{ width: 500 }}
 						      renderInput={(params) => (
 						        <TextField {...params} label="Recherchez une Organisation" placeholder="Ajoutez un Organisation" />
-						      )}
-						    />
-				        </div>
-			        </div>
-					: null}
-
-					{ showType ? 
-					<div className="fr-select-group">
-						<div className="fr-label" >Ma recherche concerne </div>
-						<div className="form_checkbox">	
-				            <Autocomplete
-						      multiple
-						  
-						      limitTags={1}
-						      className="search_checkbox" 
-						      options={autoCompleteList}
-						      disableCloseOnSelect
-						      onChange={(event, value) => handleSubmit(event, value)}
-						      getOptionLabel={(option) => option.name}
-						      renderOption={(props, option, { selected }) => (
-						        <li {...props} className="checkbox_li">
-						          <Checkbox
-						            icon={icon}
-						            checkedIcon={checkedIcon}
-						            style={{ marginRight: 8 }}
-						            checked={selected}
-						          />
-						          {option.name}
-						        </li>
-						      )}
-						      style={{ width: 500 }}
-						      renderInput={(params) => (
-						        <TextField {...params} label="Recherchez un type de service" placeholder="Ajoutez un type" />
 						      )}
 						    />
 				        </div>
