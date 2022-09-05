@@ -58,7 +58,7 @@ h1, h2{
   color:#E8CF4E;
 }
 .cnoir{
-  color:var(--text-title-grey);
+  color:var(--text-title-grey) !important;
 }
 .cgris{
   color: #8F8F8F;
@@ -239,15 +239,7 @@ border-color:transparent;
   color:var(--text-action-high-blue-france) !important;
   }
 }
-.map_legende{
-text-align:center;
-  color: var(--text-title-grey);
-  font-size:13px;
 
-  span{
-  margin-right:5px;
-  }
-}
 .react-datepicker__input-container input{
   font-family: Marianne !important;
 

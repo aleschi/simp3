@@ -82,7 +82,7 @@ class Newindicateur_execution extends React.Component {
             : null }
 
 
-              { this.state.loading ? <div><p className="fr-my-5w text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </p> <div className="loader_box"><div className ="loader"></div></div></div> : 
+              { this.state.loading ? <div><p className="fr-my-5w fr-mb-16w text-center">Chargement des données en cours.. Cela peut prendre quelques minutes. </p> <div className="loader_box"><div className ="loader"></div></div></div> : 
                 <div className="fr-mb-5w">
                 <form onSubmit={this.handleSubmit}> 
                  <Dropzone maxFiles={1} accept={acceptedfiles} onDrop={this.onDrop}>

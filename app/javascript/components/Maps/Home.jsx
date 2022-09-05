@@ -47,6 +47,8 @@ class Home extends React.Component {
           hoverId: null,
           clickId: null,
 
+          eye_legend: 'all',
+
         };
     
         this.handleChange = this.handleChange.bind(this);
@@ -122,8 +124,8 @@ class Home extends React.Component {
       .catch(error => console.log(error.message));
     }
 
-    handleChange(e){
-        e.preventDefault();
+    handleChange(params){
+        //e.preventDefault();
         const url = "/api/v1/service_executants/search";
         const search_service_executants = this.state.search_service_executants
         const search_ministeres = this.state.search_ministeres
@@ -135,23 +137,33 @@ class Home extends React.Component {
           var effectif = event.target.value
           var type_structure = this.state.type_structure
           var region = this.state.region
+          var eye_legend = this.state.eye_legend
           this.setState({ resetloc: false})
         }
         else if (event.target.name == "type_structure"){
           var type_structure = event.target.value
           var effectif = this.state.effectif
           var region = this.state.region
+          var eye_legend = this.state.eye_legend
           this.setState({ resetloc: false})
         }
         else if (event.target.name == "regions"){
           var region = event.target.value
           var effectif = this.state.effectif
           var type_structure = this.state.type_structure
+          var eye_legend = this.state.eye_legend
           this.setState({ resetloc: true, zoom: 5})
+        }else {
+          var effectif = this.state.effectif
+          var type_structure = this.state.type_structure
+          var region = this.state.region
+          var eye_legend = params
+          this.setState({ resetloc: false})
         }
+
     
         const body = {
-          search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region
+          search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region, eye_legend
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -169,7 +181,10 @@ class Home extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults,csp: response.csp, sfact: response.sfact, cgf: response.cgf,search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color,showResults: false, region: response.region, zoom: response.zoom, lat: response.lat, lng: response.lng}))
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults,csp: response.csp, sfact: response.sfact, cgf: response.cgf,
+        search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, 
+        effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color,showResults: false, region: response.region, 
+        zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend}))
       .catch(error => console.log(error.message));
     }
 
@@ -191,9 +206,8 @@ class Home extends React.Component {
 
         this.setState({ startDate: e});
         const url = "/api/v1/service_executants/search_date";
-        const autoCompleteResults = this.state.autoCompleteResults;
-        const autoCompleteList = this.state.autoCompleteList;
-       
+
+    
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
         const search_blocs = this.state.search_blocs;
@@ -207,10 +221,11 @@ class Home extends React.Component {
         const startDate = e;
         const service_executant = this.state.service_executant;
         const region = this.state.region;
+        const eye_legend = this.state.eye_legend;
     
 
         const body = {
-          autoCompleteResults,search_service_executants,search_ministeres,search_blocs, effectif, type_structure,showSe,showBloc,showMinistere,startDate,service_executant, region
+          search_service_executants,search_ministeres,search_blocs, effectif, type_structure,showSe,showBloc,showMinistere,startDate,service_executant, region, eye_legend
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -316,7 +331,8 @@ class Home extends React.Component {
             service_executant={this.state.service_executant} autoCompleteResults={this.state.autoCompleteResults} secolor={this.state.se_color} indicateur_n={this.state.indicateur_n} 
             csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} showResults={this.state.showResults} performance={this.state.performance} 
             indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} zoom={this.state.zoom} lat={this.state.lat} lng={this.state.lng} resetloc={this.state.resetloc} 
-            hoverId={this.state.hoverId} clickId={this.state.clickId} showHover={this.state.showHover} MouseOver={this.MouseOver} MouseOut={this.MouseOut}/> 
+            hoverId={this.state.hoverId} clickId={this.state.clickId} showHover={this.state.showHover} MouseOver={this.MouseOver} MouseOut={this.MouseOut}
+            eye_legend={this.state.eye_legend} handleChange={this.handleChange}/> 
           }
 
         </div>

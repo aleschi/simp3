@@ -91,7 +91,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     max = indicateur_n.first.indicateur_executions.pluck(:valeur).max()
     min = indicateur_n.first.indicateur_executions.pluck(:valeur).min()
 
-    response = {autoCompleteList: autoCompleteList, region: region, data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), data7: indicateur_n.as_json,search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name,data8: service_executant_n, search_service_executants: search_service_executants, search_ministeres: search_ministeres,
+    response = {autoCompleteList: autoCompleteList, region: region, data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), data7: indicateur_n.as_json,search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name,data8: service_executant_n, search_service_executants: search_service_executants, search_ministeres: search_ministeres,
     data_inter_ministerielle: data_inter_ministerielle, liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, ministeres: ministeres, service_executants: service_executants, min: min, max: max }
     
     render json: response
@@ -120,7 +120,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
         date_croissant = params[:date_croissant]
       end
     end
-    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), date_croissant: date_croissant, valeur_croissant: valeur_croissant}
+    response = { data6: indicateur_execution.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), date_croissant: date_croissant, valeur_croissant: valeur_croissant}
     render json: response
   end 
 
@@ -157,11 +157,11 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     se_color = Hash.new
     indicateur_execution.each do |ex|
       if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? && !ex.valeur.nil?
-        if ex.point == 3
+        if ex.point == 2
           se_color[ex.service_executant_id] = "vert"
-        elsif ex.point == 2
-          se_color[ex.service_executant_id] = "jaune"
         elsif ex.point == 1
+          se_color[ex.service_executant_id] = "jaune"
+        elsif ex.point == 0
           se_color[ex.service_executant_id] = "rouge"
         end
       elsif !ex.valeur.nil?
@@ -227,6 +227,21 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     if params[:type_structure] && params[:type_structure].length != 0 && params[:type_structure] != "ALL"
       service_executant_n = service_executant_n.where('type_structure = ?', params[:type_structure].to_s)
     end 
+
+    #search_service_executants = service_executant_n.pluck(:id).uniq
+    if params[:eye_legend] && params[:eye_legend] != 'all'
+      if params[:eye_legend] == "rouge" 
+        se_id_perf = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ? AND point = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, 0).pluck(:service_executant_id)
+      elsif params[:eye_legend] == "vert" 
+        se_id_perf = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ? AND point = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, 2).pluck(:service_executant_id)
+      elsif params[:eye_legend] == "jaune" 
+        se_id_perf = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ? AND point = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, 1).pluck(:service_executant_id)
+      elsif params[:eye_legend] == "gris" 
+        se_id_perf = service_executant_n.pluck(:id) - indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).pluck(:service_executant_id)
+      end 
+      service_executant_n = service_executant_n.where(id: se_id_perf)
+    end 
+
     if !service_executant_n.nil?
       csp = service_executant_n.where('type_structure = ?', 'CSP').count
       sfact = service_executant_n.where('type_structure = ?', 'SFACT').count
@@ -237,15 +252,16 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       cgf = 0
     end 
 
+    
     indicateur_execution = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month)
     se_color = Hash.new
     indicateur_execution.each do |ex|
       if !indicateur_n.first.seuil_1.nil? && !indicateur_n.first.seuil_2.nil? && !ex.valeur.nil?
-        if ex.point == 3
+        if ex.point == 2
           se_color[ex.service_executant_id] = "vert"
-        elsif ex.point == 2
-          se_color[ex.service_executant_id] = "jaune"
         elsif ex.point == 1
+          se_color[ex.service_executant_id] = "jaune"
+        elsif ex.point == 0
           se_color[ex.service_executant_id] = "rouge"
         end
       elsif !ex.valeur.nil?
@@ -253,15 +269,16 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       end
     end 
 
-
-
     #si se deja affiché 
     service_executant = ServiceExecutant.where(id: params[:service_executant][0]['id'])
     indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
     performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
 
-    response = { data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf, se_color: se_color,
-    service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng}
+    response = { data6: indicateur_execution, data7: indicateur_n.as_json, data8: service_executant_n, search_indicateur: params[:search_indicateur].to_s, 
+      indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], 
+      search_blocs: params[:search_blocs], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf, 
+      se_color: se_color,service_executant: service_executant.as_json(:include => [:ministere, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), 
+      performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend]}
     render json: response
   end
 
@@ -290,6 +307,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     IndicateurExecution.import(params[:file])
     render json: { message: 'ind ajouté!' }
   end 
+
 
 
 end

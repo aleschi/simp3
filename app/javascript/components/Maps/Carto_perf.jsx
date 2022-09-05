@@ -49,6 +49,7 @@ class Carto_perf extends React.Component {
           resetloc: true,
           hoverId: null,
           clickId: null,
+          eye_legend: 'all',
 
         };
 
@@ -89,8 +90,8 @@ class Carto_perf extends React.Component {
       }
     }
 
-    handleChange(event) {
-      event.preventDefault();
+    handleChange(params) {
+      //event.preventDefault();
 
       const search_service_executants = this.state.search_service_executants
       const search_ministeres = this.state.search_ministeres
@@ -102,37 +103,48 @@ class Carto_perf extends React.Component {
         var effectif = this.state.effectif
         var type_structure = this.state.type_structure
         var region = this.state.region
-        this.setState({ resetloc: false})
+        var eye_legend = this.state.eye_legend
+        this.setState({ resetloc: false, showResults: false, showHover: false })
       }
       else if (event.target.name == "effectif"){
         var effectif = event.target.value
         var search_indicateur = this.state.search_indicateur
         var type_structure = this.state.type_structure
         var region = this.state.region
-        this.setState({ resetloc: false})
+        var eye_legend = this.state.eye_legend
+        this.setState({ resetloc: false, showResults: false, showHover: false})
       }
       else if (event.target.name == "type_structure"){
         var type_structure = event.target.value
         var search_indicateur = this.state.search_indicateur
         var effectif = this.state.effectif
         var region = this.state.region
-        this.setState({ resetloc: false})
+        var eye_legend = this.state.eye_legend
+        this.setState({ resetloc: false, showResults: false, showHover: false})
       }
       else if (event.target.name == "regions"){
           var region = event.target.value
           var effectif = this.state.effectif
           var type_structure = this.state.type_structure
           var search_indicateur = this.state.search_indicateur
-          this.setState({ resetloc: true,zoom: 5})
+          var eye_legend = this.state.eye_legend
+          this.setState({ resetloc: true,zoom: 5, showResults: false, showHover: false})
+      }else{
+        var eye_legend = params
+        var region = this.state.region
+          var effectif = this.state.effectif
+          var type_structure = this.state.type_structure
+          var search_indicateur = this.state.search_indicateur
+          this.setState({ resetloc: false, showResults: false, showHover: false})
       }
 
       
-      const se_color = this.state.se_color;
+      //const se_color = this.state.se_color;
       const startDate = this.state.startDate;
       const service_executant = this.state.service_executant;
 
       const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant,region
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure,startDate,service_executant,region,eye_legend
       };
 
       const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -150,7 +162,11 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false,showResults: false,region: response.region, zoom: response.zoom, lat: response.lat, lng: response.lng}))
+      .then(response => this.setState({  indicateur_n: response.data7, service_executant_n: response.data8, 
+        search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,
+        search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact,
+         cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, showResults: false,region: response.region, 
+         zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend}))
       .catch(error => console.log(error.message));
     }
 
@@ -182,6 +198,8 @@ class Carto_perf extends React.Component {
         const service_executant = this.state.service_executant;
         const region = this.state.region;
 
+        this.setState({ showResults: false, showHover: false})
+
         const body = {
           search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region
         };
@@ -201,7 +219,7 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, showResults: false}))
+      .then(response => this.setState({  indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, showResults: false}))
       .catch(error => console.log(error.message));
     }
 
@@ -221,9 +239,10 @@ class Carto_perf extends React.Component {
         const startDate = event;
         const service_executant = this.state.service_executant;
         const region = this.state.region;
+        const eye_legend = this.state.eye_legend
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region, eye_legend
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -241,7 +260,10 @@ class Carto_perf extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6, indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance,resetloc: false}))
+      .then(response => this.setState({ indicateur_n: response.data7, service_executant_n: response.data8, search_indicateur: response.search_indicateur, 
+        indicateur_name: response.indicateur_name,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, 
+        search_blocs: response.search_blocs, effectif: response.effectif,csp: response.csp, sfact: response.sfact, cgf: response.cgf, type_structure: response.type_structure, 
+        se_color: response.se_color, loading: false, service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance,resetloc: false}))
       .catch(error => console.log(error.message));
     }
 
@@ -333,7 +355,8 @@ class Carto_perf extends React.Component {
           indicateur_n={this.state.indicateur_n}  csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} showResults={this.state.showResults} 
           performance={this.state.performance} indicateur_executions={this.state.indicateur_executions} onMarkerClick2={this.onMarkerClick2} 
           onCloseInfo={this.onCloseInfo} zoom={this.state.zoom} lat={this.state.lat} lng={this.state.lng} resetloc={this.state.resetloc}
-          hoverId={this.state.hoverId} clickId={this.state.clickId} showHover={this.state.showHover} MouseOver={this.MouseOver} MouseOut={this.MouseOut}/> 
+          hoverId={this.state.hoverId} clickId={this.state.clickId} showHover={this.state.showHover} MouseOver={this.MouseOver} MouseOut={this.MouseOut}
+          eye_legend={this.state.eye_legend} handleChange={this.handleChange}/> 
    
         }
      

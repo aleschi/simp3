@@ -48,19 +48,19 @@ class IndicateurExecution < ApplicationRecord
             if !indicateur.seuil_1.nil?
               if indicateur.name == 'IB4 - 3' || indicateur.name == 'IC1'
                 if @indicateur_execution.valeur <= indicateur.seuil_1
-                  @indicateur_execution.point = 1 
+                  @indicateur_execution.point = 0 
                 elsif @indicateur_execution.valeur <= indicateur.seuil_2
-                  @indicateur_execution.point = 2
+                  @indicateur_execution.point = 1
                 else
-                  @indicateur_execution.point = 3
+                  @indicateur_execution.point = 2
                 end
               else 
                 if @indicateur_execution.valeur <= indicateur.seuil_1
-                  @indicateur_execution.point = 3 
+                  @indicateur_execution.point = 2 
                 elsif @indicateur_execution.valeur <= indicateur.seuil_2
-                  @indicateur_execution.point = 2
-                else
                   @indicateur_execution.point = 1
+                else
+                  @indicateur_execution.point = 0
                 end
               end
             end 
@@ -79,11 +79,11 @@ class IndicateurExecution < ApplicationRecord
       else 
         @performance = service.performances.new(date: date)
       end 
-      if service.type_structure == "SFACT"
-        @performance.valeur = (service.indicateur_executions.where(date: date).sum(:point)*100.0/9).round
-      else
-        @performance.valeur = (service.indicateur_executions.where(date: date).sum(:point)*100.0/45).round
-      end
+      if service.indicateur_executions.where(date: date).where.not(point: nil).count > 0 
+        @performance.valeur = (service.indicateur_executions.where(date: date).sum(:point)*100.0/(2.0*service.indicateur_executions.where(date: date).where.not(point: nil).count)).round
+      else 
+        @performance.valeur = 0
+      end 
       @performance.save
     end 
 	end 

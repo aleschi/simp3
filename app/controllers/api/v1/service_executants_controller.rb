@@ -48,10 +48,10 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     se_id.each_with_index do |se,i|
       #if se.performances.where(date: date).count > 0 
         #if se.performances.where(date: date).first.valeur >= 40 
-        if valeur_id[i] >= 80 
+        if valeur_id[i] >= 75 
           se_color[se] = "vert"
         #elsif se.performances.where(date: date).first.valeur >= 30
-        elsif valeur_id[i] >= 60
+        elsif valeur_id[i] >= 50
           se_color[se] = "jaune"
         #elsif se.performances.where(date: date).first.valeur > 0
         elsif valeur_id[i] > 0 
@@ -86,13 +86,16 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       autoCompleteResults = ServiceExecutant.all
     end 
 
-    if params[:region] && params[:region].length > 0 && params[:region] != "ALL"
+    if params[:region] && params[:region].length > 0 && params[:region] != "ALL" && params[:region] !="Administration centrale"
       autoCompleteResults = autoCompleteResults.where(region: params[:region])
       zoom = 7
       result = Geocoder.search(params[:region],params: {language: :fr})
       lat = result[0].geometry['location']['lat']
       lng = result[0].geometry['location']['lng']
     else
+      if params[:region] && params[:region] =="Administration centrale"
+        autoCompleteResults = autoCompleteResults.where(region: params[:region])
+      end
       zoom = 5
       lat = 48.52
       lng = 2.19
@@ -114,6 +117,22 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     if params[:type_structure] && params[:type_structure].length != 0 && params[:type_structure] != "ALL"
       autoCompleteResults = autoCompleteResults.where('type_structure = ?', params[:type_structure].to_s)
     end 
+
+    if params[:eye_legend] && params[:eye_legend] != 'all'
+      if params[:eye_legend] == "rouge" 
+        se_id_perf = Performance.where('date >= ? AND date <= ? AND valeur > ? AND valeur < ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,0,50).pluck(:service_executant_id)
+
+      elsif params[:eye_legend] == "vert" 
+        se_id_perf = Performance.where('date >= ? AND date <= ? AND valeur >= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,75).pluck(:service_executant_id)
+
+      elsif params[:eye_legend] == "jaune" 
+        se_id_perf = Performance.where('date >= ? AND date <= ? AND valeur >= ? AND valeur < ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,50,75).pluck(:service_executant_id)
+      elsif params[:eye_legend] == "gris" 
+        se_id_perf = autoCompleteResults.pluck(:id) - Performance.where('date >= ? AND date <= ? AND valeur > ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,0).pluck(:service_executant_id)
+      end 
+      autoCompleteResults = autoCompleteResults.where(id: se_id_perf)
+    end 
+
     if !autoCompleteResults.nil?
       csp = autoCompleteResults.where('type_structure = ?', 'CSP').count
       sfact = autoCompleteResults.where('type_structure = ?', 'SFACT').count
@@ -131,10 +150,10 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     valeur_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:valeur)
    
     se_id.each_with_index do |se,i|     
-        if valeur_id[i] >= 80 
+        if valeur_id[i] >= 75 
           se_color[se] = "vert"
      
-        elsif valeur_id[i] >= 60 
+        elsif valeur_id[i] >= 50 
           se_color[se] = "jaune"
       
         elsif valeur_id[i] > 0 
@@ -143,7 +162,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     end 
 
     response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], 
-      search_blocs: params[:search_blocs], se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng}
+      search_blocs: params[:search_blocs], se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend]}
     render json: response
   end 
 
@@ -178,6 +197,20 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     if params[:type_structure] && params[:type_structure].length != 0 && params[:type_structure] != "ALL"
       autoCompleteResults = autoCompleteResults.where('type_structure = ?', params[:type_structure].to_s)
     end 
+    if params[:eye_legend] && params[:eye_legend] != 'all'
+      if params[:eye_legend] == "rouge" 
+        se_id_perf = Performance.where('date >= ? AND date <= ? AND valeur > ? AND valeur < ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,0,50).pluck(:service_executant_id)
+
+      elsif params[:eye_legend] == "vert" 
+        se_id_perf = Performance.where('date >= ? AND date <= ? AND valeur >= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,75).pluck(:service_executant_id)
+
+      elsif params[:eye_legend] == "jaune" 
+        se_id_perf = Performance.where('date >= ? AND date <= ? AND valeur >= ? AND valeur < ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,50,75).pluck(:service_executant_id)
+      elsif params[:eye_legend] == "gris" 
+        se_id_perf = autoCompleteResults.pluck(:id) - Performance.where('date >= ? AND date <= ? AND valeur > ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month,0).pluck(:service_executant_id)
+      end 
+      autoCompleteResults = autoCompleteResults.where(id: se_id_perf)
+    end 
     if !autoCompleteResults.nil?
       csp = autoCompleteResults.where('type_structure = ?', 'CSP').count
       sfact = autoCompleteResults.where('type_structure = ?', 'SFACT').count
@@ -190,15 +223,14 @@ class Api::V1::ServiceExecutantsController < ApplicationController
   
     se_color = Hash.new
    
-
     se_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:service_executant_id)
     valeur_id = Performance.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).where(service_executant_id: autoCompleteResults.pluck(:id)).order(service_executant_id: :asc).pluck(:valeur)
    
     se_id.each_with_index do |se,i|     
-        if valeur_id[i] >= 80 
+        if valeur_id[i] >= 75 
           se_color[se] = "vert"
      
-        elsif valeur_id[i] >= 60 
+        elsif valeur_id[i] >= 50 
           se_color[se] = "jaune"
       
         elsif valeur_id[i] > 0 
@@ -208,13 +240,13 @@ class Api::V1::ServiceExecutantsController < ApplicationController
         end
 
     end 
-    #si se deja affiché 
+    #si se deja affiché dans map result
     service_executant = ServiceExecutant.where(id: params[:service_executant][0]['id'])
     indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
     performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
 
     response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], se_color: se_color,
-    service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance}
+    service_executant: service_executant.as_json(:include => [:ministere, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), performance: performance}
     render json: response
   end 
 
@@ -224,16 +256,16 @@ class Api::V1::ServiceExecutantsController < ApplicationController
 
     indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
     performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
-    response = {service_executant: service_executant.as_json(:include => [:ministere, :type_service, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :type_service, :organisation_financiere]}]), performance: performance}
+    response = {service_executant: service_executant.as_json(:include => [:ministere, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), performance: performance}
     render json: response
   end
 
   def se_empty
     @ids = IndicateurExecution.all.pluck(:service_executant_id).uniq!
     @se_empty = ServiceExecutant.where.not(id: @ids)
-    @se_empty.destroy_all
-    @se = ServiceExecutant.all
-    @count = 0
+    #@se_empty.destroy_all
+    @se = ServiceExecutant.order(code: :asc).all
+    '''@count = 0
     while ServiceExecutant.where(region: nil).count > 0 && @count < 30
       ServiceExecutant.where(region: nil).all.each do |se|
         #if se.region.nil?
@@ -243,7 +275,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
             if element["types"][0]=="administrative_area_level_1"
               se.region = element["long_name"]
               if element["long_name"] == "Windward Islands"
-                se.region = 'Îles du Vent'
+                se.region = "Îles du Vent"
               elsif element["long_name"] == "Canton de Mamoudzou-3"
                 se.region = "Mayotte"
               elsif element["long_name"] == "Saint-Denis"
@@ -270,13 +302,25 @@ class Api::V1::ServiceExecutantsController < ApplicationController
           se.save
         end
       end
-    end
+    end'''
 
     @se_regions_vide = ServiceExecutant.where(region: nil).pluck(:libelle)
-    @se_lat_vide = ServiceExecutant.where(latitude: nil).pluck(:libelle)
+
+    count = 0
+    @lat = ServiceExecutant.all.order(id: :asc).pluck(:latitude)
+    @long = ServiceExecutant.all.order(id: :asc).pluck(:longitude)
+    @lat.each_with_index do |lat,i|
+      if ServiceExecutant.where('latitude = ? AND longitude = ?', lat, @long[i]).count >= 2 #plusieurs avec meme adresse on les décalle
+        ServiceExecutant.where('latitude = ? AND longitude = ?', lat, @long[i]).each_with_index do |service,i|
+          service.address = Geocoder.search([service.latitude, service.longitude-0.005*i],params: {language: :fr}).first.address
+          service.save
+        end
+        count += 1
+      end
+    end
 
     @regions = ServiceExecutant.all.pluck(:region).uniq
-    response = {se_empty: @se_empty, se: @se, regions: @regions, se_regions_vide: @se_regions_vide, se_lat_vide: @se_lat_vide}
+    response = {se_empty: @se_empty, se: @se, regions: @regions, se_regions_vide: @se_regions_vide, se_count_address: count}
     render json: response
   end 
 

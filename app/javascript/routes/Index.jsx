@@ -22,7 +22,7 @@ export default (
       <Route path="/service_executants/new" element={<Newservice_executant/>} />
       <Route path="/ministeres" element={<Ministere/>} />
       <Route path="/indicateur_executions/new" element={<Newindicateur_execution/>} />
-      <Route path="/indicateur_executions" element={<Execution/>} />
+      <Route path="/suivi_temporel_indicateur" element={<Execution/>} />
       <Route path="/service_executants" element={<Show/>} />
       
     </Routes>

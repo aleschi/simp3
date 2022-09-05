@@ -22,9 +22,9 @@ steps:
 
 substitutions:
   _REGION: europe-west1
-  _SERVICE_NAME: datason
-  _INSTANCE_NAME: direction-budget
-  _SECRET_NAME: datason-secret
+  _SERVICE_NAME: simp3
+  _INSTANCE_NAME: budgetlab
+  _SECRET_NAME: simp3-secret
   
 
 availableSecrets:
