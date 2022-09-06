@@ -198,7 +198,7 @@ class Carto_perf extends React.Component {
         const service_executant = this.state.service_executant;
         const region = this.state.region;
 
-        this.setState({ showResults: false, showHover: false})
+        this.setState({ showResults: false, showHover: false, eye_legend: 'all'})
 
         const body = {
           search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region

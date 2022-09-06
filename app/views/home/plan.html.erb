@@ -6,9 +6,15 @@
 		  	
 			<section class="fr-py-6v">
 				<ul>
-					<li><%= active_link_to cartographie_performance_path, target: "_self" do %>Cartographie de la performance globale<%end%></li>
-					<li><%= active_link_to "/cartographie_indicateur", target: "_self" do %>Cartographie par indicateur<%end%></li>
-					<li><%= active_link_to "/indicateur_executions", target: "_self" do %>Suivi temporel des indicateurs<%end%></li>
+					<li>Performance globale <ul>
+						<li><%= active_link_to cartographie_performance_path, target: "_self" do %>Cartographie de la performance globale<%end%></li>
+						<li><%= active_link_to suivi_temporel_performance_path, target: "_self" do %>Suivi temporel de la performance globale<%end%></li>
+					</ul></li>
+
+					<li>Performance par indicateur <ul>
+						<li><%= active_link_to cartographie_indicateur_path, target: "_self" do %>Cartographie par indicateur<%end%></li>
+						<li><%= active_link_to suivi_temporel_indicateur_path, target: "_self" do %>Suivi temporel des indicateurs<%end%></li>
+					</ul></li>
 					
 					<li>Informations
 					<ul>

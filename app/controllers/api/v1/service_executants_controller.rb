@@ -149,7 +149,9 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     if params[:service_executant] && params[:service_executant][0]
       service_executant = ServiceExecutant.where(id: params[:service_executant][0]['id'])
       indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
-      performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
+      
+      performance = Performance.where('date >= ? AND date <= ? AND service_executant_id = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, params[:service_executant][0]['id']).first.valeur
+
       response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], 
       search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], 
       se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], 

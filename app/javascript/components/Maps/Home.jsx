@@ -116,6 +116,8 @@ class Home extends React.Component {
         const startDate = this.state.startDate;
         const region = this.state.region;
 
+        this.setState({ showResults: false, showHover: false, eye_legend: 'all'})
+
         const body = {
           search_service_executants,search_ministeres,search_blocs,effectif,type_structure,startDate, region
         };

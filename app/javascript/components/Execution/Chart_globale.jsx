@@ -172,22 +172,22 @@ export default ({ indicateur_executions, service_executant_n,date_min}) => {
             max: 100,
             plotLines: [{
                 zIndex:5,
-                color: 'var(--background-action-high-green-archipel)',
+                color: 'var(--background-action-high-green-emeraude)',
                 label: {
                     text: "Seuil Performance 75%",
                     style: {
-                        color: 'var(--text-action-high-green-archipel)',
+                        color: 'var(--text-action-high-green-emeraude)',
                     },
                 },
                 value: 75,
                 width: 3,
             },{
                 zIndex:5,
-                color: 'var(--background-action-high-pink-tuile)',
+                color: 'var(--background-action-high-yellow-tournesol)',
                 label: {
                     text: "Seuil Performance 50%",
                     style: {
-                        color: 'var(--text-action-high-pink-tuile)',
+                        color: 'var(--text-action-high-yellow-tournesol)',
                     },
                 },
                 value: 50,
