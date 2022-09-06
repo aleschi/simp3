@@ -4,7 +4,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
 
   def index2
   end 
-  #page execution
+  #page suivi temporel par indicateur
   def index
   	indicateur_n = Indicateur.where('name = ?', Indicateur.first.name)
   	indicateur_name = Indicateur.all.order(name: :asc).first.name
@@ -46,7 +46,6 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       service_executants = ServiceExecutant.all.order(libelle: :asc)
     end
 
-    #services = {id: "all", libelle: 'Tout sélectionner'}
     if params[:showSe] == true 
       autoCompleteList = service_executants.select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} }
       #autoCompleteList = autoCompleteList.prepend(services)

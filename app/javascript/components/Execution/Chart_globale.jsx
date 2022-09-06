@@ -6,39 +6,23 @@ require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
 require('highcharts/modules/data')(Highcharts);
 require('highcharts/modules/accessibility')(Highcharts);
+require('highcharts/modules/no-data-to-display')(Highcharts);
 Highcharts.setOptions({
   lang: {
     shortMonths: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
   },
 });
-export default ({ indicateur_executions, indicateur_n, service_executant_n,search_indicateur, indicateur_name,data_inter_ministerielle, min, max}) => {
+export default ({ indicateur_executions, service_executant_n,date_min}) => {
     
     const series_i = [];
     let date;
-    const title_i = "Suivi temporel de l'indicateur "+indicateur_name;
-    const unite = indicateur_n[0].unite;
-    if (indicateur_name == "IC1" || indicateur_name =="IB4 - 3"){
-        var objectif = indicateur_n[0].seuil_2;
-    }else{
-        var objectif = indicateur_n[0].seuil_1;
-    }
-
-    if (max < objectif){
-        var max = objectif;
-    } else {
-        var max = max; 
-    }
-
-
+    const title_i = "Suivi temporel de la performance globale ";
     series_i.push({
             name: "Moyenne sur l'ensemble des services",
-            color: "var(--background-action-high-blue-france)",
-            data:[]
+            showInLegend: false, 
+            color: "var(--background-action-high-green-archipel)",
+            data:[{x:date_min, y:75}]
           });
-    {data_inter_ministerielle.forEach(function (el) {
-                date = new Date(el[0]).getTime();
-                series_i[0].data.push({x:date, y:Math.round(el[1] * 100) / 100});
-            })};
 
     {service_executant_n.forEach(function (e,index) {
           series_i.push({
@@ -48,7 +32,7 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             {indicateur_executions.forEach(function (el) {
               if (e.id == el.service_executant_id){
               date = new Date(el.date).getTime();             
-              series_i[index+1].data.push({x:date, y:Math.round(el.valeur * 100) / 100});
+              series_i[index+1].data.push({x:date, y:el.valeur});
               }
             });}
          
@@ -155,24 +139,26 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             }
         },
         tooltip: {
-            shared: true,
+            shared: false,
             borderColor: 'transparent',
             borderRadius: 16,
             backgroundColor: '#fff',
             xDateFormat:'%b %Y',
-            pointFormat: '{series.name} : <b>{point.y}'+unite+'</b>',
+            pointFormat: '{series.name} : <b>{point.y}</b>',
             
         },
         xAxis:{
             type: 'datetime',
             minRange: 30 * 24 * 3600 * 1000,
             ordinal: false,
+         
             labels: {
             formatter: function() {
             return Highcharts.dateFormat('%b', this.value);
             },
             style: {color: 'var(--text-title-grey)'},
             },
+           
         },
         yAxis: { 
             labels: {
@@ -182,18 +168,29 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             text: "Valeur de l'indicateur",
             style: {color: 'var(--text-title-grey)'},    
             },
-            min: min,
-            max: max,
+            min: 0,
+            max: 100,
             plotLines: [{
+                zIndex:5,
+                color: 'var(--background-action-high-green-archipel)',
+                label: {
+                    text: "Seuil Performance 75%",
+                    style: {
+                        color: 'var(--text-action-high-green-archipel)',
+                    },
+                },
+                value: 75,
+                width: 3,
+            },{
                 zIndex:5,
                 color: 'var(--background-action-high-pink-tuile)',
                 label: {
-                    text: "Objectif : "+objectif+unite,
+                    text: "Seuil Performance 50%",
                     style: {
                         color: 'var(--text-action-high-pink-tuile)',
                     },
                 },
-                value: objectif,
+                value: 50,
                 width: 3,
             }],
         },

@@ -58,7 +58,7 @@
 
         <!-- Tuiles verticales placées dans la grille -->
         <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-6 fr-col-md-4 fr-col-lg-4">
+            <div class="fr-col-6 fr-col-md-3 fr-col-lg-3">
                 <div class="fr-tile fr-enlarge-link">
                     <div class="fr-tile__body">
                         <h4 class="fr-tile__title">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <div class="fr-col-6 fr-col-md-4 fr-col-lg-4">
+            <div class="fr-col-6 fr-col-md-3 fr-col-lg-3">
                 <div class="fr-tile fr-enlarge-link">
                     <div class="fr-tile__body">
                         <h4 class="fr-tile__title">
@@ -81,21 +81,35 @@
                         <p class="fr-tile__desc">En ciblant la recherche géographique sur un indicateur particulier. </p>
                     </div>
                     <div class="fr-tile__img" data-fr-inject-svg>
-                        <%= image_tag "search.svg", class: "fr-responsive-img", alt: "" %>
+                        <%= image_tag "map.svg", class: "fr-responsive-img", alt: "" %>
                         
                     </div>
                 </div>
             </div>
-            <div class="fr-col-6 fr-col-md-4 fr-col-lg-4">
+            <div class="fr-col-6 fr-col-md-3 fr-col-lg-3">
                 <div class="fr-tile fr-enlarge-link">
                     <div class="fr-tile__body">
                         <h4 class="fr-tile__title">
-                            <%= active_link_to indicateur_executions_path,target:"_self", class:"fr-tile__link" do%>Suivre l’évolution de la performance <%end%>
+                            <%= active_link_to suivi_temporel_performance_path,target:"_self", class:"fr-tile__link" do%>Suivre l’évolution de la performance globale<%end%>
                         </h4>
-                        <p class="fr-tile__desc">En sélectionnant un indicateur et une période temporelle donnée.</p>
+                        <p class="fr-tile__desc">En sélectionnant un service exécutant et une période temporelle donnée.</p>
                     </div>
                     <div class="fr-tile__img" data-fr-inject-svg>
                         <%= image_tag "data-visualization.svg", class: "fr-responsive-img", alt: "" %>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="fr-col-6 fr-col-md-3 fr-col-lg-3">
+                <div class="fr-tile fr-enlarge-link">
+                    <div class="fr-tile__body">
+                        <h4 class="fr-tile__title">
+                            <%= active_link_to suivi_temporel_indicateur_path,target:"_self", class:"fr-tile__link" do%>Consulter la progression sur un indicateur <%end%>
+                        </h4>
+                        <p class="fr-tile__desc">En affichant l'évolution d'un service exécutant sur un indicateur choisi.</p>
+                    </div>
+                    <div class="fr-tile__img" data-fr-inject-svg>
+                        <%= image_tag "search.svg", class: "fr-responsive-img", alt: "" %>
                         
                     </div>
                 </div>

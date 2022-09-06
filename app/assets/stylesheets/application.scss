@@ -403,6 +403,7 @@ border-color:transparent;
 .fr-callout-legend{
   padding : 1rem !important;
   box-shadow: none !important; 
+  margin-bottom: 0 !important
 }
 .fr-callout--error {
   
@@ -423,5 +424,32 @@ border-color:transparent;
 }
 .fr-callout-text--blue-ecume{
   color: var(--text-label-blue-ecume) !important;
+}
+.fr-callout-action{
+  background-color:#fff;
+  text-align:center;
+  
+}
+.fr-callout-action--error{
+  border: 1px solid var(--background-contrast-error) ;
+}
+.fr-callout-action--yellow-tournesol{
+  border: 1px solid var(--background-contrast-yellow-tournesol) ;
+}
+.fr-callout-action--green-emeraude{
+  border: 1px solid var(--background-contrast-green-emeraude) ;
+}
+.fr-callout-action--gris{
+  border: 1px solid var(--background-contrast-grey);
+}
+.fr-icon-checkbox-blank-circle-line::before {
+  -webkit-mask-image: image-url("checkbox-blank-circle-line.svg") !important;
+  mask-image: image-url("checkbox-blank-circle-line.svg") !important;
+  background-image: image-url("checkbox-blank-circle-line.svg") !important;
+}
+.fr-icon-record-circle-fill::before {
+  -webkit-mask-image: image-url("record-circle-fill.svg") !important;
+  mask-image: image-url("record-circle-fill.svg") !important;
+  background-image: image-url("record-circle-fill.svg") !important;
 }
 //.fr-badge remove z-index dans dsfr

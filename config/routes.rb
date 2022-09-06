@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       post 'service_executants/import_ministere'
       post 'service_executants/liste_se'
       get 'service_executants/se_empty'
+      get 'service_executants/index_chart'
+      post 'service_executants/search_globale'
+      post 'service_executants/sort_table'
       
 
     end

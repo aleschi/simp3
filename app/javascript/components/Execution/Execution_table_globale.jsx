@@ -29,7 +29,7 @@ export class Execution_table extends React.Component {
         const body = {
           indicateur_executions,date_croissant,valeur_croissant
         };
-        const url = "/api/v1/indicateur_executions/sort_table?search=" + params;
+        const url = "/api/v1/service_executants/sort_table?search=" + params;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         fetch(url, {
           method: "POST",
@@ -54,7 +54,7 @@ export class Execution_table extends React.Component {
     render() {
 
 
-    const headers = ['Date','Service Exécutant','Code Service Exécutant','Ministère',"Organisation Financière ",'Valeur' ];
+    const headers = ['Date','Service Exécutant','Code Service Exécutant','Ministère',"Organisation Financière ",'Performance globale' ];
     var data_to_download = [];
     this.state.indicateur_executions.map((indicateur_execution, index) => (
    
@@ -79,12 +79,12 @@ export class Execution_table extends React.Component {
                   <th scope="col">Ministère</th>
                   <th scope="col">Organisation Financière</th>
                  
-                  <th scope="col">Valeur Indicateur <button onClick={() => {this.sortTable('valeur')}} id="valeur" title="filtre valeur"><span className="fr-icon-code-view fr-fi--xs rotate90 cnoir" aria-hidden="true"></span></button></th>
+                  <th scope="col">Performance globale <button onClick={() => {this.sortTable('valeur')}} id="valeur" title="filtre valeur"><span className="fr-icon-code-view fr-fi--xs rotate90 cnoir" aria-hidden="true"></span></button></th>
                 </tr>
             </thead>
             <tbody>
                 {this.state.indicateur_executions.map((indicateur_execution, index) => (
-                  <tr key={index}><td>{Moment(indicateur_execution.date).format('DD/MM/YYYY')}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }{indicateur_execution.indicateur.unite}</td></tr>
+                  <tr key={index}><td>{Moment(indicateur_execution.date).format('DD/MM/YYYY')}</td><td>{indicateur_execution.service_executant.libelle}</td><td>{indicateur_execution.service_executant.code}</td><td>{indicateur_execution.service_executant.ministere.name}</td><td>{indicateur_execution.service_executant.organisation_financiere.name}</td><td>{Math.round(indicateur_execution.valeur * 100 ) / 100 }%</td></tr>
                 ))}
             
             </tbody>

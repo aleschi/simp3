@@ -82,7 +82,7 @@ class IndicateurExecution < ApplicationRecord
       if service.indicateur_executions.where(date: date).where.not(point: nil).count > 0 
         @performance.valeur = (service.indicateur_executions.where(date: date).sum(:point)*100.0/(2.0*service.indicateur_executions.where(date: date).where.not(point: nil).count)).round
       else 
-        @performance.valeur = 0
+        @performance.valeur = nil
       end 
       @performance.save
     end 
