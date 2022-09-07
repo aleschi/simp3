@@ -65,7 +65,7 @@ export class Execution_table extends React.Component {
     <div className="fr-mb-3w">
       <h2 className="fr-mb-2w">Tableau des valeurs</h2>
 
-      <div className="fr-download"><p><CSVLink data={data_to_download} headers={headers} filename={"table_indicateurs.csv"} className="fr-download__link"> Télécharger le tableau
+      <div className="fr-download"><p><CSVLink data={data_to_download} headers={headers} filename={"table_performance_globale.csv"} className="fr-download__link"> Télécharger le tableau
       <span className="fr-download__detail">CSV</span></CSVLink></p></div>
 
       <div className="fr-table fr-my-2w fr-table--no-caption">

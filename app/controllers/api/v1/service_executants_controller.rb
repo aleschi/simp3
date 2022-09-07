@@ -185,7 +185,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     service_executants = ServiceExecutant.all.order(libelle: :asc)
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq
     autoCompleteList = ServiceExecutant.all.order(libelle: :asc).select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} } 
-    date_min = Performance.all.pluck(:date).uniq.min()
+    date_min = Performance.all.pluck(:date).uniq.min() #pour afficher les axes sur le chart 
     response = { service_executants: service_executants, ministeres: ministeres, regions: regions, autoCompleteList: autoCompleteList, date_min: date_min}
     render json: response
   end
@@ -224,18 +224,18 @@ class Api::V1::ServiceExecutantsController < ApplicationController
 
     if service_executant_n.length > 0
       se = service_executant_n.pluck(:id).uniq
-      indicateur_execution = Performance.where(service_executant_id: se).where.not(valeur: nil).order(date: :asc)
+      indicateur_executions = Performance.where(service_executant_id: se).where.not(valeur: nil).order(date: :asc)
       @liste_se = Performance.where(service_executant_id: se).where.not(valeur: nil).pluck(:service_executant_id)
       @liste_se_empty_arr=search_service_executants - @liste_se
       @liste_se_empty = ServiceExecutant.where(id: @liste_se_empty_arr)
       service_executant_n = ServiceExecutant.where(id: @liste_se) #on met a jour la liste des services avec uniquement ceux qui présentent des valeurs
     else
-      indicateur_execution = []
+      indicateur_executions = []
       @liste_se_empty_arr=[]
       @liste_se_empty = nil
     end
 
-    response = {autoCompleteList: autoCompleteList, region: region, data6: indicateur_execution.as_json(:include => [:service_executant => {:include => [:ministere, :organisation_financiere]}]),
+    response = {autoCompleteList: autoCompleteList, region: region, indicateur_executions: indicateur_executions.as_json(:include => [:service_executant => {:include => [:ministere, :organisation_financiere]}]),
     service_executant_n: service_executant_n, search_service_executants: search_service_executants, search_ministeres: search_ministeres,
     liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, ministeres: ministeres, service_executants: service_executants }
     

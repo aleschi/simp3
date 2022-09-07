@@ -426,9 +426,8 @@ border-color:transparent;
   color: var(--text-label-blue-ecume) !important;
 }
 .fr-callout-action{
-  background-color:#fff;
-  text-align:center;
-  
+  background-color:--background-default-grey;
+  text-align:center; 
 }
 .fr-callout-action--error{
   border: 1px solid var(--background-contrast-error) ;

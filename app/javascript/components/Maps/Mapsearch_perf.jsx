@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, service_executants, ministeres,blocs, showSe, showMinistere, showBloc, autoCompleteList,regions}) => {
+export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, showSe, showMinistere, showBloc, autoCompleteList,regions}) => {
 	
 	    return (
 

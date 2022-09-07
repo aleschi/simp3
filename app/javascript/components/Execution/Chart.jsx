@@ -29,7 +29,6 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
         var max = max; 
     }
 
-
     series_i.push({
             name: "Moyenne sur l'ensemble des services",
             color: "var(--background-action-high-blue-france)",
@@ -155,7 +154,8 @@ export default ({ indicateur_executions, indicateur_n, service_executant_n,searc
             }
         },
         tooltip: {
-            shared: true,
+            shared: false,
+            split: false,
             borderColor: 'transparent',
             borderRadius: 16,
             backgroundColor: '#fff',

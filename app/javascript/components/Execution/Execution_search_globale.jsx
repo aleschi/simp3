@@ -8,7 +8,7 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 import MultiSelect from "./MultiSelect";
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, service_executants, ministeres, showSe, showMinistere,search_service_executants,search_ministeres,autoCompleteList, regions,handleChangeRegion }) => {
+export default ({ handleChangeStructure, handleSubmit, showSe, showMinistere,autoCompleteList, regions,handleChangeRegion }) => {
 const [value, setValue] = useState([]);
 	    return (
 

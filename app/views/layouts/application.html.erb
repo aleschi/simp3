@@ -17,6 +17,9 @@
 
     <%= javascript_pack_tag 'Index' %>
     <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?libraries=places&key=#{ENV['GMAPS_BROWSER_KEY']}" %>
+    <% if Rails.env.production?%>
+      <script async defer data-website-id="fbb91cf4-c033-4e09-8388-ddca7b03c952" src="https://s.abla.io/abla.js"></script>
+    <% end %>
   </head>
 
   <body>

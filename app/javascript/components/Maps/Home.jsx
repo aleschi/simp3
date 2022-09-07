@@ -156,27 +156,27 @@ class Home extends React.Component {
           var type_structure = this.state.type_structure
           var region = this.state.region
           var eye_legend = this.state.eye_legend
-          this.setState({ resetloc: false})
+          this.setState({ resetloc: false, showResults: false, showHover: false})
         }
         else if (event.target.name == "type_structure"){
           var type_structure = event.target.value
           var effectif = this.state.effectif
           var region = this.state.region
           var eye_legend = this.state.eye_legend
-          this.setState({ resetloc: false})
+          this.setState({ resetloc: false, showResults: false, showHover: false})
         }
         else if (event.target.name == "regions"){
           var region = event.target.value
           var effectif = this.state.effectif
           var type_structure = this.state.type_structure
           var eye_legend = this.state.eye_legend
-          this.setState({ resetloc: true, zoom: 5})
+          this.setState({ resetloc: true, zoom: 5, showResults: false, showHover: false})
         }else {
           var effectif = this.state.effectif
           var type_structure = this.state.type_structure
           var region = this.state.region
           var eye_legend = params
-          this.setState({ resetloc: false})
+          this.setState({ resetloc: false, showResults: false, showHover: false})
         }
     
         const body = {search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region, eye_legend};

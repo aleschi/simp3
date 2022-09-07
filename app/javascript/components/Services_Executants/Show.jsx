@@ -106,7 +106,7 @@ class Show extends React.Component {
               </table>
               </div>
 
-              : null 
+              : <div className="fr-my-4w fr-mb-12w">Aucun service éxecutant trouvé pour la recherche effectuée.</div> 
               }    
             </div>
           </div>             

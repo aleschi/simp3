@@ -9,8 +9,7 @@ class Execution extends React.Component {
         super(props);
         this.state = {
           ministeres: [],
-          service_executants: [],
-     
+          service_executants: [],     
           indicateur_executions: [],
          
           service_executant_n: [],     
@@ -56,10 +55,12 @@ class Execution extends React.Component {
 
     handleChangeStructure(event){
       if (event.target.value == 'Ministere'){
-        this.setState({ showSe:  false, showMinistere: true,  search_service_executants: [], autoCompleteList: this.state.ministeres, indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
+        this.setState({ showSe:  false, showMinistere: true,  search_service_executants: [], autoCompleteList: this.state.ministeres, indicateur_executions: [], 
+          service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
       } 
       else if (event.target.value == 'Service') {
-      this.setState({ showSe:  true, showMinistere: false, search_ministeres: [], autoCompleteList: this.state.service_executants,indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
+      this.setState({ showSe:  true, showMinistere: false, search_ministeres: [], autoCompleteList: this.state.service_executants,indicateur_executions: [], 
+        service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
       }
     }
 
@@ -120,7 +121,6 @@ class Execution extends React.Component {
         const showSe = this.state.showSe;
         this.setState({ loader: true})
         
-
         const body = {
           search_service_executants,search_ministeres, region, showSe
         };
@@ -140,7 +140,8 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateur_executions: response.data6,service_executant_n: response.service_executant_n,search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
+      .then(response => this.setState({ indicateur_executions: response.indicateur_executions,service_executant_n: response.service_executant_n,
+        search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
         liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, loader: false}))
       .catch(error => console.log(error.message));
     }
@@ -160,8 +161,7 @@ class Execution extends React.Component {
           </div>
         
             <Execution_search_globale handleChangeStructure={this.handleChangeStructure} handleSubmit={this.handleSubmit} 
-            service_executants={this.state.service_executants} ministeres={this.state.ministeres} showSe={this.state.showSe} showMinistere={this.state.showMinistere} 
-            search_service_executants= {this.state.search_service_executants} search_ministeres={this.state.search_ministeres} autoCompleteList={this.state.autoCompleteList}
+            showSe={this.state.showSe} showMinistere={this.state.showMinistere} autoCompleteList={this.state.autoCompleteList}
             regions={this.state.regions} handleChangeRegion={this.handleChangeRegion}/>
 
             { this.state.liste_se_empty_arr.length > 0 && 
@@ -180,7 +180,7 @@ class Execution extends React.Component {
                 
                 <div className="fr-col-12 fr-col-lg-12">
                 <Chart_globale indicateur_executions={this.state.indicateur_executions} service_executant_n={this.state.service_executant_n} 
-                liste_se_empty={this.state.liste_se_empty} date_min={this.state.date_min}/>
+                date_min={this.state.date_min}/>
 
                 
                 </div>

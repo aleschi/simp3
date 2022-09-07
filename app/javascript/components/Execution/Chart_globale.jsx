@@ -140,11 +140,12 @@ export default ({ indicateur_executions, service_executant_n,date_min}) => {
         },
         tooltip: {
             shared: false,
+            split: false,
             borderColor: 'transparent',
             borderRadius: 16,
             backgroundColor: '#fff',
             xDateFormat:'%b %Y',
-            pointFormat: '{series.name} : <b>{point.y}</b>',
+            pointFormat: '{series.name} : <b>{point.y}%</b>',
             
         },
         xAxis:{
