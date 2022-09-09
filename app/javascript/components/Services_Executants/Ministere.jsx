@@ -18,7 +18,7 @@ class Ministere extends React.Component {
     }
 
     componentDidMount() {
-    const url = "/api/v1/service_executants/se_empty";
+    const url = "/simp3/api/v1/service_executants/se_empty";
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -36,7 +36,7 @@ class Ministere extends React.Component {
 
     handleSubmit(event) {
       event.preventDefault();
-        const url = "/api/v1/service_executants/import_ministere";
+        const url = "/simp3/api/v1/service_executants/import_ministere";
         const formData = new FormData();
 
         formData.append('file', this.state.file_csv);
@@ -53,7 +53,7 @@ class Ministere extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => window.location.href = "/indicateurs")
+          .then(response => window.location.href = "/simp3/indicateurs")
           .catch(error => console.log(error.message));
     }
 

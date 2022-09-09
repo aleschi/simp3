@@ -1,0 +1,45 @@
+{
+  "Index.js": "/simp3/packs/js/Index-448f156b38d3c1dd746a.js",
+  "Index.js.map": "/simp3/packs/js/Index-448f156b38d3c1dd746a.js.map",
+  "application.js": "/simp3/packs/js/application-d8db24778c65fd32287e.js",
+  "application.js.map": "/simp3/packs/js/application-d8db24778c65fd32287e.js.map",
+  "dsfr.js": "/simp3/packs/js/dsfr-2f572efb3abcb543cca8.js",
+  "dsfr.js.map": "/simp3/packs/js/dsfr-2f572efb3abcb543cca8.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/simp3/packs/js/application-d8db24778c65fd32287e.js"
+      ],
+      "js.map": [
+        "/simp3/packs/js/application-d8db24778c65fd32287e.js.map"
+      ]
+    },
+    "dsfr": {
+      "js": [
+        "/simp3/packs/js/dsfr-2f572efb3abcb543cca8.js"
+      ],
+      "js.map": [
+        "/simp3/packs/js/dsfr-2f572efb3abcb543cca8.js.map"
+      ]
+    },
+    "Index": {
+      "js": [
+        "/simp3/packs/js/Index-448f156b38d3c1dd746a.js"
+      ],
+      "js.map": [
+        "/simp3/packs/js/Index-448f156b38d3c1dd746a.js.map"
+      ]
+    }
+  },
+  "media/images/icon_bleu.svg": "/simp3/packs/media/images/icon_bleu-ddaaeb70.svg",
+  "media/images/icon_lieu_bleu_big.svg": "/simp3/packs/media/images/icon_lieu_bleu_big-941ed366.svg",
+  "media/images/icon_lieu_gris.svg": "/simp3/packs/media/images/icon_lieu_gris-a78fb938.svg",
+  "media/images/icon_lieu_gris_big.svg": "/simp3/packs/media/images/icon_lieu_gris_big-2b48ea9b.svg",
+  "media/images/icon_lieu_noir.svg": "/simp3/packs/media/images/icon_lieu_noir-d5bac3a8.svg",
+  "media/images/icon_lieu_orange.svg": "/simp3/packs/media/images/icon_lieu_orange-e48431ee.svg",
+  "media/images/icon_lieu_orange_big.svg": "/simp3/packs/media/images/icon_lieu_orange_big-a35eb487.svg",
+  "media/images/icon_lieu_rouge2.svg": "/simp3/packs/media/images/icon_lieu_rouge2-f07bbe62.svg",
+  "media/images/icon_lieu_rouge_big.svg": "/simp3/packs/media/images/icon_lieu_rouge_big-07d73b82.svg",
+  "media/images/icon_lieu_vert.svg": "/simp3/packs/media/images/icon_lieu_vert-7e111caa.svg",
+  "media/images/icon_lieu_vert_big.svg": "/simp3/packs/media/images/icon_lieu_vert_big-ae2603c3.svg"
+}

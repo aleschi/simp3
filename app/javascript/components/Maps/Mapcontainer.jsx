@@ -95,36 +95,44 @@ export class Mapcontainer extends React.Component {
         return <div>
         <div className="fr-grid-row fr-grid-row--gutters ">
           <div className="fr-col-6 fr-col-lg-3">
+          <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "rouge" ? this.props.handleChange('all'): this.props.handleChange('rouge')}}>
             <div className="fr-callout fr-callout--error fr-callout-legend">
               <p className="fr-callout__title fr-callout-text--error">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
               <p className="fr-callout__text fr-text--sm fr-callout-text--error">
                 <span className="mapicon"><img src={iconR} alt="icone map rouge" /> Performance Globale {'\u003C'} 50% </span></p>
              </div>
-            <div className="fr-callout-action fr-callout-action--error"> {this.props.eye_legend == "rouge" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('rouge')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>     
+            <div className="fr-callout-action fr-callout-action--error"> {this.props.eye_legend == "rouge" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>     
+          </button>
           </div>
           <div className="fr-col-6 fr-col-lg-3">
+          <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "jaune" ? this.props.handleChange('all'): this.props.handleChange('jaune')}}>
             <div className="fr-callout fr-callout--yellow-tournesol fr-callout-legend">
               <p className="fr-callout__title fr-callout-text--yellow-tournesol">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
               <p className="fr-callout__text fr-text--sm fr-callout-text--yellow-tournesol">
                  <span className="mapicon"><img src={iconJ} alt="icone map orange" /> 50% {'\u003C'}  Performance Globale {'\u003C'} 75% </span></p>              
             </div>
-            <div className="fr-callout-action fr-callout-action--yellow-tournesol"> {this.props.eye_legend == "jaune" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('jaune')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+            <div className="fr-callout-action fr-callout-action--yellow-tournesol"> {this.props.eye_legend == "jaune" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+            </button>
           </div>
           <div className="fr-col-6 fr-col-lg-3">
+            <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "vert" ? this.props.handleChange('all'): this.props.handleChange('vert')}}>
             <div className="fr-callout fr-callout--green-emeraude fr-callout-legend">
               <p className="fr-callout__title fr-callout-text--green-emeraude">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
               <p className="fr-callout__text fr-text--sm fr-callout-text--green-emeraude">
                 <span className="mapicon"><img src={iconV} alt="icone map vert" /> 75% {'\u003C'} Performance Globale </span></p>
             </div>
-            <div className="fr-callout-action fr-callout-action--green-emeraude "> {this.props.eye_legend == "vert" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('vert')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>} </div>
+            <div className="fr-callout-action fr-callout-action--green-emeraude "> {this.props.eye_legend == "vert" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>} </div>
+            </button>
           </div>
           <div className="fr-col-6 fr-col-lg-3">
+            <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "gris" ? this.props.handleChange('all'): this.props.handleChange('gris')}}>
             <div className="fr-callout fr-callout-legend">
               <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
               <p className="fr-callout__text fr-text--sm">
                 <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur les indicateurs </span></p>              
             </div>
-            <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('gris')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+            <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+            </button>
           </div>
         </div>
         </div>
@@ -137,36 +145,44 @@ export class Mapcontainer extends React.Component {
               return <div key={index}>
               <div className="fr-grid-row fr-grid-row--gutters ">
                 <div className="fr-col-6 fr-col-lg-3">
+                  <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "rouge" ? this.props.handleChange('all'): this.props.handleChange('rouge')}}>
                   <div className="fr-callout fr-callout--error fr-callout-legend">
                     <p className="fr-callout__title fr-callout-text--error">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm fr-callout-text--error">
                       <span className="mapicon"><img src={iconR} alt="icone map rouge" /> Valeur indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite}</span></p>                        
                   </div>
-                  <div className="fr-callout-action fr-callout-action--error"> {this.props.eye_legend == "rouge" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('rouge')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+                  <div className="fr-callout-action fr-callout-action--error"> {this.props.eye_legend == "rouge" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                  </button>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
+                  <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "jaune" ? this.props.handleChange('all'): this.props.handleChange('jaune')}}>
                   <div className="fr-callout fr-callout--yellow-tournesol fr-callout-legend">
                     <p className="fr-callout__title fr-callout-text--yellow-tournesol">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm fr-callout-text--yellow-tournesol">
                        <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Valeur indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span></p>                      
                   </div>
-                  <div className="fr-callout-action fr-callout-action--yellow-tournesol"> {this.props.eye_legend == "jaune" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('jaune')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+                  <div className="fr-callout-action fr-callout-action--yellow-tournesol"> {this.props.eye_legend == "jaune" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                  </button>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "vert" ? this.props.handleChange('all'): this.props.handleChange('vert')}}>
                   <div className="fr-callout fr-callout--green-emeraude fr-callout-legend">
                     <p className="fr-callout__title fr-callout-text--green-emeraude">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm fr-callout-text--green-emeraude">
                       <span className="mapicon"><img src={iconV} alt="icone map vert" /> {result.seuil_2}{result.unite} {'\u003C'} Valeur indicateur {result.name} </span></p>                 
                   </div>
-                  <div className="fr-callout-action fr-callout-action--green-emeraude ">{this.props.eye_legend == "vert" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('vert')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>} </div>
+                  <div className="fr-callout-action fr-callout-action--green-emeraude ">{this.props.eye_legend == "vert" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>} </div>
+                </button>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "gris" ? this.props.handleChange('all'): this.props.handleChange('gris')}}>
                   <div className="fr-callout fr-callout-legend">
                     <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm">
                       <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur l'indicateur </span></p>                      
                   </div>
-                  <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('gris')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+                  <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                </button>
                 </div>
               </div>
 
@@ -176,36 +192,44 @@ export class Mapcontainer extends React.Component {
               return <div key={index}>
               <div className="fr-grid-row fr-grid-row--gutters ">
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "rouge" ? this.props.handleChange('all'): this.props.handleChange('rouge')}}>
                   <div className="fr-callout fr-callout--error fr-callout-legend">
                     <p className="fr-callout__title fr-callout-text--error">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "rouge")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm fr-callout-text--error">
                       <span className="mapicon"><img src={iconR} alt="icone map rouge" /> {result.seuil_2}{result.unite} {'\u003C'} Valeur indicateur {result.name}</span></p>
                   </div>
-                  <div className="fr-callout-action fr-callout-action--error"> {this.props.eye_legend == "rouge" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('rouge')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+                  <div className="fr-callout-action fr-callout-action--error"> {this.props.eye_legend == "rouge" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                </button>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "jaune" ? this.props.handleChange('all'): this.props.handleChange('jaune')}}>
                   <div className="fr-callout fr-callout--yellow-tournesol fr-callout-legend">
                     <p className="fr-callout__title fr-callout-text--yellow-tournesol">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "jaune")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm fr-callout-text--yellow-tournesol">
                        <span className="mapicon"><img src={iconJ} alt="icone map orange" /> {result.seuil_1}{result.unite} {'\u003C'}  Valeur indicateur {result.name} {'\u003C'} {result.seuil_2}{result.unite} </span></p>
                   </div>
-                  <div className="fr-callout-action fr-callout-action--yellow-tournesol"> {this.props.eye_legend == "jaune" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('jaune')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+                  <div className="fr-callout-action fr-callout-action--yellow-tournesol"> {this.props.eye_legend == "jaune" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                </button>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "vert" ? this.props.handleChange('all'): this.props.handleChange('vert')}}>
                   <div className="fr-callout fr-callout--green-emeraude fr-callout-legend">
                     <p className="fr-callout__title fr-callout-text--green-emeraude">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "vert")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm fr-callout-text--green-emeraude">
                       <span className="mapicon"><img src={iconV} alt="icone map vert" /> Valeur indicateur {result.name} {'\u003C'} {result.seuil_1}{result.unite} </span> </p>
                   </div>
-                  <div className="fr-callout-action fr-callout-action--green-emeraude ">{this.props.eye_legend == "vert" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('vert')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>} </div>
+                  <div className="fr-callout-action fr-callout-action--green-emeraude ">{this.props.eye_legend == "vert" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>} </div>
+                </button>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "gris" ? this.props.handleChange('all'): this.props.handleChange('gris')}}>
                   <div className="fr-callout fr-callout-legend">
                     <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm">
                       <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur l'indicateur </span></p>
                   </div>
-                  <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('gris')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+                  <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                </button>
                 </div>
               </div>
             
@@ -224,12 +248,14 @@ export class Mapcontainer extends React.Component {
                   </div>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "gris" ? this.props.handleChange('all'): this.props.handleChange('gris')}}>
                   <div className="fr-callout fr-callout-legend">
                     <p className="fr-callout__title">{count_noir}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm">
                       <span className="mapicon"><img src={iconG} alt="icone map gris" /> Pas de valeur sur l'indicateur </span></p>
                   </div>
-                  <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <button onClick={() => this.props.handleChange('all')}><span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span></button> : <button onClick={() => this.props.handleChange('gris')}><span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span></button>}</div>
+                  <div className="fr-callout-action fr-callout-action--gris"> {this.props.eye_legend == "gris" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                </button>
                 </div>
               </div>
              

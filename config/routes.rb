@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  scope(:path => '/simp3') do
   devise_for :users, :path => "",
     :path_names =>  {:sign_in => "connexion", :sign_out => "logout"}
   namespace :api do
@@ -63,7 +64,13 @@ Rails.application.routes.draw do
   #redirige toutes les pages sans url vers la page d'accueil
 
   get '/*path', to: 'home#error_404'
+  get '/page_introuvable', to: 'home#error_404'
   match "/404", to: 'home#error_404', via: :all
   match "/500", to: 'home#error_500', via: :all
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  end
+
+  get '/', to: redirect('/simp3')
+  get '/*path', to: redirect('/simp3/page_introuvable')
 end

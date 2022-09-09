@@ -21,7 +21,7 @@ class Newindicateur extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const url = "/api/v1/indicateurs/import";
+        const url = "/simp3/api/v1/indicateurs/import";
         const formData = new FormData();
 
         formData.append('file', this.state.file_csv);
@@ -38,7 +38,7 @@ class Newindicateur extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => window.location.href = "/indicateurs")
+          .then(response => window.location.href = "/simp3/indicateurs")
           .catch(error => console.log(error.message));
     }
 

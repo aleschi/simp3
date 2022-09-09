@@ -63,7 +63,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-      const url = "/api/v1/service_executants/index";
+      const url = "/simp3/api/v1/service_executants/index";
       fetch(url)
       .then(response => {
         if (response.ok) {
@@ -109,7 +109,7 @@ class Home extends React.Component {
         }
      
                 
-        const url = "/api/v1/service_executants/search";
+        const url = "/simp3/api/v1/service_executants/search";
 
         const effectif = this.state.effectif;
         const type_structure = this.state.type_structure;
@@ -145,7 +145,7 @@ class Home extends React.Component {
 
     handleChange(params){
         //e.preventDefault();
-        const url = "/api/v1/service_executants/search";
+        const url = "/simp3/api/v1/service_executants/search";
         const search_service_executants = this.state.search_service_executants
         const search_ministeres = this.state.search_ministeres
         const search_blocs = this.state.search_blocs    
@@ -207,7 +207,7 @@ class Home extends React.Component {
     handleSubmitDate(e){
 
         this.setState({ startDate: e});
-        const url = "/api/v1/service_executants/search";
+        const url = "/simp3/api/v1/service_executants/search";
    
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
@@ -247,7 +247,7 @@ class Home extends React.Component {
 
     onMarkerClick2= (id) => {    
         this.setState({clickId: id});
-        const url = "/api/v1/service_executants/search_marker?q=" + id;
+        const url = "/simp3/api/v1/service_executants/search_marker?q=" + id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
         const body = {
@@ -278,7 +278,7 @@ class Home extends React.Component {
 
     MouseOver = (id) => {    
         this.setState({clickId:null, hoverId: id, showResults: false, resetloc: false});
-        const url = "/api/v1/service_executants/search_marker?q=" + id;
+        const url = "/simp3/api/v1/service_executants/search_marker?q=" + id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
         const body = {

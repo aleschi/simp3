@@ -10,7 +10,7 @@ class Show extends React.Component {
         this.handleChange = this.handleChange.bind(this);          
     }
     componentDidMount() {
-      const url = "/api/v1/service_executants/show";
+      const url = "/simp3/api/v1/service_executants/show";
       fetch(url)
       .then(response => {
         if (response.ok) {
@@ -23,7 +23,7 @@ class Show extends React.Component {
     }
 
     handleChange(event) {
-        const url = "/api/v1/service_executants/liste_se";
+        const url = "/simp3/api/v1/service_executants/liste_se";
 
         const service_executants = event.target.value;
 

@@ -17,15 +17,15 @@ export default (
 
     <Routes>
       
-      <Route path="/cartographie_performance" element={<Home/>} />
-      <Route path="/cartographie_indicateur" element={<Carto_perf/>} /> 
-      <Route path="/indicateurs/new" element={<Newindicateur/>} />
-      <Route path="/service_executants/new" element={<Newservice_executant/>} />
-      <Route path="/ministeres" element={<Ministere/>} />
-      <Route path="/indicateur_executions/new" element={<Newindicateur_execution/>} />
-      <Route path="/suivi_temporel_indicateur" element={<Execution/>} />
-      <Route path="/suivi_temporel_performance" element={<Execution_globale/>} />
-      <Route path="/service_executants" element={<Show/>} />
+      <Route path="/simp3/cartographie_performance" element={<Home/>} />
+      <Route path="/simp3/cartographie_indicateur" element={<Carto_perf/>} /> 
+      <Route path="/simp3/indicateurs/new" element={<Newindicateur/>} />
+      <Route path="/simp3/service_executants/new" element={<Newservice_executant/>} />
+      <Route path="/simp3/ministeres" element={<Ministere/>} />
+      <Route path="/simp3/indicateur_executions/new" element={<Newindicateur_execution/>} />
+      <Route path="/simp3/suivi_temporel_indicateur" element={<Execution/>} />
+      <Route path="/simp3/suivi_temporel_performance" element={<Execution_globale/>} />
+      <Route path="/simp3/service_executants" element={<Show/>} />
       
     </Routes>
 

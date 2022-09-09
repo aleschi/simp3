@@ -49,7 +49,7 @@ class Execution extends React.Component {
       
     }
     componentDidMount() {
-      const url = "/api/v1/indicateur_executions/index";
+      const url = "/simp3/api/v1/indicateur_executions/index";
       fetch(url)
       .then(response => {
         if (response.ok) {
@@ -64,7 +64,7 @@ class Execution extends React.Component {
     }
 
     handleChange(event) {
-        const url = "/api/v1/indicateur_executions/search";
+        const url = "/simp3/api/v1/indicateur_executions/search";
 
         const search_indicateur = event.target.value;
         const search_service_executants = this.state.search_service_executants;
@@ -111,7 +111,7 @@ class Execution extends React.Component {
 
     handleChangeRegion(event){
       
-      const url = "/api/v1/indicateur_executions/search";
+      const url = "/simp3/api/v1/indicateur_executions/search";
 
       const region = event.target.value;
       const search_indicateur = this.state.indicateur_name;
@@ -160,7 +160,7 @@ class Execution extends React.Component {
           value.forEach(el => search_ministeres.push(el.id))
         } 
 
-        const url = "/api/v1/indicateur_executions/search";
+        const url = "/simp3/api/v1/indicateur_executions/search";
         const search_indicateur = this.state.search_indicateur;
         const region = this.state.region;
         const showSe = this.state.showSe;

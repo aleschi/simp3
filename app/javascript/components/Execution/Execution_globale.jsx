@@ -39,7 +39,7 @@ class Execution extends React.Component {
       
     }
     componentDidMount() {
-      const url = "/api/v1/service_executants/index_chart";
+      const url = "/simp3/api/v1/service_executants/index_chart";
       fetch(url)
       .then(response => {
         if (response.ok) {
@@ -66,7 +66,7 @@ class Execution extends React.Component {
 
     handleChangeRegion(event){
       
-      const url = "/api/v1/service_executants/search_globale";
+      const url = "/simp3/api/v1/service_executants/search_globale";
 
       const region = event.target.value;
 
@@ -115,7 +115,7 @@ class Execution extends React.Component {
           value.forEach(el => search_ministeres.push(el.id))
         } 
 
-        const url = "/api/v1/service_executants/search_globale";
+        const url = "/simp3/api/v1/service_executants/search_globale";
 
         const region = this.state.region;
         const showSe = this.state.showSe;

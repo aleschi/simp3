@@ -63,7 +63,7 @@ class Carto_perf extends React.Component {
     }
 
     componentDidMount() {
-      const url = "/api/v1/indicateur_executions/carto_perf";
+      const url = "/simp3/api/v1/indicateur_executions/carto_perf";
       fetch(url)
       .then(response => {
         if (response.ok) {
@@ -99,7 +99,7 @@ class Carto_perf extends React.Component {
       const search_service_executants = this.state.search_service_executants
       const search_ministeres = this.state.search_ministeres
       const search_blocs = this.state.search_blocs
-      const url = "/api/v1/indicateur_executions/search_carto";
+      const url = "/simp3/api/v1/indicateur_executions/search_carto";
       
       if (event.target.name == "search_indicateur"){
         var search_indicateur = event.target.value
@@ -189,7 +189,7 @@ class Carto_perf extends React.Component {
         }
 
        
-        const url = "/api/v1/indicateur_executions/search_carto";
+        const url = "/simp3/api/v1/indicateur_executions/search_carto";
         const search_indicateur = this.state.search_indicateur;
 
         const effectif = this.state.effectif;
@@ -230,7 +230,7 @@ class Carto_perf extends React.Component {
        
         this.setState({ startDate: event});
  
-        const url = "/api/v1/indicateur_executions/search_carto";
+        const url = "/simp3/api/v1/indicateur_executions/search_carto";
         const search_indicateur = this.state.search_indicateur;
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
@@ -271,7 +271,7 @@ class Carto_perf extends React.Component {
 
     onMarkerClick2= (id) => {    
         this.setState({clickId: id});
-        const url = "/api/v1/service_executants/search_marker?q=" + id;
+        const url = "/simp3/api/v1/service_executants/search_marker?q=" + id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
         const body = {
@@ -302,7 +302,7 @@ class Carto_perf extends React.Component {
 
     MouseOver = (id) => {    
         this.setState({clickId:null, hoverId: id, showResults: false});
-        const url = "/api/v1/service_executants/search_marker?q=" + id;
+        const url = "/simp3/api/v1/service_executants/search_marker?q=" + id;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         const startDate = this.state.startDate;
         const body = {

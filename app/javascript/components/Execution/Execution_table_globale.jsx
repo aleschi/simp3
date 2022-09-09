@@ -29,7 +29,7 @@ export class Execution_table extends React.Component {
         const body = {
           indicateur_executions,date_croissant,valeur_croissant
         };
-        const url = "/api/v1/service_executants/sort_table?search=" + params;
+        const url = "/simp3/api/v1/service_executants/sort_table?search=" + params;
         const token = document.querySelector('meta[name="csrf-token"]').content;
         fetch(url, {
           method: "POST",

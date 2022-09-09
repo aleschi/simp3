@@ -18,7 +18,7 @@ class Newindicateur_execution extends React.Component {
     }
 
     componentDidMount() {
-    const url = "/api/v1/indicateur_executions/new";
+    const url = "/simp3/api/v1/indicateur_executions/new";
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -34,7 +34,7 @@ class Newindicateur_execution extends React.Component {
         event.preventDefault();
         this.setState({ loading: true });
 
-        const url = "/api/v1/indicateur_executions/import";
+        const url = "/simp3/api/v1/indicateur_executions/import";
         const formData = new FormData();
 
         formData.append('file', this.state.files[0]);
@@ -53,7 +53,7 @@ class Newindicateur_execution extends React.Component {
             }
             throw new Error("Network response was not ok.");
           })
-          .then(response => window.location.href = "/cartographie_performance")
+          .then(response => window.location.href = "/simp3/cartographie_performance")
           .catch(error => console.log(error.message));
     }
 
