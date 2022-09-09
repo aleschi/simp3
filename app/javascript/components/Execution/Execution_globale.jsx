@@ -74,7 +74,10 @@ class Execution extends React.Component {
       const search_ministeres = this.state.search_ministeres;
       const showSe = this.state.showSe;
       const showMinistere = this.state.showMinistere;
-      this.setState({ showSe: null, showMinistere: null, loader: true, indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], 
+      if (search_service_executants.length > 0 || search_ministeres.length > 0){
+        this.setState({ showSe: null, showMinistere: null})
+      }
+      this.setState({ indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], 
         liste_se_empty: [],search_service_executants: [],search_ministeres: []  })
 
       const body = {

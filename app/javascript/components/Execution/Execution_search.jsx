@@ -58,8 +58,9 @@ const [value, setValue] = useState([]);
 
 						<div className="fr-select-group">
 						<div className="fr-label" >Ma recherche concerne </div>
-						{ showSe ? 
-							<div className="form_checkbox">
+						
+						<div className="form_checkbox">
+							{ showSe && 
 								<MultiSelect
 							      items={autoCompleteList}
 							      label="Recherchez un service exécutant"
@@ -67,12 +68,9 @@ const [value, setValue] = useState([]);
 							      onChange={setValue}
 							      handleSubmit={handleSubmit}
 							    />
-							</div>
-						
-						: null}
-
-						{ showMinistere ? 
-						<div className="form_checkbox">	
+							}
+								
+							{ showMinistere && 
 				            <Autocomplete
 						      multiple
 						      limitTags={1}
@@ -98,12 +96,15 @@ const [value, setValue] = useState([]);
 						        <TextField {...params} label="Recherchez un ministère" placeholder="Ajoutez un ministère" />
 						      )}
 						    />
+							}
+
 				        </div>
-						: null}
+						
 
 						
 						</div>
 					</div>
+					
 					
 				</div>
  
