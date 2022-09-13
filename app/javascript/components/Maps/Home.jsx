@@ -10,11 +10,7 @@ class Home extends React.Component {
         this.state = {
           autoCompleteResults: [],
           autoCompleteList: [],
-          service_executant: [],
-          service_executants: [],
-          ministeres: [],
-          blocs: [],
-         
+          service_executant: [],     
           csp: '',
           sfact: '',
           cgf: '',
@@ -53,7 +49,6 @@ class Home extends React.Component {
         };
     
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeStructure = this.handleChangeStructure.bind(this);
         this.handleSubmitDate = this.handleSubmitDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onMarkerClick2 = this.onMarkerClick2.bind(this);
@@ -73,25 +68,11 @@ class Home extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, autoCompleteList: response.autoCompleteResults, csp: response.csp, 
-        sfact: response.sfact, cgf: response.cgf, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs, 
-        se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date), regions: response.regions }))
+        sfact: response.sfact, cgf: response.cgf, se_color: response.se_color, loading: false, startDate: new Date(response.date), maxDate: new Date(response.date),
+         regions: response.regions }))
       .catch(error => console.log(error.message));
     }
 
-    handleChangeStructure(event){
-      this.setState({ resetloc: false})
-      if (event.target.value == 'Ministere'){
-        this.setState({ showSe:  false, showMinistere: true, showBloc:  false, search_blocs: [], search_service_executants: [], autoCompleteList: this.state.ministeres,showResults: false }) 
-      } 
-      else if (event.target.value == 'Bloc'){
-      this.setState({ showSe:  false, showMinistere: false, showBloc:  true,  search_ministeres: [], search_service_executants: [], autoCompleteList: this.state.blocs,showResults: false}) 
-      }
-      else if (event.target.value == 'Service') {
-      this.setState({ showSe:  true, showMinistere: false, showBloc:  false, search_ministeres: [], search_blocs: [], autoCompleteList: this.state.service_executants,showResults: false}) 
-      }
-
-      this.handleChange(this.state.eye_legend);
-    }
 
     handleSubmit(event, value) {
         event.preventDefault(); 
@@ -150,7 +131,7 @@ class Home extends React.Component {
     }
 
     handleChange(params){
-        //e.preventDefault();
+       
         const url = "/simp3/api/v1/service_executants/search";
         const search_service_executants = []
         const search_ministeres = []
@@ -170,28 +151,28 @@ class Home extends React.Component {
           var effectif = event.target.value
           var type_structure = this.state.type_structure
           var region = this.state.region
-          var eye_legend = this.state.eye_legend
+          var eye_legend = 'all'
           this.setState({ resetloc: false, showResults: false, showHover: false})
         }
         else if (event.target.name == "type_structure"){
           var type_structure = event.target.value
           var effectif = this.state.effectif
           var region = this.state.region
-          var eye_legend = this.state.eye_legend
+          var eye_legend = 'all'
           this.setState({ resetloc: false, showResults: false, showHover: false})
         }
         else if (event.target.name == "regions"){
           var region = event.target.value
           var effectif = this.state.effectif
           var type_structure = this.state.type_structure
-          var eye_legend = this.state.eye_legend
+          var eye_legend = 'all'
           this.setState({ resetloc: true, zoom: 5, showResults: false, showHover: false})
         }
         else if (event.target.name == "secteur"){
           var effectif = this.state.effectif
           var type_structure = this.state.type_structure
           var region = this.state.region
-          var eye_legend = this.state.eye_legend
+          var eye_legend = 'all'
           this.setState({ resetloc: false, showResults: false, showHover: false})
           if (event.target.value == 'Ministere'){
             this.setState({ showSe:  false, showMinistere: true, showBloc:  false,}) 
@@ -243,7 +224,7 @@ class Home extends React.Component {
         search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, 
         effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color,showResults: false, region: response.region, 
         zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend, showSe: showSe, showMinistere: showMinistere, showBloc: showBloc,
-        autoCompleteList: response.autoCompleteList, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs}))
+        autoCompleteList: response.autoCompleteList}))
       .catch(error => console.log(error.message));
     }
  

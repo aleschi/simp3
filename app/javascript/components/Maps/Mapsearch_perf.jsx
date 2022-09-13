@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs, showSe, showMinistere, showBloc, autoCompleteList,regions}) => {
+export default ({ handleChange, handleSubmit, indicateurs, showSe, showMinistere, showBloc, autoCompleteList,regions}) => {
 	
 	    return (
 
@@ -45,7 +45,7 @@ export default ({ handleChange, handleChangeStructure, handleSubmit, indicateurs
 				<div className="fr-col-12 fr-col-lg-4">
 					<div className="fr-select-group">
 						<label htmlFor="choixservice" className="fr-label" >Secteur </label>
-						<select className="fr-select" name="type_structure" id="choixservice" onChange={handleChangeStructure}>					
+						<select className="fr-select" name="secteur" id="choixservice" onChange={handleChange}>					
 				            <option value="Service">Service Exécutant</option>
 				            <option value="Ministere">Ministère</option>
 				            <option value="Bloc">Organisation financière</option>

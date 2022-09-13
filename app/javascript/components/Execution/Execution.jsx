@@ -10,8 +10,6 @@ class Execution extends React.Component {
         this.state = {
        
           indicateurs: [],
-          ministeres: [],
-          service_executants: [],
      
           indicateur_executions: [],
           indicateur_n: [],
@@ -20,10 +18,11 @@ class Execution extends React.Component {
           indicateur_name: '',
           search_service_executants: [],
           search_ministeres: [],
+          search_blocs: [],
 
           showSe: true,
           showMinistere: false,
-       
+          showBloc: false,
           data_inter_ministerielle: [],
          
           autoCompleteList: [],
@@ -43,8 +42,7 @@ class Execution extends React.Component {
        
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangeStructure = this.handleChangeStructure.bind(this);
-        this.handleChangeRegion = this.handleChangeRegion.bind(this);   
+        this.handleChange2 = this.handleChange2.bind(this);   
       
       
     }
@@ -57,9 +55,9 @@ class Execution extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ indicateurs: response.indicateurs, ministeres: response.ministeres, service_executants: response.service_executants, 
-        indicateur_n: response.indicateur_n, indicateur_name: response.indicateur_name, data_inter_ministerielle: response.data_inter_ministerielle, 
-        autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false, min: response.min, max: response.max  }))
+      .then(response => this.setState({ indicateurs: response.indicateurs, indicateur_n: response.indicateur_n, indicateur_name: response.indicateur_name, 
+        data_inter_ministerielle: response.data_inter_ministerielle, autoCompleteList: response.autoCompleteList, regions: response.regions, loading: false,
+         min: response.min, max: response.max  }))
       .catch(error => console.log(error.message));
     }
 
@@ -71,11 +69,13 @@ class Execution extends React.Component {
         const search_ministeres = this.state.search_ministeres;
         const region = this.state.region;
         const showSe = this.state.showSe;
+        const showMinistere = this.state.showMinistere;
+        const showBloc = this.state.showBloc;
 
         this.setState({ loader: true})
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres, region,showSe
+          search_indicateur, search_service_executants,search_ministeres, region,showSe, showMinistere, showBloc
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -100,32 +100,48 @@ class Execution extends React.Component {
       .catch(error => console.log(error.message));
     }
 
-    handleChangeStructure(event){
-      if (event.target.value == 'Ministere'){
-        this.setState({ showSe:  false, showMinistere: true,  search_service_executants: [], autoCompleteList: this.state.ministeres, indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
-      } 
-      else if (event.target.value == 'Service') {
-      this.setState({ showSe:  true, showMinistere: false, search_ministeres: [], autoCompleteList: this.state.service_executants,indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: []  }) 
-      }
-    }
 
-    handleChangeRegion(event){
+
+    handleChange2(event){
       
       const url = "/simp3/api/v1/indicateur_executions/search";
-
-      const region = event.target.value;
-      const search_indicateur = this.state.indicateur_name;
-      const search_service_executants = this.state.search_service_executants;
-      const search_ministeres = this.state.search_ministeres;
-      const showSe = this.state.showSe;
-      const showMinistere = this.state.showMinistere;
-      if (search_service_executants.length > 0 || search_ministeres.length > 0){
-        this.setState({ showSe: null, showMinistere: null})
+      const search_indicateur = this.state.search_indicateur;
+      const search_service_executants = []
+      const search_ministeres = []
+      const search_blocs = []
+      var showSe = this.state.showSe;
+      var showMinistere = this.state.showMinistere;
+      var showBloc = this.state.showBloc;
+      if (this.state.search_service_executants.length > 0 || this.state.search_ministeres.length > 0 || this.state.search_blocs.length > 0){
+        this.setState({ showSe: null, showMinistere: null, showBloc: null})
       }
-      this.setState({ indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: [],search_service_executants: [],search_ministeres: []  })
-
+      this.setState({ indicateur_executions: [], service_executant_n: [], liste_se_empty_arr: [], liste_se_empty: [],search_service_executants: [],
+        search_ministeres: [], search_blocs: []  })
+      if (event.target.name == "regions"){
+        var region = event.target.value;
+      }else if (event.target.name == "secteur"){
+          var region = this.state.region
+          if (event.target.value == 'Ministere'){
+            this.setState({ showSe:  false, showMinistere: true, showBloc:  false,}) 
+            showSe = false 
+            showMinistere = true 
+            showBloc = false
+          } 
+          else if (event.target.value == 'Bloc'){
+            this.setState({ showSe:  false, showMinistere: false, showBloc:  true, }) 
+            showSe = false 
+            showMinistere = false 
+            showBloc = true
+          }
+          else if (event.target.value == 'Service') {
+            this.setState({ showSe:  true, showMinistere: false, showBloc:  false, }) 
+            showSe = true 
+            showMinistere = false 
+            showBloc = false
+          }
+        }
       const body = {
-         search_indicateur, search_service_executants,search_ministeres, region, showSe
+         search_indicateur, search_service_executants,search_ministeres, search_blocs,region, showSe, showMinistere, showBloc
       };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -144,8 +160,7 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ data_inter_ministerielle: response.data_inter_ministerielle, region: response.region, 
-        autoCompleteList: response.autoCompleteList, ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,
-        showMinistere: showMinistere, loader: false }))
+        autoCompleteList: response.autoCompleteList, showSe: showSe,showMinistere: showMinistere, showBloc: showBloc, loader: false }))
       .catch(error => console.log(error.message));
     }
 
@@ -155,23 +170,28 @@ class Execution extends React.Component {
         event.preventDefault();
         const search_service_executants = new Array() 
         const search_ministeres = new Array()
+        const search_blocs = new Array()
 
-        if (this.state.showSe){
-          value.filter(el => el.id != "all").forEach(el => search_service_executants.push(el.id));  
+        if (this.state.showSe){                
+          value.filter(el => el.id != "all").forEach(el => search_service_executants.push(el.id))     
         }
-        else{                   
+        else if (this.state.showMinistere){                   
           value.forEach(el => search_ministeres.push(el.id))
-        } 
-
+        }
+        else if (this.state.showBloc){                   
+          value.forEach(el => search_blocs.push(el.id))
+        }
         const url = "/simp3/api/v1/indicateur_executions/search";
         const search_indicateur = this.state.search_indicateur;
         const region = this.state.region;
         const showSe = this.state.showSe;
+        const showMinistere = this.state.showMinistere;
+        const showBloc = this.state.showBloc
         this.setState({ loader: true})
         
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres, region, showSe
+          search_indicateur, search_service_executants,search_ministeres, search_blocs, region, showSe, showMinistere, showBloc
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -191,7 +211,7 @@ class Execution extends React.Component {
       })
       .then(response => this.setState({ indicateur_executions: response.indicateur_executions, indicateur_n: response.indicateur_n, 
         service_executant_n: response.service_executant_n, search_indicateur: response.search_indicateur, indicateur_name: response.indicateur_name,
-        search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres,
+        search_service_executants: response.search_service_executants,search_ministeres: response.search_ministeres, search_blocs: response.search_blocs,
         data_inter_ministerielle: response.data_inter_ministerielle, liste_se_empty_arr: response.liste_se_empty_arr, liste_se_empty: response.liste_se_empty, 
         loader: false, min: response.min, max: response.max}))
       .catch(error => console.log(error.message));
@@ -211,9 +231,9 @@ class Execution extends React.Component {
             </div>
           </div>
         
-          <Execution_search handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} handleSubmit={this.handleSubmit} 
-            indicateurs={this.state.indicateurs} showSe={this.state.showSe} showMinistere={this.state.showMinistere}
-            autoCompleteList={this.state.autoCompleteList} regions={this.state.regions} handleChangeRegion={this.handleChangeRegion}/>
+          <Execution_search handleChange={this.handleChange} handleSubmit={this.handleSubmit} regions={this.state.regions} handleChange2={this.handleChange2}
+            indicateurs={this.state.indicateurs} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc}
+            autoCompleteList={this.state.autoCompleteList} />
 
           { this.state.liste_se_empty_arr.length > 0 && 
             <div className="fr-alert fr-alert--error fr-mt-3w">

@@ -10,9 +10,6 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   	indicateur_name = Indicateur.all.order(name: :asc).first.name
   	indicateurs = Indicateur.all.order(name: :asc)
     
-    ministeres = Ministere.all.order(name: :asc)
-    service_executants = ServiceExecutant.all.order(libelle: :asc)
-    
     dates = IndicateurExecution.order(date: :asc).pluck(:date).uniq
     data_inter_ministerielle = []
     dates.each do |date|
@@ -26,9 +23,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     max = indicateur_n.first.indicateur_executions.pluck(:valeur).max()
     min = indicateur_n.first.indicateur_executions.pluck(:valeur).min()
 
-    response = {indicateurs: indicateurs, ministeres: ministeres, service_executants: service_executants, indicateur_n: indicateur_n.as_json, 
-      indicateur_name: indicateur_name, data_inter_ministerielle: data_inter_ministerielle, autoCompleteList: autoCompleteList, regions: regions,
-    min: min, max: max }
+    response = {indicateurs: indicateurs, indicateur_n: indicateur_n.as_json, indicateur_name: indicateur_name, data_inter_ministerielle: data_inter_ministerielle, 
+      autoCompleteList: autoCompleteList, regions: regions, min: min, max: max }
     render json: response
   end
 
@@ -42,37 +38,39 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       service_executants = ServiceExecutant.where(region: params[:region]).order(libelle: :asc)
       min_id = service_executants.pluck(:ministere_id).uniq
       ministeres = Ministere.where(id: min_id).order(name: :asc)
+      blocs_id = service_executants.pluck(:organisation_financiere_id).uniq
+      blocs = OrganisationFinanciere.where(id: blocs_id).order(name: :asc)
     else 
       ministeres = Ministere.all.order(name: :asc)
       service_executants = ServiceExecutant.all.order(libelle: :asc)
+      blocs = OrganisationFinanciere.all.order(name: :asc)
     end
 
     if params[:showSe] == true 
       autoCompleteList = service_executants.select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} }
-    else 
+    elsif params[:showMinistere] == true
       autoCompleteList = ministeres.select([:id, :name]).map {|e| {id: e.id, name: e.name} }
+    elsif params[:showMinistere] == true
+      autoCompleteList = blocs.select([:id, :name]).map {|e| {id: e.id, name: e.name} }
     end 
 
     if params[:search_service_executants].length != 0
       service_executant_n = service_executants.where(id: params[:search_service_executants]) #liste des se choisis
-      search_service_executants = service_executant_n.pluck(:id).uniq
-      search_ministeres = []
     elsif params[:search_ministeres].length != 0
-      min = ministeres.where(id: params[:search_ministeres]) #on prend ceux selectionnés + dans la région 
-      search_ministeres = min.pluck(:id).uniq
-      service_executant_n = service_executants.where(ministere_id: search_ministeres)
-      search_service_executants = []
+      min = ministeres.where(id: params[:search_ministeres]).pluck(:id).uniq #on prend ceux selectionnés + dans la région 
+      service_executant_n = service_executants.where(ministere_id: min)
+    elsif params[:search_blocs].length != 0
+      bloc = blocs.where(id: params[:search_blocs]).pluck(:id).uniq
+      service_executant_n = service_executants.where(organisation_financiere_id: bloc)
     else 
       service_executant_n = []
-      search_service_executants = [] 
-      search_ministeres = []  
     end
 
     if service_executant_n.length > 0
       se = service_executant_n.pluck(:id).uniq
       indicateur_executions = indicateur_n.first.indicateur_executions.where(service_executant_id: se).order(date: :asc)
       @liste_se = indicateur_n.first.indicateur_executions.where(service_executant_id: se).pluck(:service_executant_id)
-      @liste_se_empty_arr=search_service_executants - @liste_se
+      @liste_se_empty_arr= se - @liste_se
       @liste_se_empty = ServiceExecutant.where(id: @liste_se_empty_arr)
       service_executant_n = ServiceExecutant.where(id: @liste_se) #on met a jour la liste des services avec uniquement ceux qui présentent des valeurs
       #min and max pour graphe prendre par rapport à ceux qu'on va afficher
@@ -101,8 +99,9 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     min = [min_data_interministerielle,min].min()
 
     response = {autoCompleteList: autoCompleteList, region: region, indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), 
-    indicateur_n: indicateur_n.as_json,search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name,service_executant_n: service_executant_n, search_service_executants: search_service_executants, search_ministeres: search_ministeres,
-    data_inter_ministerielle: data_inter_ministerielle, liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, ministeres: ministeres, service_executants: service_executants, min: min, max: max }
+    indicateur_n: indicateur_n.as_json,search_indicateur: params[:search_indicateur].to_s, indicateur_name: indicateur_name,service_executant_n: service_executant_n,
+     search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs],
+    data_inter_ministerielle: data_inter_ministerielle, liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, min: min, max: max }
     
     render json: response
     
@@ -141,19 +140,15 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
     indicateur_name = Indicateur.all.order(name: :asc).first.name
 
     indicateurs = Indicateur.all.order(name: :asc)
-    ministeres = Ministere.all.order(name: :asc)
-    service_executants = ServiceExecutant.all.order(libelle: :asc)
-    blocs = OrganisationFinanciere.all.order(name: :asc)
-
+   
     service_executant = ServiceExecutant.where(id: ServiceExecutant.first.id)
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq
 
     date = Indicateur.first.indicateur_executions.order(date: :asc).last.date #derniere date ajoutée
 
     indicateur_executions = indicateur_n.first.indicateur_executions.where('date = ?', date)
-
-    
-    service_executant_n = service_executants
+  
+    service_executant_n = ServiceExecutant.all.order(libelle: :asc)
     search_service_executants = service_executant_n.pluck(:id).uniq
     if !service_executant_n.nil?
       csp = service_executant_n.where('type_structure = ?', 'CSP').count
@@ -181,7 +176,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
 
     autoCompleteList = ServiceExecutant.all.order(libelle: :asc)   
 
-    response = {indicateurs: indicateurs, ministeres: ministeres, service_executants: service_executants,service_executant: service_executant, blocs: blocs, 
+    response = {indicateurs: indicateurs, service_executant: service_executant,
       indicateur_executions: indicateur_executions, indicateur_n: indicateur_n.as_json, service_executant_n: service_executant_n, indicateur_name: indicateur_name,
       csp: csp, sfact: sfact, cgf: cgf, search_service_executants: search_service_executants, se_color: se_color, autoCompleteList: autoCompleteList, date: date, 
       regions: regions }
@@ -191,17 +186,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
   def search_carto #search carto perf 
     indicateur_n = Indicateur.where('name = ?', params[:search_indicateur].to_s)
     indicateur_name = params[:search_indicateur].to_s
+    service_executant_n = ServiceExecutant.all
 
-    if params[:search_service_executants].length != 0
-      service_executant_n = ServiceExecutant.where(id: params[:search_service_executants])
-    elsif params[:search_ministeres].length != 0
-      service_executant_n = ServiceExecutant.where(ministere_id: params[:search_ministeres])
-    elsif params[:search_blocs].length != 0
-      service_executant_n = ServiceExecutant.where(organisation_financiere_id: params[:search_blocs])      
-    else 
-      service_executant_n = ServiceExecutant.all
-    end
-    #search_service_executants = service_executant_n.pluck(:id).uniq
 
     if params[:region] && params[:region].length > 0 && params[:region] != "ALL" && params[:region] !="Administration centrale"
       service_executant_n = service_executant_n.where(region: params[:region])
@@ -262,6 +248,14 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       autoCompleteList = blocs
     end
 
+    if params[:search_service_executants].length != 0
+      service_executant_n = service_executant_n.where(id: params[:search_service_executants])
+    elsif params[:search_ministeres].length != 0
+      service_executant_n = service_executant_n.where(ministere_id: params[:search_ministeres])
+    elsif params[:search_blocs].length != 0
+      service_executant_n = service_executant_n.where(organisation_financiere_id: params[:search_blocs])      
+    end
+
     if !service_executant_n.nil?
       csp = service_executant_n.where('type_structure = ?', 'CSP').count
       sfact = service_executant_n.where('type_structure = ?', 'SFACT').count
@@ -298,8 +292,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], 
       search_blocs: params[:search_blocs], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf, 
       se_color: se_color,service_executant: service_executant.as_json(:include => [:ministere, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), 
-      performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], autoCompleteList: autoCompleteList, blocs: blocs,
-      service_executants: service_executants, ministeres: ministeres}
+      performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], autoCompleteList: autoCompleteList,}
     render json: response
   end
 

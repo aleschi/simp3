@@ -30,9 +30,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       sfact = 0
       cgf = 0
     end 
-    service_executants = ServiceExecutant.all.order(libelle: :asc)
-    ministeres = Ministere.all.order(name: :asc)
-    blocs = OrganisationFinanciere.all.order(name: :asc)
+    
    
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq!
     date = Indicateur.first.indicateur_executions.order(date: :asc).last.date #derniere date ajoutée
@@ -53,8 +51,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
         end
     end 
 
-    response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf,service_executants: service_executants, ministeres: ministeres, 
-      blocs: blocs, se_color: se_color, date: date, regions: regions}
+    response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, se_color: se_color, date: date, regions: regions}
     render json: response
   end
 
@@ -175,8 +172,7 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     else
       response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], 
       search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], 
-      se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], autoCompleteList: autoCompleteList, blocs: blocs,
-      service_executants: service_executants, ministeres: ministeres}
+      se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], autoCompleteList: autoCompleteList}
     end
     render json: response
   end 
@@ -202,12 +198,10 @@ class Api::V1::ServiceExecutantsController < ApplicationController
   #page suivi temporel perf globale
 
   def index_chart
-    ministeres = Ministere.all.order(name: :asc)
-    service_executants = ServiceExecutant.all.order(libelle: :asc)
     regions = ServiceExecutant.all.order(region: :asc).pluck(:region).uniq
     autoCompleteList = ServiceExecutant.all.order(libelle: :asc).select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} } 
     date_min = Performance.all.pluck(:date).uniq.min() #pour afficher les axes sur le chart 
-    response = { service_executants: service_executants, ministeres: ministeres, regions: regions, autoCompleteList: autoCompleteList, date_min: date_min}
+    response = { regions: regions, autoCompleteList: autoCompleteList, date_min: date_min}
     render json: response
   end
 
@@ -217,37 +211,39 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       service_executants = ServiceExecutant.where(region: params[:region]).order(libelle: :asc)
       min_id = service_executants.pluck(:ministere_id).uniq
       ministeres = Ministere.where(id: min_id).order(name: :asc)
+      blocs_id = service_executants.pluck(:organisation_financiere_id).uniq
+      blocs = OrganisationFinanciere.where(id: blocs_id).order(name: :asc)
     else 
       ministeres = Ministere.all.order(name: :asc)
       service_executants = ServiceExecutant.all.order(libelle: :asc)
+      blocs = OrganisationFinanciere.all.order(name: :asc)
     end
 
     if params[:showSe] == true 
       autoCompleteList = service_executants.select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} }
-    else 
+    elsif params[:showMinistere] == true  
       autoCompleteList = ministeres.select([:id, :name]).map {|e| {id: e.id, name: e.name} }
+    elsif params[:showBloc] == true 
+      autoCompleteList = blocs.select([:id, :name]).map {|e| {id: e.id, name: e.name} }
     end 
 
     if params[:search_service_executants].length != 0
       service_executant_n = service_executants.where(id: params[:search_service_executants])
-      search_service_executants = service_executant_n.pluck(:id).uniq
-      search_ministeres = []
     elsif params[:search_ministeres].length != 0
-      min = ministeres.where(id: params[:search_ministeres]) #on prend ceux selectionnés + dans la région 
-      search_ministeres = min.pluck(:id).uniq
-      service_executant_n = service_executants.where(ministere_id: search_ministeres)
-      search_service_executants = []
+      min = ministeres.where(id: params[:search_ministeres]).pluck(:id).uniq #on prend ceux selectionnés + dans la région 
+      service_executant_n = service_executants.where(ministere_id: min)
+    elsif params[:search_blocs].length != 0
+      bloc = blocs.where(id: params[:search_blocs]).pluck(:id).uniq
+      service_executant_n = service_executants.where(organisation_financiere_id: bloc)
     else 
       service_executant_n = []
-      search_service_executants = [] 
-      search_ministeres = []  
     end
 
     if service_executant_n.length > 0
       se = service_executant_n.pluck(:id).uniq
       indicateur_executions = Performance.where(service_executant_id: se).where.not(valeur: nil).order(date: :asc)
       @liste_se = Performance.where(service_executant_id: se).where.not(valeur: nil).pluck(:service_executant_id)
-      @liste_se_empty_arr=search_service_executants - @liste_se
+      @liste_se_empty_arr=se - @liste_se
       @liste_se_empty = ServiceExecutant.where(id: @liste_se_empty_arr)
       service_executant_n = ServiceExecutant.where(id: @liste_se) #on met a jour la liste des services avec uniquement ceux qui présentent des valeurs
     else
@@ -257,8 +253,8 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     end
 
     response = {autoCompleteList: autoCompleteList, region: region, indicateur_executions: indicateur_executions.as_json(:include => [:service_executant => {:include => [:ministere, :organisation_financiere]}]),
-    service_executant_n: service_executant_n, search_service_executants: search_service_executants, search_ministeres: search_ministeres,
-    liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, ministeres: ministeres, service_executants: service_executants }
+    service_executant_n: service_executant_n, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres],
+    search_blocs: params[:search_blocs],liste_se_empty_arr: @liste_se_empty_arr, liste_se_empty: @liste_se_empty, }
     
     render json: response
 
