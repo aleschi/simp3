@@ -13,7 +13,7 @@ Highcharts.setOptions({
   },
 });
 export default ({ indicateur_executions, service_executant_n,date_min}) => {
-    
+    console.log('1');
     const series_i = [];
     let date;
     const title_i = "Suivi temporel de la performance globale ";
@@ -166,7 +166,7 @@ export default ({ indicateur_executions, service_executant_n,date_min}) => {
                     style: {color: 'var(--text-title-grey)'},
                 },
             title: {
-            text: "Valeur de l'indicateur",
+            text: "Valeur",
             style: {color: 'var(--text-title-grey)'},    
             },
             min: 0,

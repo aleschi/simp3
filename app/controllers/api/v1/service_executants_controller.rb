@@ -118,6 +118,20 @@ class Api::V1::ServiceExecutantsController < ApplicationController
       autoCompleteResults = autoCompleteResults.where(id: se_id_perf)
     end 
 
+    min_id = autoCompleteResults.pluck(:ministere_id).uniq
+    blocs_id = autoCompleteResults.pluck(:organisation_financiere_id).uniq
+    ministeres = Ministere.where(id: min_id).order(name: :asc)
+    blocs = OrganisationFinanciere.where(id: blocs_id).order(name: :asc)
+    service_executants = autoCompleteResults.order(libelle: :asc)
+    if params[:showSe] == true
+      autoCompleteList = service_executants
+    elsif params[:showMinistere] == true   
+      autoCompleteList = ministeres
+    elsif params[:showBloc] == true
+      autoCompleteList = blocs
+    end
+    
+
     if !autoCompleteResults.nil?
       csp = autoCompleteResults.where('type_structure = ?', 'CSP').count
       sfact = autoCompleteResults.where('type_structure = ?', 'SFACT').count
@@ -149,9 +163,11 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     if params[:service_executant] && params[:service_executant][0]
       service_executant = ServiceExecutant.where(id: params[:service_executant][0]['id'])
       indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
-      
-      performance = Performance.where('date >= ? AND date <= ? AND service_executant_id = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, params[:service_executant][0]['id']).first.valeur
-
+      if Performance.where('date >= ? AND date <= ? AND service_executant_id = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, params[:service_executant][0]['id']).count > 0
+        performance = Performance.where('date >= ? AND date <= ? AND service_executant_id = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, params[:service_executant][0]['id']).first.valeur
+      else 
+        performance = 0
+      end 
       response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], 
       search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], 
       se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], 
@@ -159,7 +175,8 @@ class Api::V1::ServiceExecutantsController < ApplicationController
     else
       response = {autoCompleteResults: autoCompleteResults, csp: csp, sfact: sfact, cgf: cgf, effectif: params[:effectif], type_structure: params[:type_structure], 
       search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], search_blocs: params[:search_blocs], 
-      se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend]}
+      se_color: se_color, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], autoCompleteList: autoCompleteList, blocs: blocs,
+      service_executants: service_executants, ministeres: ministeres}
     end
     render json: response
   end 
@@ -167,7 +184,11 @@ class Api::V1::ServiceExecutantsController < ApplicationController
   def search_marker
     service_executant = ServiceExecutant.where(id: params[:q])
     indicateur_executions = service_executant.first.indicateur_executions.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).order(indicateur_id: :asc)
-    performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
+    if service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).count > 0
+      performance = service_executant.first.performances.where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).first.valeur
+    else
+      performance = nil
+    end
     response = {service_executant: service_executant.as_json(:include => [:ministere, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), performance: performance}
     render json: response
   end

@@ -115,11 +115,14 @@ class Home extends React.Component {
         const type_structure = this.state.type_structure;
         const startDate = this.state.startDate;
         const region = this.state.region;
+        const showSe = this.state.showSe;
+        const showMinistere = this.state.showMinistere;
+        const showBloc = this.state.showBloc;
 
         this.setState({ showResults: false, showHover: false, eye_legend: 'all'})
 
         const body = {
-          search_service_executants,search_ministeres,search_blocs,effectif,type_structure,startDate, region
+          search_service_executants,search_ministeres,search_blocs,effectif,type_structure,startDate, region, showSe, showMinistere, showBloc
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -146,10 +149,18 @@ class Home extends React.Component {
     handleChange(params){
         //e.preventDefault();
         const url = "/simp3/api/v1/service_executants/search";
-        const search_service_executants = this.state.search_service_executants
-        const search_ministeres = this.state.search_ministeres
-        const search_blocs = this.state.search_blocs    
+        const search_service_executants = []
+        const search_ministeres = []
+        const search_blocs = []  
         const startDate = this.state.startDate
+        const showSe = this.state.showSe;
+        const showMinistere = this.state.showMinistere;
+        const showBloc = this.state.showBloc;
+        if (this.state.search_service_executants.length > 0 || this.state.search_ministeres.length > 0 || this.state.search_blocs.length > 0){
+          this.setState({ showSe: null, showMinistere: null, showBloc: null})
+        }
+        
+        this.setState({search_service_executants: [],search_ministeres: [] , search_blocs: [] })
         
         if (event.target.name == "effectif"){
           var effectif = event.target.value
@@ -178,8 +189,9 @@ class Home extends React.Component {
           var eye_legend = params
           this.setState({ resetloc: false, showResults: false, showHover: false})
         }
-    
-        const body = {search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region, eye_legend};
+
+
+        const body = {search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region, eye_legend, showSe, showMinistere, showBloc};
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
         fetch(url, {
@@ -199,7 +211,8 @@ class Home extends React.Component {
       .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults,csp: response.csp, sfact: response.sfact, cgf: response.cgf,
         search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, 
         effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color,showResults: false, region: response.region, 
-        zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend}))
+        zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend, showSe: showSe, showMinistere: showMinistere, showBloc: showBloc,
+        autoCompleteList: response.autoCompleteList, service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs}))
       .catch(error => console.log(error.message));
     }
  
@@ -310,7 +323,8 @@ class Home extends React.Component {
 
 
   render() {
-
+console.log(this.state.autoCompleteList);
+console.log(this.state.search_service_executants)
     return (
       <div>
 

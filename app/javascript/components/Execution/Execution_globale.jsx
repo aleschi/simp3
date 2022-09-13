@@ -100,7 +100,7 @@ class Execution extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.setState({ region: response.region, autoCompleteList: response.autoCompleteList, 
-        ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,showMinistere: showMinistere, loader: false }))
+        ministeres: response.ministeres, service_executants: response.service_executants, showSe: showSe,showMinistere: showMinistere}))
       .catch(error => console.log(error.message));
     }
 
@@ -179,22 +179,19 @@ class Execution extends React.Component {
 
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> : 
             <div>
-            <div className="fr-grid-row fr-grid-row--gutters fr-my-4w">
-                
-                <div className="fr-col-12 fr-col-lg-12">
-                <Chart_globale indicateur_executions={this.state.indicateur_executions} service_executant_n={this.state.service_executant_n} 
-                date_min={this.state.date_min}/>
-
-                
-                </div>
-            </div>
-            {this.state.indicateur_executions.length > 0 && 
-            <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
-              <div className="fr-col-12">
-                <Execution_table_globale indicateur_executions={this.state.indicateur_executions}/>
+              <div className="fr-grid-row fr-grid-row--gutters fr-my-4w">              
+                  <div className="fr-col-12 fr-col-lg-12">
+                    <Chart_globale indicateur_executions={this.state.indicateur_executions} service_executant_n={this.state.service_executant_n} 
+                    date_min={this.state.date_min}/>         
+                  </div>
               </div>
-            </div>
-            }
+              {this.state.indicateur_executions.length > 0 && 
+              <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+                <div className="fr-col-12">
+                  <Execution_table_globale indicateur_executions={this.state.indicateur_executions}/>
+                </div>
+              </div>
+              }
             </div>
           }
                  

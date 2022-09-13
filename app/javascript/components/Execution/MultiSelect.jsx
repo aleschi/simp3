@@ -82,6 +82,7 @@ export default ({ items,label,placeholder,onChange,handleSubmit}) => {
 	      multiple
 	      className="search_checkbox"
 	      limitTags={1}
+        noOptionsText={'Aucune option'}
 	      options={items}
 	      value={selectedOptions}
 	      disableCloseOnSelect

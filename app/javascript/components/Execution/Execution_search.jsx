@@ -15,13 +15,13 @@ const [value, setValue] = useState([]);
 			<div>
 				<div className="fr-grid-row fr-grid-row--gutters">
 		          <div className="fr-col-12 fr-col-lg-12">      
-		            <h2 className="fr-mb-3w">Ma recherche </h2>
+		            <h2 className="fr-mb-3w">Filtrer la recherche </h2>
 		          </div>
 		        </div>
 		        <div className="fr-grid-row fr-grid-row--gutters">
 		          	<div className="fr-col-12 fr-col-lg-4">
 						<div className="fr-select-group">
-						<label htmlFor="indicateur" className="fr-label" >Je souhaite visualiser l'indicateur </label>
+						<label htmlFor="indicateur" className="fr-label" >Indicateur </label>
 						<select className="fr-select" id="indicateur" name="search_indicateur" onChange={handleChange} required>
 							{indicateurs.map((indicateur, index) => (
 				              <option key={index} value={indicateur.name}>{indicateur.name} - {indicateur.description}</option>
@@ -32,18 +32,7 @@ const [value, setValue] = useState([]);
 
 					<div className="fr-col-12 fr-col-lg-4">
 						<div className="fr-select-group">
-						<label htmlFor="choixservice" className="fr-label" >Concernant les </label>
-						<select className="fr-select" id="choixservice" name="type_structure" onChange={handleChangeStructure}>					
-				            <option value="Service">Services Exécutants</option>
-				            <option value="Ministere">Ministères</option>
-				                      
-						</select>
-						</div>
-					</div>
-
-					<div className="fr-col-12 fr-col-lg-4">
-						<div className="fr-select-group">
-						<label htmlFor="regions" className="fr-label" >Sur la région </label>
+						<label htmlFor="regions" className="fr-label" >Région </label>
 						<select className="fr-select" id="regions" name="regions" onChange={handleChangeRegion}>	<option value="ALL">Toutes les régions</option>  
 		                    { regions.map((region, index) => (
 		                      <option key={index} value={region}>{region}</option>   
@@ -52,12 +41,25 @@ const [value, setValue] = useState([]);
 						</select>
 						</div>
 					</div>
+
+					<div className="fr-col-12 fr-col-lg-4">
+						<div className="fr-select-group">
+						<label htmlFor="choixservice" className="fr-label" >Secteur </label>
+						<select className="fr-select" id="choixservice" name="type_structure" onChange={handleChangeStructure}>					
+				            <option value="Service">Service Exécutant</option>
+				            <option value="Ministere">Ministère</option>
+				                      
+						</select>
+						</div>
+					</div>
+
+					
 				</div>
 				<div className="fr-grid-row fr-grid-row--gutters">
 					<div className="fr-col-12 fr-col-lg-4"> 
 
 						<div className="fr-select-group">
-						<div className="fr-label" >Ma recherche concerne </div>
+						<div className="fr-label" >Rechercher </div>
 						
 						<div className="form_checkbox">
 							{ showSe && 
@@ -77,7 +79,7 @@ const [value, setValue] = useState([]);
 						      className="search_checkbox" 
 						      options={autoCompleteList}
 						      disableCloseOnSelect
-						      
+						      noOptionsText={'Aucune option'}
 						      onChange={(event, value) => handleSubmit(event, value)}
 						      getOptionLabel={(option) => option.name}
 						      renderOption={(props, option, { selected }) => (
