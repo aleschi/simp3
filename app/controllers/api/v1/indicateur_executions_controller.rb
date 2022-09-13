@@ -249,6 +249,19 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       service_executant_n = service_executant_n.where(id: se_id_perf)
     end 
 
+    min_id = service_executant_n.pluck(:ministere_id).uniq
+    blocs_id = service_executant_n.pluck(:organisation_financiere_id).uniq
+    ministeres = Ministere.where(id: min_id).order(name: :asc)
+    blocs = OrganisationFinanciere.where(id: blocs_id).order(name: :asc)
+    service_executants = service_executant_n.order(libelle: :asc)
+    if params[:showSe] == true
+      autoCompleteList = service_executants
+    elsif params[:showMinistere] == true   
+      autoCompleteList = ministeres
+    elsif params[:showBloc] == true
+      autoCompleteList = blocs
+    end
+
     if !service_executant_n.nil?
       csp = service_executant_n.where('type_structure = ?', 'CSP').count
       sfact = service_executant_n.where('type_structure = ?', 'SFACT').count
@@ -285,7 +298,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       indicateur_name: indicateur_name, search_service_executants: params[:search_service_executants], search_ministeres: params[:search_ministeres], 
       search_blocs: params[:search_blocs], effectif: params[:effectif], type_structure: params[:type_structure], csp: csp, sfact: sfact, cgf: cgf, 
       se_color: se_color,service_executant: service_executant.as_json(:include => [:ministere, :organisation_financiere]), indicateur_executions: indicateur_executions.as_json(:include => [:indicateur, :service_executant => {:include => [:ministere, :organisation_financiere]}]), 
-      performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend]}
+      performance: performance, region: params[:region], zoom: zoom, lat: lat, lng: lng, eye_legend: params[:eye_legend], autoCompleteList: autoCompleteList, blocs: blocs,
+      service_executants: service_executants, ministeres: ministeres}
     render json: response
   end
 

@@ -100,6 +100,15 @@ class Carto_perf extends React.Component {
       const search_ministeres = this.state.search_ministeres
       const search_blocs = this.state.search_blocs
       const url = "/simp3/api/v1/indicateur_executions/search_carto";
+
+      const showSe = this.state.showSe;
+      const showMinistere = this.state.showMinistere;
+      const showBloc = this.state.showBloc;
+      if (this.state.search_service_executants.length > 0 || this.state.search_ministeres.length > 0 || this.state.search_blocs.length > 0){
+        this.setState({ showSe: null, showMinistere: null, showBloc: null})
+      }
+        
+      this.setState({search_service_executants: [],search_ministeres: [] , search_blocs: [] })
       
       if (event.target.name == "search_indicateur"){
         var search_indicateur = event.target.value
@@ -146,7 +155,7 @@ class Carto_perf extends React.Component {
       const service_executant = this.state.service_executant;
 
       const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure,startDate,service_executant,region,eye_legend
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure,startDate,service_executant,region,eye_legend, showSe, showMinistere, showBloc
       };
 
       const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -167,7 +176,8 @@ class Carto_perf extends React.Component {
       .then(response => this.setState({ service_executant_n: response.data8, indicateur_n: response.indicateur_n, search_indicateur: response.search_indicateur, 
         indicateur_name: response.indicateur_name, effectif: response.effectif,csp: response.csp, sfact: response.sfact,cgf: response.cgf, 
         type_structure: response.type_structure, se_color: response.se_color, loading: false, showResults: false,region: response.region, 
-         zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend}))
+         zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend, autoCompleteList: response.autoCompleteList,
+        service_executants: response.service_executants, ministeres: response.ministeres, blocs: response.blocs}))
       .catch(error => console.log(error.message));
     }
 
@@ -198,11 +208,14 @@ class Carto_perf extends React.Component {
         const startDate = this.state.startDate;
         const service_executant = this.state.service_executant;
         const region = this.state.region;
+        const showSe = this.state.showSe;
+        const showMinistere = this.state.showMinistere;
+        const showBloc = this.state.showBloc
 
         this.setState({ showResults: false, showHover: false, eye_legend: 'all'})
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region, showSe, showMinistere, showBloc
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -243,9 +256,12 @@ class Carto_perf extends React.Component {
         const service_executant = this.state.service_executant;
         const region = this.state.region;
         const eye_legend = this.state.eye_legend
+        const showSe = this.state.showSe;
+        const showMinistere = this.state.showMinistere;
+        const showBloc = this.state.showBloc
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region, eye_legend
+          search_indicateur, search_service_executants,search_ministeres,search_blocs,effectif,type_structure, se_color,startDate,service_executant, region, eye_legend, showSe, showMinistere, showBloc
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;

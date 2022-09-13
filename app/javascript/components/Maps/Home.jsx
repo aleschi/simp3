@@ -48,6 +48,7 @@ class Home extends React.Component {
           clickId: null,
 
           eye_legend: 'all',
+  
 
         };
     
@@ -88,6 +89,8 @@ class Home extends React.Component {
       else if (event.target.value == 'Service') {
       this.setState({ showSe:  true, showMinistere: false, showBloc:  false, search_ministeres: [], search_blocs: [], autoCompleteList: this.state.service_executants,showResults: false}) 
       }
+
+      this.handleChange(this.state.eye_legend);
     }
 
     handleSubmit(event, value) {
@@ -153,14 +156,15 @@ class Home extends React.Component {
         const search_ministeres = []
         const search_blocs = []  
         const startDate = this.state.startDate
-        const showSe = this.state.showSe;
-        const showMinistere = this.state.showMinistere;
-        const showBloc = this.state.showBloc;
+        
+        var showSe = this.state.showSe;
+        var showMinistere = this.state.showMinistere;
+        var showBloc = this.state.showBloc;
         if (this.state.search_service_executants.length > 0 || this.state.search_ministeres.length > 0 || this.state.search_blocs.length > 0){
           this.setState({ showSe: null, showMinistere: null, showBloc: null})
         }
-        
         this.setState({search_service_executants: [],search_ministeres: [] , search_blocs: [] })
+        
         
         if (event.target.name == "effectif"){
           var effectif = event.target.value
@@ -182,7 +186,33 @@ class Home extends React.Component {
           var type_structure = this.state.type_structure
           var eye_legend = this.state.eye_legend
           this.setState({ resetloc: true, zoom: 5, showResults: false, showHover: false})
-        }else {
+        }
+        else if (event.target.name == "secteur"){
+          var effectif = this.state.effectif
+          var type_structure = this.state.type_structure
+          var region = this.state.region
+          var eye_legend = this.state.eye_legend
+          this.setState({ resetloc: false, showResults: false, showHover: false})
+          if (event.target.value == 'Ministere'){
+            this.setState({ showSe:  false, showMinistere: true, showBloc:  false,}) 
+            showSe = false 
+            showMinistere = true 
+            showBloc = false
+          } 
+          else if (event.target.value == 'Bloc'){
+            this.setState({ showSe:  false, showMinistere: false, showBloc:  true, }) 
+            showSe = false 
+            showMinistere = false 
+            showBloc = true
+          }
+          else if (event.target.value == 'Service') {
+            this.setState({ showSe:  true, showMinistere: false, showBloc:  false, }) 
+            showSe = true 
+            showMinistere = false 
+            showBloc = false
+          }
+        }
+        else {
           var effectif = this.state.effectif
           var type_structure = this.state.type_structure
           var region = this.state.region
@@ -190,6 +220,7 @@ class Home extends React.Component {
           this.setState({ resetloc: false, showResults: false, showHover: false})
         }
 
+        
 
         const body = {search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region, eye_legend, showSe, showMinistere, showBloc};
 
@@ -323,8 +354,7 @@ class Home extends React.Component {
 
 
   render() {
-console.log(this.state.autoCompleteList);
-console.log(this.state.search_service_executants)
+
     return (
       <div>
 
@@ -336,7 +366,8 @@ console.log(this.state.search_service_executants)
             </div>
           </div>
         
-            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange} handleChangeStructure={this.handleChangeStructure} showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} handleSubmit={this.handleSubmit} regions={this.state.regions}/>
+            <Mapsearch autoCompleteResults={this.state.autoCompleteResults} autoCompleteList= {this.state.autoCompleteList} handleChange={this.handleChange}
+             showSe={this.state.showSe} showMinistere={this.state.showMinistere} showBloc={this.state.showBloc} handleSubmit={this.handleSubmit} regions={this.state.regions}/>
         
           
           { this.state.loading ? <div className="loader_box"><div className ="loader"></div></div> :  
