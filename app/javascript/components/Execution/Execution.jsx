@@ -67,6 +67,7 @@ class Execution extends React.Component {
         const search_indicateur = event.target.value;
         const search_service_executants = this.state.search_service_executants;
         const search_ministeres = this.state.search_ministeres;
+        const search_blocs = this.state.search_blocs;
         const region = this.state.region;
         const showSe = this.state.showSe;
         const showMinistere = this.state.showMinistere;
@@ -75,7 +76,7 @@ class Execution extends React.Component {
         this.setState({ loader: true})
 
         const body = {
-          search_indicateur, search_service_executants,search_ministeres, region,showSe, showMinistere, showBloc
+          search_indicateur, search_service_executants,search_ministeres, search_blocs,region,showSe, showMinistere, showBloc
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;

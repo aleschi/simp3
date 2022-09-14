@@ -49,6 +49,7 @@ class Home extends React.Component {
         };
     
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeI = this.handleChangeI.bind(this);
         this.handleSubmitDate = this.handleSubmitDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onMarkerClick2 = this.onMarkerClick2.bind(this);
@@ -130,17 +131,59 @@ class Home extends React.Component {
       .catch(error => console.log(error.message));
     }
 
+    handleChangeI(params){
+      const url = "/simp3/api/v1/service_executants/search";
+        
+      const startDate = this.state.startDate    
+      var showSe = this.state.showSe;
+      var showMinistere = this.state.showMinistere;
+      var showBloc = this.state.showBloc;
+      var search_service_executants = this.state.search_service_executants
+      var search_ministeres = this.state.search_ministeres
+      var search_blocs = this.state.search_blocs  
+      var effectif = this.state.effectif
+      var type_structure = this.state.type_structure
+      var region = this.state.region
+      var eye_legend = params
+      this.setState({ resetloc: false, showResults: false, showHover: false})
+
+      const body = {search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region, eye_legend, showSe, showMinistere, showBloc};
+
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        })
+        .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults,csp: response.csp, sfact: response.sfact, cgf: response.cgf,
+        search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, 
+        effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color,showResults: false, region: response.region, 
+        zoom: response.zoom, lat: response.lat, lng: response.lng, eye_legend: response.eye_legend,}))
+      .catch(error => console.log(error.message));
+    }
+
     handleChange(params){
        
         const url = "/simp3/api/v1/service_executants/search";
-        const search_service_executants = []
-        const search_ministeres = []
-        const search_blocs = []  
-        const startDate = this.state.startDate
         
+        const startDate = this.state.startDate    
         var showSe = this.state.showSe;
         var showMinistere = this.state.showMinistere;
         var showBloc = this.state.showBloc;
+
+
+        var search_service_executants = []
+        var search_ministeres = []
+        var search_blocs = []  
         if (this.state.search_service_executants.length > 0 || this.state.search_ministeres.length > 0 || this.state.search_blocs.length > 0){
           this.setState({ showSe: null, showMinistere: null, showBloc: null})
         }
@@ -193,15 +236,6 @@ class Home extends React.Component {
             showBloc = false
           }
         }
-        else {
-          var effectif = this.state.effectif
-          var type_structure = this.state.type_structure
-          var region = this.state.region
-          var eye_legend = params
-          this.setState({ resetloc: false, showResults: false, showHover: false})
-        }
-
-        
 
         const body = {search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate, region, eye_legend, showSe, showMinistere, showBloc};
 
@@ -242,7 +276,7 @@ class Home extends React.Component {
         const startDate = e;
         const service_executant = this.state.service_executant;
         const region = this.state.region;
-        const eye_legend = this.state.eye_legend;
+        const eye_legend = "all";
     
         const body = {
           search_service_executants,search_ministeres,search_blocs, effectif, type_structure,startDate,service_executant, region, eye_legend
@@ -265,7 +299,7 @@ class Home extends React.Component {
       })
       .then(response => this.setState({ autoCompleteResults: response.autoCompleteResults, csp: response.csp, sfact: response.sfact, cgf: response.cgf,
         search_service_executants: response.search_service_executants, search_ministeres: response.search_ministeres,search_blocs: response.search_blocs, 
-        effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color, loading: false, 
+        effectif: response.effectif, type_structure: response.type_structure, se_color: response.se_color, loading: false, eye_legend: response.eye_legend,
         service_executant: response.service_executant,indicateur_executions: response.indicateur_executions, performance: response.performance,resetloc: false  }))
       .catch(error => console.log(error.message));
     }
@@ -357,7 +391,7 @@ class Home extends React.Component {
             csp={this.state.csp} cgf={this.state.cgf} sfact={this.state.sfact} handleSubmit={this.handleSubmit} showResults={this.state.showResults} performance={this.state.performance} 
             indicateur_executions={this.state.indicateur_executions} onCloseInfo={this.onCloseInfo} zoom={this.state.zoom} lat={this.state.lat} lng={this.state.lng} resetloc={this.state.resetloc} 
             hoverId={this.state.hoverId} clickId={this.state.clickId} showHover={this.state.showHover} MouseOver={this.MouseOver} MouseOut={this.MouseOut}
-            eye_legend={this.state.eye_legend} handleChange={this.handleChange}/> 
+            eye_legend={this.state.eye_legend} handleChange={this.handleChangeI}/> 
           }
 
         </div>

@@ -141,7 +141,7 @@ class Execution extends React.Component {
         this.setState({ loader: true})
         
         const body = {
-          search_service_executants,search_ministeres, region, showSe, showMinistere, showBloc
+          search_service_executants,search_ministeres, search_blocs, region, showSe, showMinistere, showBloc
         };
 
         const token = document.querySelector('meta[name="csrf-token"]').content;

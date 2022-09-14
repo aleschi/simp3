@@ -7,7 +7,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default ({ handleChange, handleSubmit, indicateurs, showSe, showMinistere, showBloc, autoCompleteList,regions}) => {
+export default ({ handleChange, handleChangeI, handleSubmit, indicateurs, showSe, showMinistere, showBloc, autoCompleteList,regions}) => {
 	
 	    return (
 
@@ -23,7 +23,7 @@ export default ({ handleChange, handleSubmit, indicateurs, showSe, showMinistere
 				
 					<div className="fr-select-group">
 						<label htmlFor="indicateur" className="fr-label" >Indicateur</label> 
-						<select className="fr-select" name="search_indicateur" id="indicateur" onChange={handleChange} required>
+						<select className="fr-select" name="search_indicateur" id="indicateur" onChange={handleChangeI} required>
 							{indicateurs.map((indicateur, index) => (
 				              <option key={index} value={indicateur.name}>{indicateur.name} - {indicateur.description}</option>
 				            ))}
