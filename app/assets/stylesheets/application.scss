@@ -441,6 +441,9 @@ border-color:transparent;
 .fr-callout-action--gris{
   border: 1px solid var(--background-contrast-grey);
 }
+.fr-callout-action--blue-ecume{
+  border: 1px solid var(--background-contrast-blue-ecume) ;
+}
 .fr-icon-checkbox-blank-circle-line::before {
   -webkit-mask-image: image-url("checkbox-blank-circle-line.svg") !important;
   mask-image: image-url("checkbox-blank-circle-line.svg") !important;

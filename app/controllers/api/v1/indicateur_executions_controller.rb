@@ -50,7 +50,7 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       autoCompleteList = service_executants.select([:id, :libelle]).map {|e| {id: e.id, libelle: e.libelle} }
     elsif params[:showMinistere] == true
       autoCompleteList = ministeres.select([:id, :name]).map {|e| {id: e.id, name: e.name} }
-    elsif params[:showMinistere] == true
+    elsif params[:showBloc] == true
       autoCompleteList = blocs.select([:id, :name]).map {|e| {id: e.id, name: e.name} }
     end 
 
@@ -229,6 +229,8 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
         se_id_perf = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ? AND point = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, 2).pluck(:service_executant_id)
       elsif params[:eye_legend] == "jaune" 
         se_id_perf = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ? AND point = ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month, 1).pluck(:service_executant_id)
+      elsif params[:eye_legend] == "bleu"
+        se_id_perf = indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).pluck(:service_executant_id)
       elsif params[:eye_legend] == "gris" 
         se_id_perf = service_executant_n.pluck(:id) - indicateur_n.first.indicateur_executions.where(service_executant_id: search_service_executants).where('date >= ? AND date <= ?', params[:startDate].to_date.at_beginning_of_month, params[:startDate].to_date.at_end_of_month).pluck(:service_executant_id)
       end 

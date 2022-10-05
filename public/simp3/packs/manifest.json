@@ -1,6 +1,6 @@
 {
-  "Index.js": "/simp3/packs/js/Index-dbc4f44a65b1b64768f6.js",
-  "Index.js.map": "/simp3/packs/js/Index-dbc4f44a65b1b64768f6.js.map",
+  "Index.js": "/simp3/packs/js/Index-79af98aea92756b72825.js",
+  "Index.js.map": "/simp3/packs/js/Index-79af98aea92756b72825.js.map",
   "application.js": "/simp3/packs/js/application-d8db24778c65fd32287e.js",
   "application.js.map": "/simp3/packs/js/application-d8db24778c65fd32287e.js.map",
   "dsfr.js": "/simp3/packs/js/dsfr-2f572efb3abcb543cca8.js",
@@ -24,10 +24,10 @@
     },
     "Index": {
       "js": [
-        "/simp3/packs/js/Index-dbc4f44a65b1b64768f6.js"
+        "/simp3/packs/js/Index-79af98aea92756b72825.js"
       ],
       "js.map": [
-        "/simp3/packs/js/Index-dbc4f44a65b1b64768f6.js.map"
+        "/simp3/packs/js/Index-79af98aea92756b72825.js.map"
       ]
     }
   },

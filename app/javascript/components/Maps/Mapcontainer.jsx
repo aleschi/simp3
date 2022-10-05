@@ -241,11 +241,14 @@ export class Mapcontainer extends React.Component {
             return <div key={index}>
               <div className="fr-grid-row fr-grid-row--gutters ">              
                 <div className="fr-col-6 fr-col-lg-3">
+                <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "bleu" ? this.props.handleChange('all'): this.props.handleChange('bleu')}}>
                   <div className="fr-callout fr-callout--blue-ecume fr-callout-legend">
                     <p className="fr-callout__title fr-callout-text--blue-ecume ">{this.props.autoCompleteResults.filter(result => (this.props.secolor[result.id] == "bleu")).length}/{this.props.csp + this.props.sfact + this.props.cgf}</p>
                     <p className="fr-callout__text fr-text--sm fr-callout-text--blue-ecume ">
                       <span className="mapicon"><img src={iconBl} alt="icone map bleu" /> Services avec valeur sur l'indicateur </span> </p>
                   </div>
+                 <div className="fr-callout-action fr-callout-action--blue-ecume"> {this.props.eye_legend == "bleu" ? <span className="fr-icon-record-circle-fill fr-icon--sm" aria-hidden="true"></span> : <span className="fr-icon-checkbox-blank-circle-line fr-icon--sm" aria-hidden="true"></span>}</div>
+                </button>
                 </div>
                 <div className="fr-col-6 fr-col-lg-3">
                 <button className="fr-button-legend" onClick={() => {this.props.eye_legend == "gris" ? this.props.handleChange('all'): this.props.handleChange('gris')}}>

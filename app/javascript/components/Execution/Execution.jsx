@@ -121,7 +121,7 @@ class Execution extends React.Component {
       if (event.target.name == "regions"){
         var region = event.target.value;
       }else if (event.target.name == "secteur"){
-          var region = this.state.region
+          var region = this.state.region;
           if (event.target.value == 'Ministere'){
             this.setState({ showSe:  false, showMinistere: true, showBloc:  false,}) 
             showSe = false 

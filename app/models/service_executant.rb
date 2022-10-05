@@ -51,13 +51,16 @@ class ServiceExecutant < ApplicationRecord
       
       @service.effectif = row_data['Effectif'].to_i
 
-      @service.address = row_data['CP'].to_s + ' ' + row_data['VILLE'].to_s + ' France'
+      if !@service.address.nil? && @service.address != row_data['CP'].to_s + ' ' + row_data['VILLE'].to_s + row_data['PAYS'].to_s 
+        @service.address = row_data['CP'].to_s + ' ' + row_data['VILLE'].to_s + row_data['PAYS'].to_s 
+      end 
       @service.type_structure = row_data['Type2']
+      
       @service.region = row_data['TERRITOIRE']
 
-      if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? 
+      #if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? 
         @service.save
-      end
+      #end
 
      
     end
