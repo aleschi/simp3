@@ -1,36 +1,87 @@
-
-<div class="fr-container">    
-  <div class="fr-grid-row fr-grid-row--gutters">
-    <div class="fr-col-12 fr-col-lg-6 fr-col-offset-lg-3 fr-mb-5w">
-       
-      <h1 class="fr-my-5w tc">Connexion</h1>
-    
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name),:html => {:id => "login"}, remote: true) do |f| %>
-
-        <div class="fr-input-group ">
-          <label class="fr-label" for="form-field1">Adresse mail*</label>
-          <%= f.email_field :email,required: true, autofocus: true, autocomplete: "email",class:"fr-input", id: "form-field1" %>
+<main role="main" id="content">
+    <div class="fr-container fr-container--fluid fr-mb-md-14v">
+        <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+            <div class="fr-col-12 fr-col-md-8 fr-col-lg-6">
+                <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v fr-mt-4w">
+                    <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+                        <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
+                            <h4>Connexion à SIMP3</h4>
+                            
+                            <div>
+                              <%= form_for(resource, as: resource_name, url: session_path(resource_name),:html => {:id => "login"}, remote: true) do |f| %>
+                                    <fieldset class="fr-fieldset" id="login-1801-fieldset" aria-labelledby="login-1801-fieldset-legend login-1801-fieldset-messages">
+                                        <legend class="fr-fieldset__legend" id="login-1801-fieldset-legend">
+                                            <h5>Se connecter avec les identifiants</h5>
+                                        </legend>
+                                        <div class="fr-fieldset__element fr-hidden" id='errorMessage'>
+                                            <div class="fr-alert fr-alert--error fr-alert--sm">
+                                                <p>Identifiant/mot de passe incorrect</p>
+                                            </div>
+                                        </div>
+                                        <div class="fr-fieldset__element">
+                                            <fieldset class="fr-fieldset" id="credentials" aria-labelledby="credentials-legend credentials-messages">
+                                                <legend class="fr-sr-only" id="credentials-legend">
+                                                    identifiants
+                                                </legend>
+                                                <div class="fr-fieldset__element">
+                                                    <div class="fr-input-group">
+                                                        <label class="fr-label" for="username-1798">
+                                                            Identifiant
+                                                            <span class="fr-hint-text">Format attendu : nom@domaine.fr</span>
+                                                        </label>
+                                                        
+                                                        <%= f.email_field :email,required: true, autofocus: true, autocomplete: "username",class:"fr-input", id: "username-1798" %>
+                                                        <div class="fr-messages-group" id="username-1798-messages" aria-live="assertive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="fr-fieldset__element">
+                                                    <div class="fr-password" id="password-1799">
+                                                        <label class="fr-label" for="password-1799-input">
+                                                            Mot de passe
+                                                        </label>
+                                                        <div class="fr-input-wrap">
+                                                            
+                                                            <%= f.password_field :password,required: true, autocomplete: "current-password", class:"fr-password__input fr-input", id: "password-1799-input" %>
+                                                        </div>
+                                                        <div class="fr-messages-group" id="password-1799-input-messages" aria-live="assertive">
+                                                        </div>
+                                                        <div class="fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm">
+                                                            <input aria-label="Afficher le mot de passe" id="password-1799-show" type="checkbox">
+                                                            <label class="fr--password__checkbox fr-label" for="password-1799-show">
+                                                                Afficher
+                                                            </label>
+                                                        </div>
+                                                        <p>
+                                                          <a class="fr-link" href="mailto:budget.lab@finances.gouv.fr?subject=Mot de passe oublié -SIMP3" target="_blank" rel="noopener" title="Mot de passe oublié">Mot de passe oublié ?</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="fr-messages-group" id="credentials-messages" aria-live="assertive">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="fr-fieldset__element">
+                                            <ul class="fr-btns-group">
+                                                <li>
+                                                    
+                                                    <%= f.submit "Connexion", class:"fr-mt-2v fr-btn" %>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="fr-messages-group" id="login-1801-fieldset-messages" aria-live="assertive">
+                                        </div>
+                                    </fieldset>
+                                <%end%>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="fr-input-group ">
-          <label class="fr-label" for="form-field2">Mot de passe*</label>
-          <%= f.password_field :password,required: true, autocomplete: "current-password",class:"fr-input", id: "form-field2" %>
-        </div>
-        <div>
-          <a class="fr-link fr-link--sm" href="mailto:budget.lab@finances.gouv.fr?subject=Mot de passe oublié -SIMP3" target="_blank" rel="noopener" title="Mot de passe oublié">Mot de passe oublié ? Contactez-nous </a>
-       </div>
-
-        <div id='error-message'></div>
-        
-     
-        <div class="tc fr-mt-4w">
-          <%= f.submit "Connexion", class:"fr-btn" %>
-        </div>
-
-      <% end %>
     </div>
-  </div>
-</div>
+</main>
 
 <script>
    $(document).ready(function() {
@@ -44,10 +95,8 @@
     .bind("ajax:error", function(evt, xhr, status, error) {
       //function called on status: 401 or 500 (for ex.)
       //console.log(xhr.responseText);
-      $('#error-message').html("identifiant ou mot de passe non reconnu");
-      $('#error-message').addClass('fr-error-text');
-      $('#password').addClass('fr-input--error');
-      $('#motdepasse').addClass('fr-input-group--error');
+      $('#errorMessage').removeClass('fr-hidden');
+      $('#credentials').addClass('fr-fieldset--error');
     });
   });
 

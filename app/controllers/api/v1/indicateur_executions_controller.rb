@@ -74,8 +74,13 @@ class Api::V1::IndicateurExecutionsController < ApplicationController
       @liste_se_empty = ServiceExecutant.where(id: @liste_se_empty_arr)
       service_executant_n = ServiceExecutant.where(id: @liste_se) #on met a jour la liste des services avec uniquement ceux qui présentent des valeurs
       #min and max pour graphe prendre par rapport à ceux qu'on va afficher
-      max = indicateur_executions.pluck(:valeur).max()
-      min = indicateur_executions.pluck(:valeur).min()
+      if indicateur_executions.length > 0
+        max = indicateur_executions.pluck(:valeur).max()
+        min = indicateur_executions.pluck(:valeur).min()
+      else
+        max = indicateur_n.first.indicateur_executions.pluck(:valeur).max()
+        min = indicateur_n.first.indicateur_executions.pluck(:valeur).min()
+      end
     else
       indicateur_executions = []
       @liste_se_empty_arr=[]

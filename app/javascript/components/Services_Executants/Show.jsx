@@ -62,7 +62,7 @@ class Show extends React.Component {
         <div className="fr-container pr">    
           <div className="fr-grid-row fr-grid-row--gutters">
             <div className="fr-col-12 fr-col-lg-12">
-              <h1 className="fr-my-5w">Liste des services exécutants</h1>
+              <h1 className="fr-my-5w">Liste des services exécutants ({this.state.service_executants.length})</h1>
             </div>
           </div>
 

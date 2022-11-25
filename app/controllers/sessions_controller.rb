@@ -13,7 +13,7 @@ class SessionsController < Devise::SessionsController
 	    respond_with resource, location: after_sign_in_path_for(resource)
 
 	  else 
-		invalid_login_attempt
+		  invalid_login_attempt
 	  end
   
   end
