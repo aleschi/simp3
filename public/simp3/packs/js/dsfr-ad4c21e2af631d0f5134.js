@@ -12896,8 +12896,8 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/alexandraleschi/Documents/GitHub/db/rails6/datason/app/javascript/packs/dsfr.module.js */"./app/javascript/packs/dsfr.module.js");
-module.exports = __webpack_require__(/*! /Users/alexandraleschi/Documents/GitHub/db/rails6/datason/app/javascript/packs/dsfr.nomodule.js */"./app/javascript/packs/dsfr.nomodule.js");
+__webpack_require__(/*! /Users/alexandraleschi/Documents/GitHub/db/rails6/simp3/app/javascript/packs/dsfr.module.js */"./app/javascript/packs/dsfr.module.js");
+module.exports = __webpack_require__(/*! /Users/alexandraleschi/Documents/GitHub/db/rails6/simp3/app/javascript/packs/dsfr.nomodule.js */"./app/javascript/packs/dsfr.nomodule.js");
 
 
 /***/ })

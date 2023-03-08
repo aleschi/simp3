@@ -25,52 +25,45 @@ class ServiceExecutant < ApplicationRecord
       next if idx == 0 # skip header
       row_data = Hash[[headers, row].transpose]
       
-      OrganisationFinanciere.where('name = ?',row_data['ORGANISATION']).first_or_create do |orga|
-        orga.name = row_data['ORGANISATION']
-      end
-      Ministere.where('name = ?',row_data['Ministere']).first_or_create do |ministere|
-        ministere.name = row_data['Ministere']
-      end
+      #OrganisationFinanciere.where('name = ?',row_data['ORGANISATION']).first_or_create do |orga|
+      #  orga.name = row_data['ORGANISATION']
+      #end
+      #Ministere.where('name = ?',row_data['Ministere']).first_or_create do |ministere|
+      #  ministere.name = row_data['Ministere']
+      #end
 
       if ServiceExecutant.where('code = ?',row_data['CODE SE ']).count > 0
         @service = ServiceExecutant.where('code = ?',row_data['CODE SE ']).first
       else
-        @service = ServiceExecutant.new 
-        
+        @service = ServiceExecutant.new
       end
-
       @service.code = row_data['CODE SE ']
       #if ServiceExecutant.where('libelle = ?',row_data['LIBELLE'].to_s).count > 1 #on evite les doublons de libelle
       #  @service.libelle = row_data['LIBELLE'].to_s + ' - ' + row_data['CODE SE '].to_s
       #else
-        @service.libelle = row_data['LIBELLE'].to_s
+      #  @service.libelle = row_data['LIBELLE'].to_s
       #end
-      @service.organisation_financiere_id = OrganisationFinanciere.where('name = ?',row_data['ORGANISATION']).first.id
-      @service.ministere_id = Ministere.where('name = ?',row_data['Ministere']).first.id
-   
-      
-      @service.effectif = row_data['Effectif'].to_i
+      #@service.organisation_financiere_id = OrganisationFinanciere.where('name = ?',row_data['ORGANISATION']).first.id
+      #@service.ministere_id = Ministere.where('name = ?',row_data['Ministere']).first.id
+      #@service.effectif = row_data['Effectif'].to_i
 
-      if !@service.address.nil? && @service.address != row_data['CP'].to_s + ' ' + row_data['VILLE'].to_s + row_data['PAYS'].to_s 
-        @service.address = row_data['CP'].to_s + ' ' + row_data['VILLE'].to_s + row_data['PAYS'].to_s 
-      end 
-      @service.type_structure = row_data['Type2']
-      
+      #if !@service.address.nil? && @service.address != row_data['CP'].to_s + ' ' + row_data['VILLE'].to_s + row_data['PAYS'].to_s
+      #@service.address = row_data['CP'].to_s + ' ' + row_data['VILLE'].to_s + row_data['PAYS'].to_s
+      #end
+      #@service.type_structure = row_data['Type2']
       @service.region = row_data['TERRITOIRE']
 
       #if !@service.organisation_financiere_id.nil? && !@service.ministere_id.nil? 
         @service.save
       #end
-
-     
     end
     #on relance si long ou lat nil 
-    while ServiceExecutant.where(longitude: nil).count > 0
-      ServiceExecutant.where(longitude: nil).each do |s|
-        s.address = s.address
-        s.save
-       end 
-    end
+    #while ServiceExecutant.where(longitude: nil).count > 0
+    #  ServiceExecutant.where(longitude: nil).each do |s|
+    #    s.address = s.address
+    #    s.save
+    #   end
+    #end
     
 
     
